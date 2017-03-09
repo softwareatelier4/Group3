@@ -1,9 +1,9 @@
-let config = require('./config');
-let express = require('express');
-let logger = require('morgan');
-let  path = require('path');
-let bodyParser = require('body-parser');
-let app = express();
+var config = require('./config');
+var express = require('express');
+var logger = require('morgan');
+var path = require('path');
+var bodyParser = require('body-parser');
+var app = express();
 
 //Connect to db
 var mongoose   = require('mongoose');

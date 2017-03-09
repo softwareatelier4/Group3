@@ -1,6 +1,6 @@
-let should = require("should")
-let app = require("../../app")
-let request = require('supertest');
+var should = require("should")
+var app = require("../../app")
+var request = require('supertest');
 
 describe("test server response", function(){
 	it("should return 200 for /GET index.html",function(done){
