@@ -3,7 +3,7 @@ module.exports = {
   // Url of the Mongodb server
   mongoUrl: "mongodb://localhost/",
   // Database name
-  mongoDbName: "atelierbeats-dev",
+  mongoDbName: "job-advisor-dev",
   //Server URL
-  url: "http://127.0.0.1:3000"
+  url: "http://127.0.0.1:4000"
 }
