@@ -1,0 +1,36 @@
+{
+  "name": "job-advisor",
+  "description": "Software Atelier 4 Project",
+  "main": "app.js",
+  "authors": [
+    "Paolo Falcioni",
+    "Susanna Ardigò",
+    "Alexander Camenzind",
+    "Damiano Pugliesi",
+    "Dimitrios Iason Kytros",
+    "Ilija Gjorgjiev",
+    "Gianmarco Palazzi",
+    "Simon Reding",
+    "Andrea Giovanni Perozziello",
+    "Konstantinos Stefanidis Vozikis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "Polymer"
+  ],
+  "homepage": "https://github.com/softwareatelier4/Group3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.8.1"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "job-advisor",
+  "version": "1.0.0",
+  "description": "Software Atelier 4 Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run test-mocha",
+    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/app --colors --reporter mocha-jenkins-reporter",
+    "start": "DEBUG='job-advisor-server' node ./bin/www"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "Polymer"
+  ],
+  "author": "Paolo Falcioni, Susanna Ardigò, Alexander Camenzind, Damiano Pugliesi, Dimitrios Iason Kytros, Ilija Gjorgjiev, Gianmarco Palazzi, Simon Reding, Andrea Giovanni Perozziello, Konstantinos Stefanidis Vozikis",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "mocha-jenkins-reporter": "^0.3.7",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.8.6",
+    "morgan": "^1.8.1",
+    "path": "^0.12.7",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
+  }
+}
