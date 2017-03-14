@@ -1,0 +1,31 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+This is the polymer component for the search field.
+-->
+
+<dom-module id="search-field">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'search-field',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'temp',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
