@@ -9,7 +9,7 @@ require("../../models/User.js");
 const User = mongoose.model("User");
 const id = ObjectId();
 describe("Testing Create on userRouting ", function(){
-  describe("POST/users",function(){
+  describe("POST/userRouting",function(){
     it("should add user to db if the data is valid", function(done){
       var newUserData = {
         "_id":id,
@@ -43,7 +43,7 @@ describe("Testing Create on userRouting ", function(){
       })
     })
   })
-  describe('PUT /users/:userid', function(){
+  describe('PUT /userRouting/:userid', function(){
 
     it('should update an existing user', function(done){
       var newUserData =  {
@@ -78,5 +78,75 @@ describe("Testing Create on userRouting ", function(){
         });
     });
 })
+describe('GET /userRouting', function(){
+
+    it('should list all the users with correct data', function(done){
+      request(app)
+        .get('/userRouting')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(200)
+        .end(function(err, res){
+          done();
+        });
+    });
+  });
+
+  describe('GET /userRouting/:userid', function(){
+
+
+    it('should list the user with correct data', function(done){
+      request(app)
+        .get('/userRouting/' + id)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(200)
+        .end(function(err, res){
+          done();
+        });
+    });
+    it('should respond with a 404 if the user does not exist', function(done){
+        request(app)
+          .get('/userRouting/' +"dsadsadsadas")
+          .set('Accept', 'application/json')
+          .expect(404, done);
+      });
+  })
+
+  describe('DELETE /userRouting/:userid', function(){
+
+
+    it('should delete an existing user', function(done){
+      request(app)
+        .del('/userRouting/' + id)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(204)
+        .end(function(err, res){
+          done();
+        });
+    });
+
+    it('should not list the previous resource', function(done){
+      request(app)
+        .get('/userRouting/' + id)
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+
+    it('should respond with a 404 for a previously deleted resource', function(done){
+      request(app)
+        .delete('/userRouting/' + id)
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+
+    it('should respond with a 404 if the user does not exist', function(done){
+      request(app)
+        .delete('/userRouting/'+'dsadasdsads')
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+  });
 
 })
