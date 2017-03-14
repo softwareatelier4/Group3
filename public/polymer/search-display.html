@@ -10,21 +10,36 @@ This is the polymer component for the search field.
       :host {
         display: block;
       }
+      .freelancer-container{
+        background-color: light-grey;
+      }
     </style>
-    <h2>Hello [[prop1]]</h2>
+    <div> Search Results:</div>
+    <template is="dom-repeat" items="{{employees}}">
+      <div class="freelancer-container">
+        <div>Name: <span>{{item.name}}</span></div>
+        <div>Location: <span>{{item.location}}</span></div>
+      </div>
+    </template>
   </template>
 
   <script>
     Polymer({
 
       is: 'search-display',
+      ready: function() {
+        this.employees = [
+            {name: 'Bob', location: 'Lugano'},
+            {name: 'Sally', location: 'Milano'}
+        ];
+      },
 
       properties: {
         prop1: {
           type: String,
           value: 'temp',
         },
-      },
+      }
 
     });
   </script>
