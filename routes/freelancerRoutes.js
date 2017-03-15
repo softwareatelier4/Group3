@@ -8,13 +8,18 @@ require("../models/Freelancer.js");
 const userModel = mongoose.model("User");
 const freelancerModel = mongoose.model("Freelancer");
 
-
+router.get('/query', function(req,res){
+  // console.log(req.query)
+  // console.log("asdf")
+  res.status(200).end()
+})
 router.get('/', function (req, res){
-    freelancer.find({},
+    freelancerModel.find({},
        function (err, found) {
         res.json(found);
     })
 });
+
 
 
 // router.get("/:id", function(req,res){
