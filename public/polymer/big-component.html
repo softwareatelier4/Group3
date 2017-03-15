@@ -11,33 +11,34 @@ This is the polymer component for the search field.
         display: flex;
         flex-direction: column;
     }
-    #input-fields{
+    .input-fields{
       display: flex;
       flex-direction: row;
-      border-style: ridge;
-      border-color: black;
-      margin-left: 10%;
-      margin-right: 10%;
+      width: 100%;
+      height: 100%;
     }
-    #component-align{
-        margin-left: 22%;
-        margin-right: 20%;
+    .background-image{
+        width: 100%;
+        height: 40%;
     }
+
     </style>
-    <form>
-    <div id = "input-fields">
+<form>
+    <div class = "input-fields">
         <div class = 'fields'>
-            <div id = "component-align">
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
-                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+            <div>
+                <search-display></search-display>
+                <search-field></search-field>
+
+                <div>
+                    <img src = "../img/background.jpg" class = "background-image">
+                </div>
+
             </div>
         </div>
     </div>
 </form>
+[[prop1]]
   </template>
 
   <script>
@@ -48,7 +49,7 @@ This is the polymer component for the search field.
       properties: {
         prop1: {
           type: String,
-          value: 'temp',
+          value: '© Job Advisor',
         },
       },
 
