@@ -28,6 +28,7 @@
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "path": "^0.12.7",
+    "places.js": "^1.4.10",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
   }
