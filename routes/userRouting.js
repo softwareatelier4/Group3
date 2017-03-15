@@ -7,7 +7,7 @@ require("../models/User.js");
 const user = mongoose.model("User");
 
 
-router.get('/', function (req, res) {
+router.get('/', function (req, res){
     user.find({},{password:0},
        function (err, found) {
         for (let i =0; i<found.length; i++){
@@ -54,14 +54,7 @@ router.delete("/:id",function(req,res){
 });
 
 router.post("/", function(req,res){
-  let a = new user({
-    userName : req.body.userName,
-    email: req.body.email,
-    password : req.body.password,
-    firstName : req.body.firstName,
-    dateCreated : req.body.dateCreated,
-    lastName : req.body.lastName
-  });
+  let a = new user(req.body);
   a.save(function(err, saved){
     if(err){
       res.status(400).json().end();
@@ -85,43 +78,13 @@ router.put("/:id", function(req,res){
   else if(!(req.body.password)){
     res.sendStatus(400);
   }
-  let a = {
-    userName : req.body.userName,
-    email: req.body.email,
-    password : req.body.password,
-    firstName : req.body.firstName,
-    lastName : req.body.lastName,
-    dateCreated : req.body.dateCreated,
-  };
+  let a = req.body;
   user.update({_id:req.params.id}, a, function(err,modified){
     if(err){
       res.sendStatus(400);
     }
     else{
-      if(modified.n === 0){
-        var newA = new user({
-                    _id: req.params.id,
-                    userName : req.body.userName,
-                    email: req.body.email,
-                    password : req.body.password,
-                    firstName : req.body.firstName,
-                    lastName : req.body.lastName,
-                    dateCreated : req.body.dateCreated,
-                });
-        newA.save(function(err, saved){
-          if(err){
-            res.status(400).json().end();
-            return;
-          }
-          saved = saved.toObject();
-          delete saved.password;
-          res.status(201).json(saved);
-        })
-      }
-      else{
-        res.sendStatus(404);
-      }
-
+      res.sendStatus(404);
     }
   })
 });
