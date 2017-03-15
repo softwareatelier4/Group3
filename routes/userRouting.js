@@ -69,22 +69,13 @@ router.post("/", function(req,res){
 
 
 router.put("/:id", function(req,res){
-  if(!(req.body.userName)){
-    res.sendStatus(400);
-  }
-  else if(!(req.body.email)){
-    res.sendStatus(400);
-  }
-  else if(!(req.body.password)){
-    res.sendStatus(400);
-  }
   let a = req.body;
   user.update({_id:req.params.id}, a, function(err,modified){
     if(err){
       res.sendStatus(400);
     }
     else{
-      res.sendStatus(404);
+      res.sendStatus(200);
     }
   })
 });
