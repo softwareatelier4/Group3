@@ -1,40 +1,60 @@
-<link rel="import" href="./polymer/polymer.html">
 
-
-<link rel="import" href="./paper-button/paper-button.html">
+!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>
+    Job Advisor
+  </title>
+  <link rel="import" href="./components/polymer/polymer.html">
+  <link rel="import" href="./components/paper-button/paper-button.html">
+  <link rel="import" href="./components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="import" href="./components/paper-listbox/paper-listbox.html">
+  <link rel="import" href="./components/paper-item/paper-item.html">
+  <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
 
 
 <!--
 This is the polymer component for the search field.
 -->
 
+
 <dom-module id="search-field">
   <template>
     <style>
-    #input-fields{
-      display: flex;
-      flex-direction: row;
-      width: 100vw;
-      background-color: #d9d9d9;
-      height: 10vh;
-    }
-    #freelancer-input{
-      width: 20vw;
-      height: 10vh;
-      font-size: 7vh;
-    }
-    .algolia-places{
-      width: 20vw !important;
-    }
-    #location-input{
-      width: 20vw;
-      height: 10vh;
-      font-size: 7vh;
-    }
+
+
+  <dom-module id="search-field">
+    <template>
+      <style>
+      #input-fields{
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        background-color: #d9d9d9;
+        height: 10vh;
+      }
+      #l-container{
+        width: 20vw;
+      }
+      #freelancer-input{
+        width: 20vw;
+        height: 10vh;
+        font-size: 4vh;
+      }
+      .algolia-places{
+        width: 20vw !important;
+      }
+      #location-input{
+        width: 20vw;
+        height: 10vh;
+        font-size: 4vh;
+      }
+
     #logo {
       display:block;
       margin:auto;
-    }
+      }
     paper-button.green {
       background: white;
       color: black;
@@ -54,42 +74,61 @@ This is the polymer component for the search field.
       max-height:95px;
       width: auto;
       height: auto;
-      margin-right: 10vw;
+    }
+    paper-dropdown-menu{
+      height: 10vh;
+      width: 20vw;
+    }
+
+    #img-holder{
+      background-color: black;
     }
     </style>
+  </head>
 
-<div><img src="../img/simple_logo.png" id="logo"></div>
-<form>
-<div id="input-fields">
-  <input type="text" id="freelancer-input" placeholder="Profession eg. &#34;Translator&#34;"><br>
-  <input type="search" id="location-input" placeholder="City" />
-  <paper-button id="search-button" class="green">Seach</paper-button>
-</div>
-</form>
+<body>
+  <div><img id="img-holder"src="../img/simple_logo.png" id="logo"></div>
+    <form>
+      <div id="input-fields">
+        <input type="text" id="freelancer-input" placeholder="Profession eg. &#34;Translator&#34;"><br>
+        <div id="l-container">
+          <input type="search" id="location-input" placeholder="City" />
+        </div>
+        <div id="l-container">
+          <paper-dropdown-menu label="Job">
+            <paper-listbox class="dropdown-content" selected="3">
+              <paper-item>Janitor</paper-item>
+              <paper-item>Translator</paper-item>
+              <paper-item>Private Investigator</paper-item>
+              <paper-item>Other</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <paper-button id="search-button" class="green">Search</paper-button>
+      </div>
+    </form>
 
 <!-- Api for location filter -->
   <script>
-  (function() {
-    var placesAutocomplete = places({
-      container: document.querySelector('#location-input'),
-      type: 'city',
-      aroundLatLngViaIP: false,
-      templates: {
-        value: function(suggestion) {
-          return suggestion.name;
+    (function() {
+      var placesAutocomplete = places({
+        container: document.querySelector('#location-input'),
+        type: 'city',
+        aroundLatLngViaIP: false,
+        templates: {
+          value: function(suggestion) {
+            return suggestion.name;
+          }
         }
-      }
-    });
-  })();
+      });
+    })();
   </script>
 
   </template>
 
   <script>
     Polymer({
-
       is: 'search-field',
-
       properties: {
         city: {
           type: String,
@@ -100,3 +139,6 @@ This is the polymer component for the search field.
     });
   </script>
 </dom-module>
+
+</body>
+</html>
