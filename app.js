@@ -18,4 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const usersRouter = require('./routes/userRouting');
  app.use('/userRouting', usersRouter);
 
+const freelancerRouter= require('./routes/freelancerRoutes.js')
+app.use('/freelancer', freelancerRouter)
 module.exports = app;

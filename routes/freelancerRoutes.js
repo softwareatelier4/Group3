@@ -1,22 +1,22 @@
-// const express = require("express");
-// const router = express.Router();
-// const mongoose = require("mongoose");
-// require("../models/User.js");
-// require("../models/Freelancer.js");
+const express = require("express");
+const router = express.Router();
+const mongoose = require("mongoose");
+require("../models/User.js");
+require("../models/Freelancer.js");
 //
 //
-// const user = mongoose.model("User");
-// const freelancer = mongoose.model("Freelancer");
-//
-//
-// router.get('/', function (req, res){
-//     freelancer.find({},
-//        function (err, found) {
-//         res.json(found);
-//     })
-// });
-//
-//
+const userModel = mongoose.model("User");
+const freelancerModel = mongoose.model("Freelancer");
+
+
+router.get('/', function (req, res){
+    freelancer.find({},
+       function (err, found) {
+        res.json(found);
+    })
+});
+
+
 // router.get("/:id", function(req,res){
 //   freelancer.find({_id: req.params.id}, function (err, found) {
 //       if (Object.keys(found).length === 0) {
@@ -51,16 +51,17 @@
 //   })
 // });
 //
-// router.post("/", function(req,res){
-//   let a = new freelancer(req.body);
-//   a.save(function(err, saved){
-//     if(err){
-//       res.status(400).json().end();
-//     }
-//     else{
-//     saved = saved.toObject();
-//     delete saved.password;
-//     res.json(saved);
-//   }
-//   })
-// });
+router.post("/", function(req,res){
+  console.log(req.body);
+  let a = new freelancerModel(req.body);
+  a.save(function(err, saved){
+    if(err){
+      console.log(err)
+      res.status(400).json().end();
+    }
+    else{
+      res.status(201).end()
+    }
+  })
+});
+module.exports = router;
