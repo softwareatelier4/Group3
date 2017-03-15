@@ -28,6 +28,10 @@ This is the polymer component for the search field.
       height: 10vh;
       font-size: 7vh;
     }
+    #logo {
+      display:block;
+      margin:auto;
+    }
     paper-button.green {
       background: white;
       color: black;
@@ -50,12 +54,13 @@ This is the polymer component for the search field.
       margin-right: 10vw;
     }
     </style>
-    <form>
+
+<img src="../img/simple_logo.png" id="logo">
+<form>
 <div id="input-fields">
-  <img src="../img/simple_logo.png" id="logo">
   <input type="text" id="freelancer-input" placeholder="Profession eg. &#34;Translator&#34;"><br>
   <input type="search" id="location-input" placeholder="City" />
-  <paper-button id="search-button"class="green">Seach</paper-button>
+  <paper-button id="search-button"class="green">Search</paper-button>
 </div>
 </form>
 
