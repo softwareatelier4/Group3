@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "npm run test-mocha",
-    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/app --colors --reporter mocha-jenkins-reporter",
+    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/* --colors --reporter mocha-jenkins-reporter",
     "start": "DEBUG='job-advisor-server' node ./bin/www"
   },
   "keywords": [
@@ -18,6 +18,7 @@
   "author": "Paolo Falcioni, Susanna Ardigò, Alexander Camenzind, Damiano Pugliesi, Dimitrios Iason Kytros, Ilija Gjorgjiev, Gianmarco Palazzi, Simon Reding, Andrea Giovanni Perozziello, Konstantinos Stefanidis Vozikis",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "istanbul": "^0.4.5",
