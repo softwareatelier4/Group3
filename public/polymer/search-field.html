@@ -1,3 +1,4 @@
+
 !DOCTYPE <!DOCTYPE html>
 <html>
 <head>
@@ -5,15 +6,24 @@
   <title>
     Job Advisor
   </title>
-  <link rel="import" href="./polymer/polymer.html">
-  <link rel="import" href="./paper-button/paper-button.html">
-  <link rel="import" href="./paper-dropdown-menu/paper-dropdown-menu.html">
-  <link rel="import" href="./paper-listbox/paper-listbox.html">
-  <link rel="import" href="./paper-item/paper-item.html">
+  <link rel="import" href="./components/polymer/polymer.html">
+  <link rel="import" href="./components/paper-button/paper-button.html">
+  <link rel="import" href="./components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="import" href="./components/paper-listbox/paper-listbox.html">
+  <link rel="import" href="./components/paper-item/paper-item.html">
+  <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
+
 
 <!--
 This is the polymer component for the search field.
 -->
+
+
+<dom-module id="search-field">
+  <template>
+    <style>
+
+
   <dom-module id="search-field">
     <template>
       <style>
@@ -40,6 +50,7 @@ This is the polymer component for the search field.
         height: 10vh;
         font-size: 4vh;
       }
+
     #logo {
       display:block;
       margin:auto;
@@ -68,14 +79,15 @@ This is the polymer component for the search field.
       height: 10vh;
       width: 20vw;
     }
-    body{
-      color: #85e085;
+
+    #img-holder{
+      background-color: black;
     }
     </style>
   </head>
 
 <body>
-  <div><img src="../img/simple_logo.png" id="logo"></div>
+  <div><img id="img-holder"src="../img/simple_logo.png" id="logo"></div>
     <form>
       <div id="input-fields">
         <input type="text" id="freelancer-input" placeholder="Profession eg. &#34;Translator&#34;"><br>
