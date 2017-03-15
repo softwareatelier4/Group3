@@ -1,0 +1,57 @@
+<link rel="import" href="./components/polymer/polymer.html">
+
+<!--
+This is the polymer component for the search field.
+-->
+
+<dom-module id="big-component">
+  <template>
+    <style>
+    .fields{
+        display: flex;
+        flex-direction: column;
+    }
+    #input-fields{
+      display: flex;
+      flex-direction: row;
+      border-style: ridge;
+      border-color: black;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+    #component-align{
+        margin-left: 22%;
+        margin-right: 20%;
+    }
+    </style>
+    <form>
+    <div id = "input-fields">
+        <div class = 'fields'>
+            <div id = "component-align">
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+                <img src="sfondo.jpg" alt="" height="100" width="200"/>
+            </div>
+        </div>
+    </div>
+</form>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'big-component',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'temp',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
