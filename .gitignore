@@ -4,4 +4,3 @@ bower_components
 *.log
 coverage/
 jenkins-test-results.xml
-
