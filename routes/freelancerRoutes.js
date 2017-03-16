@@ -11,28 +11,41 @@ const freelancer = mongoose.model("Freelancer");
 
 router.get('/query', function(req,res){
   let words = req.query.words.split(',')
-  freelancer.find({},function(err,found){
+  freelancer.find({},{dateCreated:0,telephoneNum:0,review:0,pictureGallery:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
       let result=[]
-      // console.log(words)
       found.forEach(function(item){
         if(check(item, words)){
           result.push(item)
         }
       })
-      res.status(200).end()
+      res.json(result).end()
     }
   })
-  // console.log(req.query)
-  // console.log("asdf")
 })
 
 function check(data, words){
-  for(x in data){
-    console.log(x)
+
+  console.log(words)
+  for(let i = 0; i<words.length;i++){
+    let word = words[i]
+    flag = false
+    for(x in data){
+      try{
+        if(data[x].indexOf(word) !== -1){
+          flag = true
+        }
+      }catch(err){
+      }
+
+    }
+    if(!flag){
+      return false
+    }
   }
+  return true
 }
 router.get('/', function (req, res){
     freelancer.find({},
