@@ -87,7 +87,7 @@ This is the polymer component for the search field.
   <div id="search-container">
     <div id="l-container">
     <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
-      <paper-input label="{{profession}}"></paper-input>
+      <paper-input label="Looking for" value = "{{profession}}"></paper-input>
     </div>
     <div id="l-container">
       <paper-dropdown-menu label="Job" placeholder="Looking for..." class="dropdown" >
@@ -145,7 +145,7 @@ This is the polymer component for the search field.
         },
         profession: {
           type: String,
-          value: 'Looking for'
+          value: ''
         },
         this_url :{
           type: String,
