@@ -13,3 +13,8 @@ const ReviewSchema = new mongoose.Schema(
     freelancer : {type : ObjectId, ref : "Freelancer", required : true},
     dateCreated : { type: Date, required: true, default: Date.now },
   })
+
+
+
+  //register model
+  mongoose.model('Review', ReviewSchema);
