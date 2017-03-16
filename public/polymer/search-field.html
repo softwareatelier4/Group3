@@ -98,11 +98,15 @@ This is the polymer component for the search field.
         </paper-listbox>
       </paper-dropdown-menu>
     </div>
-    <paper-button id="search-button" class="green">Search</paper-button>
+    <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
     <div id="r-container">
       <input type="search" id="location-input" placeholder="{{city}}">
     </div>
   </div>
+  <iron-ajax
+  auto
+  url="{{this_url}}"
+  on-response="someFunction"></iron-ajax>
 
   <script>
     (function() {
@@ -143,8 +147,16 @@ This is the polymer component for the search field.
           type: String,
           value: 'Looking for'
         },
+        this_url :{
+          type: String,
+          value: ""
+        },
 
       },
+      onSubmit : function(e){
+        let text = this.profession;
+        console.log(text);
+      }
 
     });
   </script>
