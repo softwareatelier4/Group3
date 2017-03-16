@@ -19,52 +19,47 @@
 This is the polymer component for the search field.
 -->
 
-
-<dom-module id="search-field">
-
-
   <dom-module id="search-field">
-    <template>
-      <style>
-    #search-container{
-        width: inherit;
-        height: 10vh;
-        display: flex;
-        align-content: space-around;
-        background-color: grey;
-      }
-      #l-container{
-        width: 20vw;
-        height: 10vh;
-      }
-      #r-container{
-        width: 25vw;
-        height: 10vh;
-        margin-left: auto;
-      }
-      #freelancer-input{
-        width: inherit;
-        height: inherit;
-        font-size: 4vh;
-      }
-      #location-input{
-        width: inherit;
-        height: 10vh;
-        font-size: 4vh;
-      }
+  <template>
+  <style>
+  #search-container{
+      width: inherit;
+      height: 10vh;
+      display: flex;
+      align-content: space-around;
+      background-color: grey;
+    }
+    #l-container{
+      width: 20vw;
+      height: 10vh;
+    }
+    #r-container{
+      width: 25vw;
+      height: 10vh;
+      margin-left: auto;
+    }
+    #freelancer-input{
+      width: inherit;
+      height: inherit;
+      font-size: 4vh;
+    }
+    #location-input{
+      width: inherit;
+      height: 10vh;
+      font-size: 4vh;
+    }
     #logo {
       margin:0;
       background-color: black;
       width: 100vw;
-      }
-      paper-input{
-        background-color: white;
-
-      }
-      paper-dropdown-menu.dropdown{
-        background-color:white;
-        height:10vh;
-      }
+    }
+    paper-input{
+      background-color: white;
+    }
+    paper-dropdown-menu.dropdown{
+      background-color:white;
+      height:10vh;
+    }
     paper-button.green {
       background: white;
       color: black;
@@ -93,26 +88,25 @@ This is the polymer component for the search field.
 
   <div id="logo"><img src="../img/simple_logo.png"></div>
   <div id="search-container">
-
-      <div id="l-container">
-        <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
-        <paper-input label="Looking for..."></paper-input>
-        </div>
-        <div id="l-container">
-          <paper-dropdown-menu label="Job" placeholder="Looking for..." class="dropdown" >
-            <paper-listbox class="dropdown-content" selected="0">
-              <template is="dom-repeat" items="{{jobs}}">
-              <paper-item>[[item.name]]</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu>
-        </div>
-        <paper-button id="search-button" class="green">Search</paper-button>
-        <div id="r-container">
-          <!--<paper-input id="location-input"></paper-input>-->
-          <input type="search" id="location-input" placeholder="City">
-        </div>
-      </div>
+    <div id="l-container">
+    <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
+      <paper-input label="Looking for..."></paper-input>
+    </div>
+    <div id="l-container">
+      <paper-dropdown-menu label="Job" placeholder="Looking for..." class="dropdown" >
+        <paper-listbox class="dropdown-content" selected="0">
+          <template is="dom-repeat" items="{{jobs}}">
+            <paper-item>[[item.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </div>
+    <paper-button id="search-button" class="green">Search</paper-button>
+    <div id="r-container">
+      <!--<paper-input id="location-input"></paper-input>-->
+      <input type="search" id="location-input" placeholder="City">
+    </div>
+  </div>
 
 
 
