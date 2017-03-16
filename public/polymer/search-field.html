@@ -84,13 +84,14 @@ This is the polymer component for the search field.
   </head>
 
   <div id="logo"><img src="../img/simple_logo.png"></div>
+
   <div id="search-container">
     <div id="l-container">
-    <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
       <paper-input label="Looking for" value = "{{profession}}"></paper-input>
     </div>
+
     <div id="l-container">
-      <paper-dropdown-menu label="Job" placeholder="Looking for..." class="dropdown" >
+      <paper-dropdown-menu label="Job" class="dropdown" >
         <paper-listbox class="dropdown-content" selected="0">
           <template is="dom-repeat" items="{{jobs}}">
             <paper-item>[[item.name]]</paper-item>
@@ -98,11 +99,15 @@ This is the polymer component for the search field.
         </paper-listbox>
       </paper-dropdown-menu>
     </div>
+
     <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
+
     <div id="r-container">
       <input type="search" id="location-input" placeholder="{{city}}">
     </div>
+
   </div>
+  
   <iron-ajax
   auto
   url="{{this_url}}"
