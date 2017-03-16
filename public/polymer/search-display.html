@@ -1,6 +1,6 @@
-
 <link rel="import" href="./components/polymer/polymer.html">
-
+<link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <!--
 This is the polymer component for the search field.
 -->
@@ -9,24 +9,57 @@ This is the polymer component for the search field.
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
+      }
+      .profile-container{
+        width:100%;
+        display: flex;
+        flex-wrap: wrap;
+
       }
       .freelancer-container{
         background-color: #e6e6e6;
         padding: 1vh;
         margin: 1vh;
+        width: 40%;
+        font-family: Didact Gothic;
+        border-left-style: solid;
+        border-width: 4px;
+        border-color: #10a494;
+      }
+      .element-display{
+        padding-left: 150px;
+      }
+
+      img {
+        height: 120px;
+        width: 120px;
+        vertical-align: middle;
+        object-fit: cover;
+        float: left;
+        padding-top: 20px;
       }
       h2{
-        padding: 1vh;
+        font-family: Didact Gothic;
+        margin: 1vh;
       }
     </style>
     <h2> Search Results:</h2>
-    <template is="dom-repeat" items="{{employees}}">
-      <div class="freelancer-container">
-        <div>Name: <span>{{item.name}}</span></div>
-        <div>Location: <span>{{item.location}}</span></div>
-      </div>
-    </template>
+    <div class= "profile-container">
+      <template is="dom-repeat" items="{{employees}}">
+        <div class="freelancer-container">
+          <img src ="../img/profile_pic.png">
+          <div class="element-display">First Name: <span>{{item.FirstName}}</span></div>
+          <div class= "element-display">Last Name: <span>{{item.LastName}}</span></div>
+          <div class= "element-display">Location: <span>{{item.location}}</span></div>
+          <div class= "element-display">Email: <span>{{item.Email}}</span></div>
+          <div class= "element-display">Job: <span>{{item.Job}}</span></div>
+          <div class= "element-display">Tel: <span>{{item.Tel}}</span></div>
+          <div class= "element-display">Review: <span>{{item.Review}}</span></div>
+          <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div>
+        </div>
+      </template>
+  </div>
   </template>
 
   <script>
@@ -35,8 +68,14 @@ This is the polymer component for the search field.
       is: 'search-display',
       ready: function() {
         this.employees = [
-            {name: 'Bob', location: 'Lugano'},
-            {name: 'Sally', location: 'Milano'}
+            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
+            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
+            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
+            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
+            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' }
         ];
       },
 
