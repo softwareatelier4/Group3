@@ -93,14 +93,14 @@ This is the polymer component for the search field.
 
   <div id="logo"><img src="../img/simple_logo.png"></div>
   <div id="search-container">
-    
+
       <div id="l-container">
         <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
         <paper-input label="Looking for..."></paper-input>
         </div>
         <div id="l-container">
-          <paper-dropdown-menu label="job" placeholder="Looking for..." class="dropdown" >
-            <paper-listbox class="dropdown-content" selected="3">
+          <paper-dropdown-menu label="Job" placeholder="Looking for..." class="dropdown" >
+            <paper-listbox class="dropdown-content" selected="0">
               <template is="dom-repeat" items="{{jobs}}">
               <paper-item>[[item.name]]</paper-item>
               </template>
@@ -142,10 +142,10 @@ This is the polymer component for the search field.
       is: 'search-field',
       ready: function(){
         this.jobs = [
+          {name : 'Any'},
           {name : 'Janitor'},
           {name : 'Translator'},
-          {name : 'Private Investigator'},
-          {name : 'Other'}
+          {name : 'Private Investigator'}
         ];
       },
       properties: {
