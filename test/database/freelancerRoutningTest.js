@@ -12,7 +12,7 @@ let Freelancer = mongoose.model("Freelancer")
 let newFreelancerData={
   firstName: "peter",
   lastName:"asdf",
-  email:"fuckIlija@gmail.com",
+  email:"Ilija@gmail.com",
   location:"lugano",
   job:"carpenter",
   telephoneNum:"123",
