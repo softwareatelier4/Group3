@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+mongoose.Promise = require('bluebird')
 require("../models/User.js");
 
 const user = mongoose.model("User");

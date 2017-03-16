@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+mongoose.Promise = require('bluebird')
 require("../models/User.js");
 require("../models/Freelancer.js");
 //
@@ -9,12 +10,32 @@ const user = mongoose.model("User");
 const freelancer = mongoose.model("Freelancer");
 
 router.get('/query', function(req,res){
+  let words = req.query.words.split(',')
+  freelancer.find({},function(err,found){
+    if(err){
+      res.status(500).end()
+    }else{
+      let result=[]
+      // console.log(words)
+      found.forEach(function(item){
+        if(check(item, words)){
+          result.push(item)
+        }
+      })
+      res.status(200).end()
+    }
+  })
   // console.log(req.query)
   // console.log("asdf")
-  res.status(200).end()
 })
+
+function check(data, words){
+  for(x in data){
+    console.log(x)
+  }
+}
 router.get('/', function (req, res){
-    freelancerModel.find({},
+    freelancer.find({},
        function (err, found) {
         res.json(found);
     })

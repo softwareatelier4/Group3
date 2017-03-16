@@ -3,13 +3,16 @@ var should = require("should")
 var app = require("../../app")
 var request = require('supertest');
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 const ObjectId = mongoose.Types.ObjectId
-
+let utils = require('../../utils.js')
 require("../../models/User.js");
 
 const User = mongoose.model("User");
 const id = ObjectId();
 describe("Testing Create on userRouting ", function(){
+  before(utils.dropDb)
+  after(utils.dropDb)
   describe("POST/userRouting",function(){
     it("should add user to db if the data is valid", function(done){
       var newUserData = {
