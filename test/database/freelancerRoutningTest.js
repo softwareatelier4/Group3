@@ -20,8 +20,9 @@ let newFreelancerData={
   website:"xd.com",
   skypeAcc:"asfd"
 }
+const id = ObjectId();
 
-describe("freelancer db test",function(){
+describe("freelancer db test POST",function(){
   it("should add valid user",function(done){
     request(app)
     .post("freelancer")
@@ -32,6 +33,21 @@ describe("freelancer db test",function(){
       done()
     })
   })
+  it("should not add freelancer to db if the data is invalid", function(done){
+    var freelancerData = {
+      "firstName" : "Seth",
+      "lastName" : "MacFarlane",
+    }
+    request(app)
+    .post("/freelancer")
+    .set("content-type", "application/json")
+    .send(freelancerData)
+    .expect(400)
+    .end(function(err,res){
+      done();
+    })
+  })
+
   describe("Test full text search", function(){
     before(utils.dropDb);
     after(utils.dropDb)
@@ -46,5 +62,111 @@ describe("freelancer db test",function(){
     })
   })
 })
+
+describe('PUT /freelancer/:freelancerid', function(){
+
+  it('should update an existing freelancer', function(done){
+    var freelancerData =  {
+
+      "firstName" : "Seth",
+      "lastName" : "MacFarlane",
+      "email" : "hello",
+      "password" : "peg"
+    };
+
+    request(app)
+      .put('/freelancer/' + id)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .send(freelancerData)
+      .expect(204)
+      .end(function(err, res){
+        var body = res.body;
+        body.should.be.empty;
+
+        //check if user was updated
+        request(app)
+          .get('/freelancer/' + id)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/, 'it should respond with json' )
+          .expect(200)
+          .end(function(err, res){
+            done();
+          });
+
+      });
+  });
+})
+
+describe('GET /freelancer', function(){
+
+    it('should list all the freelancers with correct data', function(done){
+      request(app)
+        .get('/userRo')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(200)
+        .end(function(err, res){
+          done();
+        });
+    });
+  });
+
+  describe('GET /freelancer/:freelancerid', function(){
+
+
+    it('should list the freelancer with correct data', function(done){
+      request(app)
+        .get('/freelancer/' + id)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(200)
+        .end(function(err, res){
+          done();
+        });
+    });
+    it('should respond with a 404 if the user does not exist', function(done){
+        request(app)
+          .get('/freelancer/' +"dsadsadsadas")
+          .set('Accept', 'application/json')
+          .expect(404, done);
+      });
+  })
+
+  describe('DELETE /freelancer/:freelancerid', function(){
+
+
+    it('should delete an existing freelancer', function(done){
+      request(app)
+        .del('/freelancer/' + id)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/, 'it should respond with json' )
+        .expect(204)
+        .end(function(err, res){
+          done();
+        });
+    });
+
+    it('should not list the previous resource', function(done){
+      request(app)
+        .get('/freelancer/' + id)
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+
+    it('should respond with a 404 for a previously deleted resource', function(done){
+      request(app)
+        .delete('/freelancer/' + id)
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+
+    it('should respond with a 404 if the user does not exist', function(done){
+      request(app)
+        .delete('/freelancer/'+'dsadasdsads')
+        .set('Accept', 'application/json')
+        .expect(404, done);
+    });
+  });
 
 // utils.dropDb()
