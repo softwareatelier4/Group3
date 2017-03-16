@@ -11,6 +11,7 @@
   <link rel="import" href="./components/paper-dropdown-menu/paper-dropdown-menu.html">
   <link rel="import" href="./components/paper-listbox/paper-listbox.html">
   <link rel="import" href="./components/paper-item/paper-item.html">
+  <link rel="import" href="./components/paper-input/paper-input.html">
   <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
 
 
@@ -36,6 +37,11 @@ This is the polymer component for the search field.
         width: 20vw;
         height: 10vh;
       }
+      #r-container{
+        width: 25vw;
+        height: 10vh;
+        margin-left: auto;
+      }
       #freelancer-input{
         width: inherit;
         height: inherit;
@@ -51,6 +57,10 @@ This is the polymer component for the search field.
       background-color: black;
       width: 100vw;
       }
+      paper-input{
+        background-color: white;
+
+      }
       paper-dropdown-menu.dropdown{
         background-color:white;
         height:10vh;
@@ -58,6 +68,7 @@ This is the polymer component for the search field.
     paper-button.green {
       background: white;
       color: black;
+      height: 110%;
     }
 
     paper-button.green:hover {
@@ -75,7 +86,6 @@ This is the polymer component for the search field.
 
     }
     paper-dropdown-menu{
-      height: 10vh;
       width: 20vw;
     }
     </style>
@@ -83,14 +93,13 @@ This is the polymer component for the search field.
 
   <div id="logo"><img src="../img/simple_logo.png"></div>
   <div id="search-container">
+    
       <div id="l-container">
-        <input type="text" id="freelancer-input" placeholder="Search...">
+        <!--<input type="text" id="freelancer-input" placeholder="Search...">-->
+        <paper-input label="Looking for..."></paper-input>
         </div>
         <div id="l-container">
-          <input type="search" id="location-input" placeholder="City" />
-        </div>
-        <div id="l-container">
-          <paper-dropdown-menu noink no-animations class="dropdown" >
+          <paper-dropdown-menu label="job" placeholder="Looking for..." class="dropdown" >
             <paper-listbox class="dropdown-content" selected="3">
               <template is="dom-repeat" items="{{jobs}}">
               <paper-item>[[item.name]]</paper-item>
@@ -99,6 +108,10 @@ This is the polymer component for the search field.
           </paper-dropdown-menu>
         </div>
         <paper-button id="search-button" class="green">Search</paper-button>
+        <div id="r-container">
+          <!--<paper-input id="location-input"></paper-input>-->
+          <input type="search" id="location-input" placeholder="City">
+        </div>
       </div>
 
 
