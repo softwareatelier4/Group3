@@ -130,9 +130,6 @@ This is the polymer component for the search field.
           }
         }
       });
-      placesAutocomplete.on('change', function resultSelected(e) {
-        document.querySelector('#location-input').placeholder = e.suggestion.name || '';
-      });
     })();
   </script>
   </template>
