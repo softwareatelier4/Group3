@@ -87,22 +87,26 @@ This is the polymer component for the search field.
 
   <div id="search-container">
 
+    <!--first field: Looking for-->
     <div id="l-container">
-      <paper-input label="Looking for" value = "{{profession}}"></paper-input>
+      <paper-input label="Looking for" value = "{{name}}"></paper-input>
     </div>
 
+    <!-- second field Profession-->
     <div id="l-container">
-      <paper-dropdown-menu label="Job" class="dropdown" >
-        <paper-listbox class="dropdown-content" selected="0">
-          <template is="dom-repeat" items="{{jobs}}">
+      <paper-dropdown-menu label="Profession" class="dropdown" >
+        <paper-listbox class="dropdown-content" selected="{{profession}}">
+          <template is="dom-repeat" items="{{professions}}">
             <paper-item>[[item.name]]</paper-item>
           </template>
         </paper-listbox>
       </paper-dropdown-menu>
     </div>
 
+    <!--search button-->
     <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
 
+    <!--last field: City -->
     <div id="r-container">
       <input type="search" id="location-input" placeholder="{{city}}">
     </div>
@@ -111,7 +115,7 @@ This is the polymer component for the search field.
 
   <iron-ajax
   auto
-  url="{{this_url}}"
+  url="{{req_url}}"
   on-response="someFunction"></iron-ajax>
 
   <script>
@@ -126,6 +130,9 @@ This is the polymer component for the search field.
           }
         }
       });
+      placesAutocomplete.on('change', function resultSelected(e) {
+        document.querySelector('#location-input').placeholder = e.suggestion.name || '';
+      });
     })();
   </script>
   </template>
@@ -137,7 +144,7 @@ This is the polymer component for the search field.
     Polymer({
       is: 'search-field',
       ready: function(){
-        this.jobs = [
+        this.professions = [
           {name : 'Any'},
           {name : 'Janitor'},
           {name : 'Translator'},
@@ -145,28 +152,35 @@ This is the polymer component for the search field.
         ];
       },
       properties: {
-        city: {
+        name: {
           type: String,
-          value: 'City'
+          value: ''
         },
         profession: {
           type: String,
           value: ''
         },
-        this_url :{
+        city: {
           type: String,
-          value: "/freelancer/query?words=alex,janitor,milan"
+          value: ''
         },
-
+        req_url :{
+          type: String,
+          value: ''
+        },
       },
       onSubmit : function(e){
-        let text = this.profession;
-        console.log(text);
+        this.req_url = "/freelancer/query?words=";
+        this.req_url += this.name + ",";
+        this.req_url += this.professions[this.profession].name + ",";
+        this.req_url += this.city;
+        console.log(this.req_url);
       }
 
     });
   </script>
 </dom-module>
 
-
+<!-- how the request string should look -->
+<!--value: "/freelancer/query?words=alex,janitor,milan"-->
 </html>
