@@ -173,7 +173,7 @@ This is the polymer component for the search field.
         this.req_url = "/freelancer/query?words=";
         this.req_url += this.name + ",";
         this.req_url += this.professions[this.profession].name + ",";
-        this.req_url += this.city;
+        this.req_url += document.getElementById('location-input').value;
         console.log(this.req_url);
       }
 
