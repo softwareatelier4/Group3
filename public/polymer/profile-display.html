@@ -39,24 +39,24 @@ This is the polymer component for the search field.
     </style>
     <div id="body">
       <div class="collumn">
-    <h2>[[profile.FirstName]] [[profile.LastName]]<br>
+    <h2>[[profile.firstName]] [[profile.lastName]]<br>
       <star-rating rating="[[profile.Review]]"></star-rating>
       </h2>
 
-    <h3>[[profile.Job]] in [[profile.location]]</h3>
+    <h3>[[profile.job]] in [[profile.location]]</h3>
     <div class="freelancer-container">
       <img src ="../img/profile_pic.png">
-      <div class="desc">Member since: <span>{{profile.CreationDate}}</span></div>
+      <div class="desc">Member since: <span>{{profile.dateCreated}}</span></div>
     </div>
   </div>
     <div class= "description-container collumn">
 
         <h3>About</h3>
-        [[profile.Description]]
+        [[profile.description]]
         <div id="contact-container">
           <h4>Book Now!</h4>
-          <div class= "desc">Email: <span>{{profile.Email}}</span></div>
-          <div class= "desc">Tel: <span>{{profile.Tel}}</span></div>
+          <div class= "desc">Email: <span>{{profile.email}}</span></div>
+          <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
 
         </div>
   </div>
