@@ -2,7 +2,6 @@
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Didact+Gothic">
-    <link rel="stylesheet" href="./public/polymer/components/font-awesome/css/font-awesome.min.css">
 <!--
 This is the polymer component for the search field.
 -->
@@ -71,9 +70,7 @@ This is the polymer component for the search field.
       ready: function() {
         this.profile =
             {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'1',CreationDate: '01',Description:'description' },
-            this.stars = new Array(Math.round(parseInt(this.profile.Review))%6);
-            this.emptyStars = new Array(5-Math.round(parseInt(this.profile.Review))%6);
+            Job: 'Plumber', Tel: "0123456789",Review:'1',CreationDate: '01',Description:'description' }
       },
 
       properties: {
