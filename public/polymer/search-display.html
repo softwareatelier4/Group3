@@ -46,17 +46,17 @@ This is the polymer component for the search field.
     </style>
     <h2> Search Results:</h2>
     <div class= "profile-container">
-      <template is="dom-repeat" items="{{employees}}">
-        <div class="freelancer-container">
+      <template is="dom-repeat" items="{{searchData}}">
+        <div on-tap="handleTap" class="freelancer-container">
           <img src ="../img/profile_pic.png">
-          <div class="element-display">First Name: <span>{{item.FirstName}}</span></div>
-          <div class= "element-display">Last Name: <span>{{item.LastName}}</span></div>
+          <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
+          <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
           <div class= "element-display">Location: <span>{{item.location}}</span></div>
-          <div class= "element-display">Email: <span>{{item.Email}}</span></div>
-          <div class= "element-display">Job: <span>{{item.Job}}</span></div>
-          <div class= "element-display">Tel: <span>{{item.Tel}}</span></div>
-          <div class= "element-display">Review: <span>{{item.Review}}</span></div>
-          <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div>
+          <div class= "element-display">Email: <span>{{item.email}}</span></div>
+          <div class= "element-display">Job: <span>{{item.job}}</span></div>
+          <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
+          <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
+          <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
         </div>
       </template>
   </div>
@@ -67,16 +67,16 @@ This is the polymer component for the search field.
 
       is: 'search-display',
       ready: function() {
-        this.employees = [
-            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' }
-        ];
+        // this.employees = [
+        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
+        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' }
+        // ];
       },
 
       properties: {
@@ -84,8 +84,14 @@ This is the polymer component for the search field.
           type: String,
           value: 'temp',
         },
+        searchData:{
+          type:Object,
+          value:[]
+        }
+      },
+      handleTap:function(e){
+        console.log(e)
       }
-
     });
   </script>
 </dom-module>
