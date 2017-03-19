@@ -11,7 +11,10 @@ const freelancer = mongoose.model("Freelancer");
 
 router.get('/query', function(req,res){
   let words = req.query.words.split(',')
-  freelancer.find({},{dateCreated:0,telephoneNum:0,review:0,pictureGallery:0,__v:0}).lean().exec(function(err,found){
+  for(let i = 0; i<words.length; i++){//set everyting to lowercase
+    words[i]= words[i].toLowerCase()
+  }
+  freelancer.find({},{dateCreated:0,review:0,pictureGallery:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
@@ -28,13 +31,12 @@ router.get('/query', function(req,res){
 
 function check(data, words){
 
-  console.log(words)
   for(let i = 0; i<words.length;i++){
     let word = words[i]
     flag = false
     for(x in data){
       try{
-        if(data[x].indexOf(word) !== -1){
+        if(data[x].toLowerCase().indexOf(word) !== -1){
           flag = true
         }
       }catch(err){

@@ -36,6 +36,7 @@
     "paper-dropdown-menu": "^1.5.0",
     "paper-item": "^1.2.1",
     "paper-listbox": "^1.1.2",
-    "paper-input": "^1.1.23"
+    "paper-input": "^1.1.23",
+    "iron-ajax": "^1.4.3"
   }
 }
