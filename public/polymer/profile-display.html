@@ -1,4 +1,5 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Didact+Gothic">
     <link rel="stylesheet" href="./public/polymer/components/font-awesome/css/font-awesome.min.css">
@@ -10,7 +11,7 @@ This is the polymer component for the search field.
   <template>
     <style>
     h3,.desc{
-      color: grey;
+      color: #595959;
       font-style: italic;
     }
     .desc span{
@@ -18,31 +19,46 @@ This is the polymer component for the search field.
       font-style:normal;
     }
     h4{
-      color: red;
+      color: green;
+    }
+    .collumn{
+      align-self: stretch;
+      padding:2%;
     }
     #body{
-      background-color:#e6fff2;
+      background-color:#f2f2f2;
+      padding:5%;
+      display: -webkit-flex;
+      display: flex;
+      align-items: stretch;
+    }
+    #contact-container{
+      background-color:  #e6e6e6;
+      padding: 2%;
     }
 
     </style>
     <div id="body">
-    <h2>[[profile.FirstName]] [[profile.LastName]]
-      <template is="dom-repeat" items="{{stars}}">
-        <i class="fa fa-star" aria-hidden="true"></i>
-    </template><template is="dom-repeat" items="{{emptyStars}}">
-      <i class="fa fa-star-o" aria-hidden="true"></i>
-  </template></h2>
-    <h3>[[profile.Job]] in [[profile.location]]</h3>
-    <div id="contact-container">
-      <h4>Book Now!</h4>
-      <div class= "desc">Email: <span>{{profile.Email}}</span></div>
-      <div class= "desc">Tel: <span>{{profile.Tel}}</span></div>
+      <div class="collumn">
+    <h2>[[profile.FirstName]] [[profile.LastName]]<br>
+      <star-rating rating="[[profile.Review]]"></star-rating>
+      </h2>
 
+    <h3>[[profile.Job]] in [[profile.location]]</h3>
+    <div class="freelancer-container">
+      <img src ="../img/profile_pic.png">
+      <div class="desc">Member since: <span>{{profile.CreationDate}}</span></div>
     </div>
-    <div class= "description-container">
-        <div class="freelancer-container">
-          <img src ="../img/profile_pic.png">
-          <div class="desc">Member since: <span>{{profile.CreationDate}}</span></div>
+  </div>
+    <div class= "description-container collumn">
+
+        <h3>About</h3>
+        [[profile.Description]]
+        <div id="contact-container">
+          <h4>Book Now!</h4>
+          <div class= "desc">Email: <span>{{profile.Email}}</span></div>
+          <div class= "desc">Tel: <span>{{profile.Tel}}</span></div>
+
         </div>
   </div>
 </div>
@@ -55,13 +71,13 @@ This is the polymer component for the search field.
       ready: function() {
         this.profile =
             {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:3,CreationDate: '01' },
-            this.stars = new Array(Math.round(this.profile.Review)%6);
-            this.emptyStars = new Array(5-Math.round(this.profile.Review)%6);
+            Job: 'Plumber', Tel: "0123456789",Review:'1',CreationDate: '01',Description:'description' },
+            this.stars = new Array(Math.round(parseInt(this.profile.Review))%6);
+            this.emptyStars = new Array(5-Math.round(parseInt(this.profile.Review))%6);
       },
 
       properties: {
-        prop1: {
+        objID: {
           type: String,
           value: 'temp',
         },
