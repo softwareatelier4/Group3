@@ -40,7 +40,7 @@ This is the polymer component for the search field.
     <div id="body">
       <div class="collumn">
     <h2>[[profile.firstName]] [[profile.lastName]]<br>
-      <star-rating rating="[[profile.Review]]"></star-rating>
+      <star-rating rating="[[profile.review]]"></star-rating>
       </h2>
 
     <h3>[[profile.job]] in [[profile.location]]</h3>
@@ -75,8 +75,8 @@ This is the polymer component for the search field.
       is: 'profile-display',
       ready: function() {
         this.profile =
-            {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'1',CreationDate: '01',Description:'description' }
+            {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+            job: 'Plumber', telephoneNum: "0123456789",review:Math.random()*10,dateCreated: '01',description:'description' }
       },
 
       properties: {
