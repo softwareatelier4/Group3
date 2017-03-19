@@ -1,18 +1,20 @@
 'use strict'
 const config = require("./config.js")
 const mongoose = require('mongoose')
+const utils = require('./utils.js')
 mongoose.Promise = require('bluebird')
 mongoose.connect(config.mongoUrl+config.mongoDbName)
-// console.log(mongoose.connection)
 require("./models/User.js")
-const User = mongoose.model("User");
+require("./models/Freelancer.js")
+
 //drop db
 function dropDatabase(done){
-  mongoose.connection.collections['users'].drop(function(err){
-    done();
-  })
+  utils.dropDb(seed)
 }
 
+// global to check if all models have finished
+let global_counter = 0;
+let number_of_models=0;
 function closeConnection(){
   mongoose.connection.close( function(err){
 
@@ -20,19 +22,31 @@ function closeConnection(){
 
 function seed(){
   let data = require("./test/seedData.js")
-  let userData = data[0].data
-  let users=[]
+  number_of_models=data.length
+  data.forEach(function(item){
+    seedModel(item)
+  })
+}
 
-  for(let i = 0; i< userData.length; i++){
-    const newUser = new User(userData[i])
-    users.push(newUser)
+function seedModel(d){
+  const Model = mongoose.model(d.name)
+  let data=[]
+  for(let i = 0; i < d.data.length; i++){
+    data.push(new Model(d.data[i]))
   }
   let counter=0;
-  users.forEach((item)=> item.save((err,data) => {
-    if(++counter == users.length){
-      closeConnection()
+  data.forEach((item)=> item.save((err,data) => {
+    // console.log(this.length)
+    if(++counter == d.data.length){
+      console.log(`finsihed ${d.name}`)
+      checkIfFinished()
     }
   }))
+}
+function checkIfFinished(){
+  if(++global_counter==2){
+    closeConnection()
+  }
 }
 dropDatabase(seed)
 // seed()

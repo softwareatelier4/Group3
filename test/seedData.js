@@ -3,13 +3,14 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
+let sharedId= ObjectId()
 
 
 var users = {
   name : 'User',
   data : [
     {
-      "_id"          : ObjectId(),
+      "_id"          : sharedId,
       "firstName"    : "Masiar",
       "lastName"     : "Babazadeh",
       "userName"     : "masiar",
@@ -40,7 +41,62 @@ var users = {
   ]
 }
 
+var freelancers={
+  name:"Freelancer",
+  data:[
+  {
+    "_id":ObjectId(),
+    "firstName": "Peter",
+    "lastName":"Shaw",
+    "email":"peter_s@gmail.com",
+    "location":"Lugano",
+    "job":"Carpenter",
+    "telephoneNum":"123",
+    "description":"i am a bad carpenter",
+    "website":"xd.com",
+    "skypeAcc":"asfd",
+    "ownerId":sharedId
+},
+{
+  "_id":ObjectId(),
+  "firstName": "Bob",
+  "lastName":"Andrews",
+  "email":"Bob@gmail.com",
+  "location":"Mendrisio",
+  "job":"Carpenter",
+  "telephoneNum":"123",
+  "description":"i am an amazing carpenter",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+},
+{
+  "_id":ObjectId(),
+  "firstName": "Justus",
+  "lastName":"Jonas",
+  "email":"Justus@gmail.com",
+  "location":"Lugano",
+  "job":"Janitor",
+  "telephoneNum":"123",
+  "description":"i am one of the best janitors ever",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+},
+{
+  "_id":ObjectId(),
+  "firstName": "Peter",
+  "lastName":"Parker",
+  "email":"Peter_p@gmail.com",
+  "location":"Bellinzona",
+  "job":"Carpenter",
+  "telephoneNum":"123",
+  "description":"i am a bad carpenter",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+}]
+}
+
 var seedData = [];
 seedData.push(users);
+seedData.push(freelancers)
 
 module.exports = seedData;
