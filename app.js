@@ -20,4 +20,8 @@ const usersRouter = require('./routes/userRouting');
 
 const freelancerRouter= require('./routes/freelancerRoutes.js')
 app.use('/freelancer', freelancerRouter)
+
+app.get('/*', function(req, res){
+    res.sendfile(path.join(__dirname, 'public/index.html'));
+});
 module.exports = app;

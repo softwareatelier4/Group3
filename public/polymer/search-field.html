@@ -146,6 +146,7 @@ This is the polymer component for the search field.
         this.professions = [
           {name : 'Any'},
           {name : 'Janitor'},
+          {name: 'Carpenter'},
           {name : 'Translator'},
           {name : 'Private Investigator'}
         ];
@@ -176,8 +177,11 @@ This is the polymer component for the search field.
       onSubmit : function(e){
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ')
+        console.log(words)
         words.forEach(function(item){
-          str+=item+","
+          if(item!== ""){
+            str+=item+","
+          }
         })
         if(this.professions[this.profession].name =="Any"){
 
