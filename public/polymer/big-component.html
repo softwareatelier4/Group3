@@ -13,6 +13,7 @@ This is the polymer component for the search field.
     .fields{
         display: flex;
         flex-direction: row;
+        width: 100%;
     }
     .input-fields{
       display: flex;
@@ -24,8 +25,15 @@ This is the polymer component for the search field.
         width: 100%;
         height: 40%;
     }
+    search-field{
+      width: 100%;
+    }
+    form{
+      width: 100%;
+    }
 
     </style>
+    <body>
 
     <app-location route="{{route}}"></app-location>
     <app-route
@@ -39,6 +47,8 @@ This is the polymer component for the search field.
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
 
+    <search-field search-data={{searchData}}></search-field>
+
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
       <form name="search">
           <div class = "input-fields">
@@ -46,19 +56,18 @@ This is the polymer component for the search field.
                   <div>
 
 
-                      <search-field search-data={{searchData}}></search-field>
+
                       <search-display search-data={{searchData}}></search-display>
                       <div>
                           <!-- <img src = "../img/background.jpg" class = "background-image"> -->
                       </div>
-
                   </div>
               </div>
           </div>
       </form>
       <profile-display freelancer-id="{{freelancerId}}" name="profile"></profile-display>
     </iron-pages>
-
+  </body>
 
 <!-- [[prop1]] -->
   </template>
