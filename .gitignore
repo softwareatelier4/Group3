@@ -2,6 +2,7 @@ public/polymer/components
 .DS_Store
 node_modules/
 bower_components
+public/polymer/public/
 *.log
 coverage/
 jenkins-test-results.xml

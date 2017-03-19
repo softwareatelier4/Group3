@@ -1,6 +1,7 @@
 <link rel="import" href="./components/polymer/polymer.html">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+    <link rel="stylesheet" href="./public/polymer/components/font-awesome/css/font-awesome.min.css">
 <!--
 This is the polymer component for the search field.
 -->
@@ -8,20 +9,34 @@ This is the polymer component for the search field.
 <dom-module id="profile-display">
   <template>
     <style>
+    profile-display{
+      background-color: grey;
+    }
+    h3{
+      opacity:0.6
+    }
+    h4{
+      color: red;
+    }
 
     </style>
-    <h2>[[profile.FirstName]]</h2>
+    <h2>[[profile.FirstName]] [[profile.LastName]]
+      <template is="dom-repeat" items="{{stars}}">
+        <i class="fa fa-star" aria-hidden="true"></i>
+    </template></h2>
+    <h3>[[profile.Job]] in [[profile.location]]</h3>
+    <div id="contact-container">
+      <h4>Book Now!</h4>
+      <div class= "element-display">Email: <span>{{profile.Email}}</span></div>
+      <div class= "element-display">Tel: <span>{{profile.Tel}}</span></div>
+
+    </div>
     <div class= "description-container">
         <div class="freelancer-container">
           <img src ="../img/profile_pic.png">
-          <div class="element-display">First Name: <span>{{item.FirstName}}</span></div>
-          <div class= "element-display">Last Name: <span>{{item.LastName}}</span></div>
-          <div class= "element-display">Location: <span>{{item.location}}</span></div>
-          <div class= "element-display">Email: <span>{{item.Email}}</span></div>
-          <div class= "element-display">Job: <span>{{item.Job}}</span></div>
-          <div class= "element-display">Tel: <span>{{item.Tel}}</span></div>
-          <div class= "element-display">Review: <span>{{item.Review}}</span></div>
-          <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div>
+
+          <div class= "element-display">Rating: <span>{{profile.Review}}</span></div>
+          <div class= "element-display">Member since: <span>{{profile.CreationDate}}</span></div>
         </div>
   </div>
   </template>
@@ -33,7 +48,8 @@ This is the polymer component for the search field.
       ready: function() {
         this.profile =
             {FirstName: 'Bob', LastName: 'Palazzi', location: 'Lugano', Email: 'username@example.com',
-            Job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' };
+            Job: 'Plumber', Tel: "0123456789",Review:4,CreationDate: '01' },
+            this.stars = new Array(this.profile.Review);
       },
 
       properties: {
