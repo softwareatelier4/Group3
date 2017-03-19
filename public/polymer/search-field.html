@@ -25,50 +25,71 @@ This is the polymer component for the search field.
   <style>
   #search-container{
       width: inherit;
-      height: 10vh;
+      height: 10%;
       display: flex;
-      align-content: space-around;
-      background-color: grey;
+      flex-direction: row;
+      background-color: #FFF;
+
     }
     #l-container{
-      width: 20vw;
-      height: 10vh;
+      width: 30%;
+      background-color: white;
+
+    }
+    #top{
+      display: flex;
+      -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    background-color: black;
     }
     #r-container{
-      width: 25vw;
-      height: 10vh;
+      width: 30%;
+      height: auto;
       margin-left: auto;
+      margin-bottom: auto;
     }
     #freelancer-input{
-      width: inherit;
+      width: auto;
       height: inherit;
       font-size: 4vh;
+
     }
     #location-input{
       width: inherit;
-      height: 10vh;
+      height: inherit;
       font-size: 4vh;
+      border-radius: 0px;
     }
     #logo {
       margin:0;
       background-color: black;
-      width: 100vw;
+      width: auto;
     }
+    #spaceMaker{
+      width: 0%;
+    }
+
     paper-input{
       background-color: white;
+      height: inherit;
     }
     paper-dropdown-menu.dropdown{
       background-color:white;
-      height:10vh;
+      height:inherit;
+      width: 100%;
     }
     paper-button.green {
       background: white;
       color: black;
-      height: 110%;
+      height: 100%;
+      width: 10%;
+      margin: 0;
+      border-radius: 0px;
     }
     paper-button.green:hover {
       background: white;
-      color: #00e600;
+      color: rgb(126,216,80);
     }
     paper-button[disabled],
     paper-button[toggles][active] {
@@ -79,16 +100,23 @@ This is the polymer component for the search field.
       max-height:95px;
     }
     paper-dropdown-menu{
-      width: 20vw;
+      width: 100%;
     }
     </style>
   </head>
-
-  <div id="logo"><img src="../img/simple_logo.png"></div>
+  <div id="top">
+  <div id="logo"><img src="../img/simple_logo.png">
+    </div>
+    <div id="r-container">
+    <input type="search" id="location-input" placeholder="{{city}}">
+  </div>
+</div>
 
   <div id="search-container">
+    <div id="spaceMaker"></div>
 
     <!--first field: Looking for-->
+
     <div id="l-container">
       <paper-input label="Looking for" value = "{{name}}"></paper-input>
     </div>
@@ -104,13 +132,12 @@ This is the polymer component for the search field.
       </paper-dropdown-menu>
     </div>
 
+
     <!--search button-->
     <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
 
     <!--last field: City -->
-    <div id="r-container">
-      <input type="search" id="location-input" placeholder="{{city}}">
-    </div>
+
 
   </div>
 
