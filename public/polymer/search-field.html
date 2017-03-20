@@ -220,6 +220,11 @@ This is the polymer component for the search field.
         searchData:{
           type:Object,
           notify:true
+      },
+        justSearched:{
+            type:Boolean,
+            notify:true,
+            value:false
         }
       },
       onSubmit : function(e){
@@ -240,6 +245,7 @@ This is the polymer component for the search field.
 
         str += document.getElementById('location-input').value;
         this.req_url=str;
+        this.justSearched=true
       },
       someFunction:function(res){
         this.searchData=res.detail.response
