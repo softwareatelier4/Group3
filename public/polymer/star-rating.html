@@ -1,0 +1,39 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+    <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+<!--
+This is the polymer component for the search field.
+-->
+
+<dom-module id="star-rating">
+  <template>
+    <style>
+    .fa-star{
+      color: rgb(126,216,80);
+    }
+    </style>
+
+      <template is="dom-repeat" items="{{stars}}">
+        <i class="fa fa-star" aria-hidden="true"></i>
+    </template><template is="dom-repeat" items="{{emptyStars}}">
+      <i class="fa fa-star-o" aria-hidden="true"></i>
+  </template>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'star-rating',
+      attached: function() {
+            this.stars = new Array(Math.round(parseInt(this.rating))%6);
+            this.emptyStars = new Array(5-Math.round(parseInt(this.rating))%6);
+      },
+
+      properties: {
+        rating : String
+      }
+
+    });
+  </script>
+</dom-module>

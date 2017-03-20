@@ -1,0 +1,122 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./star-rating.html">
+<link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<!--
+This is the polymer component for the search field.
+-->
+
+<dom-module id="profile-display">
+  <template>
+    <style>
+    h3,.desc{
+      color: #595959;
+      font-weight: bold;
+      font-style: italic;
+      font-family: Didact Gothic;
+    }
+    .desc span{
+      color:black;
+      font-style:normal;
+    }
+    h4{
+      color: green;
+      font-family: Didact Gothic;
+    }
+    .collumn{
+      align-self: stretch;
+      padding:2%;
+    }
+    #body{
+      background-color:#f2f2f2;
+      padding:5%;
+      display: -webkit-flex;
+      display: flex;
+      align-items: stretch;
+      font-family: Didact Gothic;
+    }
+    #contact-container{
+      background-color:  #e6e6e6;
+      padding: 8%;
+      border-left-style: solid;
+      border-width: 4px;
+      border-color: #10a494;
+      font-size: 18px;
+    }
+    .button {
+      background-color: #10a494;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+
+    </style>
+    <div id="body">
+      <div class="collumn">
+    <h2>[[profile.firstName]] [[profile.lastName]]<br>
+      <star-rating rating="4"></star-rating>
+      </h2>
+
+    <h3>[[profile.job]] in [[profile.location]]</h3>
+    <div class="freelancer-container">
+      <img src ="../img/profile_pic.png">
+      <div class="desc">Member since: <span>{{profile.dateCreated}}</span></div>
+    </div>
+  </div>
+    <div class= "collumn">
+
+        <h2 style = "font-size:25px">About</h2>
+        <div style="overflow: scroll; width:300px;">
+          [[profile.description]]
+        </div>
+        <p></p>
+        <div id="contact-container" style = "width: 300px" >
+          <div class= "desc">Email: <span>{{profile.email}}</span></div>
+          <p style="font-size:5px"></p>
+          <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
+          <p style="font-size:5px"></p>
+          <div class= "desc">Website: <span>{{profile.website}}</span></div>
+          <p style="font-size:5px"></p>
+          <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
+          <p></p>
+          <center><div class = "button" >Book Now!</div></center>
+
+        </div>
+
+
+  </div>
+</div>
+
+<iron-ajax
+  auto
+  url="/freelancer/[[freelancerId]]"
+  on-response="handleResponse"
+></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'profile-display',
+      ready: function() {
+        this.profile =
+            {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
+            job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
+      },
+
+      properties: {
+        freelancerId: {
+          type: String
+        },
+      },
+      handleResponse:function(res){
+        this.profile=res.detail.response
+      }
+
+    });
+  </script>
+</dom-module>

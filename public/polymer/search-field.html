@@ -6,11 +6,16 @@
   <title>
     Job Advisor
   </title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
+  <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
   <link rel="import" href="./components/polymer/polymer.html">
   <link rel="import" href="./components/paper-button/paper-button.html">
   <link rel="import" href="./components/paper-dropdown-menu/paper-dropdown-menu.html">
   <link rel="import" href="./components/paper-listbox/paper-listbox.html">
   <link rel="import" href="./components/paper-item/paper-item.html">
+  <link rel="import" href="./components/paper-input/paper-input.html">
+  <link rel="import" href="./components/iron-ajax/iron-ajax.html">
   <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
 
 
@@ -18,97 +23,151 @@
 This is the polymer component for the search field.
 -->
 
-
 <dom-module id="search-field">
   <template>
-    <style>
-
-
-  <dom-module id="search-field">
-    <template>
-      <style>
-      #input-fields{
-        display: flex;
-        flex-direction: row;
-        width: 100vw;
-        background-color: #d9d9d9;
-        height: 10vh;
-      }
-      #l-container{
-        width: 20vw;
-      }
-      #freelancer-input{
-        width: 20vw;
-        height: 10vh;
-        font-size: 4vh;
-      }
-      .algolia-places{
-        width: 20vw !important;
-      }
-      #location-input{
-        width: 20vw;
-        height: 10vh;
-        font-size: 4vh;
-      }
-
+  <style>
+  #search-container{
+      width: inherit;
+      height: 7%;
+      display: flex;
+      flex-direction: row;
+      /*background-color: #FFF;*/
+      background: linear-gradient(to left, rgb(126,216,80) , yellow);
+      min-height: 3.5em;
+    }
+    #l-container{
+      width: 30%;
+      background-color: white;
+    }
+    #top{
+      display: flex;
+      -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    background-color: black;
+    height: 5%;
+    min-height: 2.5em;
+    }
+    #r-container{
+      width: 30%;
+      height: auto;
+      margin-left: auto;
+      margin-bottom: auto;
+    }
+    #freelancer-input{
+      width: auto;
+      height: inherit;
+      font-size: 4vh;
+    }
+    #location-input{
+      width: inherit;
+      height: 100%;
+      font-size: 4vh;
+      border-radius: 0px;
+    }
     #logo {
-      display:block;
-      margin:auto;
-      }
+      color:rgb(126,216,80);
+      margin:0;
+      background-color: black;
+      width: auto;
+      height: 10%;
+      font-size: 2em;
+      font-family: 'Inconsolata', monospace;
+    }
+    #logo span{
+      color:white;
+      margin:0;
+      background-color: black;
+      width: auto;
+      height: 10%;
+      font-family: 'Open Sans', sans-serif;
+    }
+    #spaceMaker{
+      width: 30%;
+    }
+
+    paper-input{
+      background-color: white;
+      height: inherit;
+    }
+    paper-dropdown-menu.dropdown{
+      background-color:white;
+      height:inherit;
+      width: 100%;
+    }
+    .fa-handshake-o{
+      /*color:green;*/
+      /*margin-left: 1%;
+      margin-right: 1%;*/
+    }
     paper-button.green {
       background: white;
       color: black;
+      height: 100%;
+      width: 10%;
+      margin: 0;
+      border-radius: 0px;
     }
-
     paper-button.green:hover {
       background: white;
-      color: #00e600;
+      color: rgb(126,216,80);
     }
-
     paper-button[disabled],
     paper-button[toggles][active] {
       background: red;
     }
     img{
-      max-width:230px;
-      max-height:95px;
-      width: auto;
-      height: auto;
+      max-height:100%;
     }
     paper-dropdown-menu{
-      height: 10vh;
-      width: 20vw;
-    }
-
-    #img-holder{
-      background-color: black;
+      width: 100%;
     }
     </style>
   </head>
+  <div id="top">
+    <div id="spaceMaker"> </div>
+  <div id="logo"><i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+    </div>
+    <div id="r-container">
+    <input type="search" id="location-input" placeholder="{{city}}">
+  </div>
+</div>
 
-<body>
-  <div><img id="img-holder"src="../img/simple_logo.png" id="logo"></div>
-    <form>
-      <div id="input-fields">
-        <input type="text" id="freelancer-input" placeholder="Profession eg. &#34;Translator&#34;"><br>
-        <div id="l-container">
-          <input type="search" id="location-input" placeholder="City" />
-        </div>
-        <div id="l-container">
-          <paper-dropdown-menu label="Job">
-            <paper-listbox class="dropdown-content" selected="3">
-              <paper-item>Janitor</paper-item>
-              <paper-item>Translator</paper-item>
-              <paper-item>Private Investigator</paper-item>
-              <paper-item>Other</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-        </div>
-        <paper-button id="search-button" class="green">Search</paper-button>
-      </div>
-    </form>
+  <div id="search-container">
 
-<!-- Api for location filter -->
+
+    <!--first field: Looking for-->
+
+    <div id="l-container">
+      <paper-input label="Looking for" value = "{{name}}"></paper-input>
+    </div>
+
+    <!-- second field Profession-->
+    <div id="l-container">
+      <paper-dropdown-menu label="Profession" class="dropdown" >
+        <paper-listbox class="dropdown-content" selected="{{profession}}">
+          <template is="dom-repeat" items="{{professions}}">
+            <paper-item>[[item.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </div>
+
+
+    <!--search button-->
+    <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
+
+    <!--last field: City -->
+
+
+  </div>
+
+  <iron-ajax
+  auto
+  url="{{req_url}}"
+  handle-as="json"
+  on-response="someFunction"></iron-ajax>
+
   <script>
     (function() {
       var placesAutocomplete = places({
@@ -123,22 +182,78 @@ This is the polymer component for the search field.
       });
     })();
   </script>
-
   </template>
+
+
+<!-- Api for location filter -->
 
   <script>
     Polymer({
       is: 'search-field',
+      ready: function(){
+        this.professions = [
+          {name : 'Any'},
+          {name : 'Janitor'},
+          {name: 'Carpenter'},
+          {name : 'Translator'},
+          {name : 'Private Investigator'}
+        ];
+      },
       properties: {
+        name: {
+          type: String,
+          value: ''
+        },
+        profession: {
+          type: Number,
+          value: 0
+        },
         city: {
           type: String,
-          value: '',
+          value: ''
         },
+        req_url :{
+          type: String,
+          value: '',
+          notify:true
+        },
+        searchData:{
+          type:Object,
+          notify:true
       },
+        justSearched:{
+            type:Boolean,
+            notify:true,
+            value:false
+        }
+      },
+      onSubmit : function(e){
+        let str= "/freelancer/query?words=";
+        let words = this.name.split(' ')
+        words.forEach(function(item){
+          if(item!== ""){
+            str+=item+","
+          }
+        })
+        if(this.professions[this.profession].name =="Any"){
+
+        }else{
+          str += this.professions[this.profession].name + ",";
+        }
+
+
+        str += document.getElementById('location-input').value;
+        this.req_url=str;
+        this.justSearched=true
+      },
+      someFunction:function(res){
+        this.searchData=res.detail.response
+      }
 
     });
   </script>
 </dom-module>
 
-</body>
+<!-- how the request string should look -->
+<!--value: "/freelancer/query?words=alex,janitor,milan"-->
 </html>

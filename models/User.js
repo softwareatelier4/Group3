@@ -14,6 +14,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const FreelancerSchema = require('./Freelancer');
 
 /** @constructor
 * @param {Object} definition
@@ -26,6 +27,9 @@ const userSchema = new mongoose.Schema(
     password : { type: String, required: true },
     email   : { type: String, required: true },
     dateCreated : { type: Date, required: true, default: Date.now },
+    location : {type: String},
+    freelancers : { type: [FreelancerSchema], default: []},
+    profilePicture : {type: String},
   }
 );
 

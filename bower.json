@@ -35,6 +35,11 @@
     "paper-button": "^1.0.14",
     "paper-dropdown-menu": "^1.5.0",
     "paper-item": "^1.2.1",
-    "paper-listbox": "^1.1.2"
+    "paper-listbox": "^1.1.2",
+    "paper-input": "^1.1.23",
+    "iron-ajax": "^1.4.3",
+    "font-awesome": "^4.7.0",
+    "iron-pages": "^1.0.8",
+    "app-route": "PolymerElements/app-route#^0.9.3"
   }
 }
