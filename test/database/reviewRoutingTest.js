@@ -8,85 +8,65 @@ const ObjectId = mongoose.Types.ObjectId
 let utils = require("../../utils.js")
 require("../../models/User.js");
 require("../../models/Freelancer.js")
-let Freelancer = mongoose.model("Freelancer")
-let newFreelancerData={
-  firstName: "peter",
-  lastName:"asdf",
-  email:"Ilija@gmail.com",
-  location:"lugano",
-  job:"carpenter",
-  telephoneNum:"123",
-  description:"i am a bad carpenter",
-  website:"xd.com",
-  skypeAcc:"asfd"
+require("../../models/Review.js")
+let Review = mongoose.model("Review")
+let newReviewData={reviewText:"LEL",
+ reviewRating:"2",
+ user:"58caba5b97aa1a1b665b5c0f",
+ freelancer:"58cab9a297aa1a1b665b5c0c"
 }
 const id = ObjectId();
 
-describe("freelancer db test POST",function(){
+describe("review db test POST",function(){
   it("should add valid user",function(done){
     request(app)
-    .post("freelancer")
+    .post("review")
     .set("content-type", "application/json")
-    .send(newFreelancerData)
+    .send(newReviewData)
     .expect(201)
     .end(function(err,res){
       done()
     })
   })
-  it("should not add freelancer to db if the data is invalid", function(done){
-    var freelancerData = {
-      "firstName" : "Seth",
-      "lastName" : "MacFarlane",
+  it("should not add review to db if the data is invalid", function(done){
+    var reviewData = {
+      "reviewRating" : "2"
     }
     request(app)
-    .post("/freelancer")
+    .post("/review")
     .set("content-type", "application/json")
-    .send(freelancerData)
+    .send(reviewData)
     .expect(400)
     .end(function(err,res){
       done();
     })
   })
 
-  describe("Test full text search", function(){
-    before(utils.dropDb);
-    after(utils.dropDb)
-    it("should find stuff", function(done){
-      request(app)
-      .get("freelancer/query?words=carpenter,lugano")
-      .send()
-      .expect(201)
-      .end(function(err,res){
-        done()
-      })
-    })
-  })
 })
 
-describe('PUT /freelancer/:freelancerid', function(){
+describe('PUT /review/:reviewid', function(){
 
-  it('should update an existing freelancer', function(done){
-    var freelancerData =  {
-
-      "firstName" : "Seth",
-      "lastName" : "MacFarlane",
-      "email" : "hello",
-      "password" : "peg"
+  it('should update an existing review', function(done){
+    var reviewData =  {
+     "reviewText":"LAL",
+     "reviewRating":"3",
+     "user":"58caba5b97aa1a1b665b5c0f",
+     "freelancer":"58cab9a297aa1a1b665b5c0c"
     };
 
     request(app)
-      .put('/freelancer/' + id)
+      .put('/review/' + id)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
-      .send(freelancerData)
+      .send(reviewData)
       .expect(204)
       .end(function(err, res){
         var body = res.body;
         body.should.be.empty;
 
-        //check if freelancer was updated
+        //check if review was updated
         request(app)
-          .get('/freelancer/' + id)
+          .get('/review/' + id)
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/, 'it should respond with json' )
           .expect(200)
@@ -98,9 +78,9 @@ describe('PUT /freelancer/:freelancerid', function(){
   });
 })
 
-describe('GET /freelancer', function(){
+describe('GET /review', function(){
 
-    it('should list all the freelancers with correct data', function(done){
+    it('should list all the reviews with correct data', function(done){
       request(app)
         .get('/userRo')
         .set('Accept', 'application/json')
@@ -112,12 +92,12 @@ describe('GET /freelancer', function(){
     });
   });
 
-  describe('GET /freelancer/:freelancerid', function(){
+  describe('GET /review/:reviewid', function(){
 
 
-    it('should list the freelancer with correct data', function(done){
+    it('should list the review with correct data', function(done){
       request(app)
-        .get('/freelancer/' + id)
+        .get('/review/' + id)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/, 'it should respond with json' )
         .expect(200)
@@ -127,18 +107,18 @@ describe('GET /freelancer', function(){
     });
     it('should respond with a 404 if the user does not exist', function(done){
         request(app)
-          .get('/freelancer/' +"dsadsadsadas")
+          .get('/review/' +"dsadsadsadas")
           .set('Accept', 'application/json')
           .expect(404, done);
       });
   })
 
-  describe('DELETE /freelancer/:freelancerid', function(){
+  describe('DELETE /review/:reviewid', function(){
 
 
-    it('should delete an existing freelancer', function(done){
+    it('should delete an existing review', function(done){
       request(app)
-        .del('/freelancer/' + id)
+        .del('/review/' + id)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/, 'it should respond with json' )
         .expect(204)
@@ -149,21 +129,21 @@ describe('GET /freelancer', function(){
 
     it('should not list the previous resource', function(done){
       request(app)
-        .get('/freelancer/' + id)
+        .get('/review/' + id)
         .set('Accept', 'application/json')
         .expect(404, done);
     });
 
     it('should respond with a 404 for a previously deleted resource', function(done){
       request(app)
-        .delete('/freelancer/' + id)
+        .delete('/review/' + id)
         .set('Accept', 'application/json')
         .expect(404, done);
     });
 
     it('should respond with a 404 if the user does not exist', function(done){
       request(app)
-        .delete('/freelancer/'+'dsadasdsads')
+        .delete('/review/'+'dsadasdsads')
         .set('Accept', 'application/json')
         .expect(404, done);
     });
