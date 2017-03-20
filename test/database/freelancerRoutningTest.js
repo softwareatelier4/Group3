@@ -10,23 +10,26 @@ require("../../models/User.js");
 require("../../models/Freelancer.js")
 let Freelancer = mongoose.model("Freelancer")
 let newFreelancerData={
-  // firstName: "peter",
-  // lastName:"asdf",
-  // email:"Ilija@gmail.com",
-  // location:"lugano",
-  // job:"carpenter",
-  // telephoneNum:"123",
-  // description:"i am a bad carpenter",
-  // website:"xd.com",
-  // skypeAcc:"asfd"
+  "firstName": "peter",
+  "lastName":"asdf",
+  "email":"Ilija@gmail.com",
+  "location":"lugano",
+  "job":"carpenter",
+  "telephoneNum":"123",
+  "description":"i am a bad carpenter",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+  "country":"asdf",
+  "streetNum":"1234",
+  "street":"asfd",
 }
 const id = ObjectId();
 
 describe("freelancer db test POST",function(){
-  before(utils.dropDb)
+
   it("should add valid user",function(done){
     request(app)
-    .post("freelancer")
+    .post("/freelancer")
     .set("content-type", "application/json")
     .send(newFreelancerData)
     .expect(201)

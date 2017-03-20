@@ -205,8 +205,8 @@ This is the polymer component for the search field.
           value: ''
         },
         profession: {
-          type: String,
-          value: ''
+          type: Number,
+          value: 0
         },
         city: {
           type: String,
@@ -230,12 +230,12 @@ This is the polymer component for the search field.
       onSubmit : function(e){
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ')
-        console.log(words)
         words.forEach(function(item){
           if(item!== ""){
             str+=item+","
           }
         })
+        console.log(this.profession)
         if(this.professions[this.profession].name =="Any"){
 
         }else{

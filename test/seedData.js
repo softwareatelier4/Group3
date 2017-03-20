@@ -55,7 +55,10 @@ var freelancers={
     "description":"i am a bad carpenter",
     "website":"xd.com",
     "skypeAcc":"asfd",
-    "ownerId":sharedId
+    "ownerId":sharedId,
+    "country":"Switzerland",
+    "streetNum":"12",
+    "street":"via Buffi",
 },
 {
   "_id":ObjectId(),
@@ -68,6 +71,9 @@ var freelancers={
   "description":"i am an amazing carpenter",
   "website":"xd.com",
   "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
 },
 {
   "_id":ObjectId(),
@@ -80,6 +86,9 @@ var freelancers={
   "description":"i am one of the best janitors ever",
   "website":"xd.com",
   "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
 },
 {
   "_id":ObjectId(),
@@ -92,6 +101,9 @@ var freelancers={
   "description":"i am a bad carpenter",
   "website":"xd.com",
   "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
 }]
 }
 

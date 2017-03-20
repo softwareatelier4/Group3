@@ -9,13 +9,14 @@ require("../models/Freelancer.js");
 //
 const user = mongoose.model("User");
 const freelancer = mongoose.model("Freelancer");
+const searchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
 router.get('/query', function(req,res){
   let words = req.query.words.split(',')
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
     words[i]= words[i].toLowerCase()
   }
-  freelancer.find({},{dateCreated:0,review:0,pictureGallery:0,__v:0}).lean().exec(function(err,found){
+  freelancer.find({},{dateCreated:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
@@ -34,15 +35,11 @@ function check(data, words){
 
   for(let i = 0; i<words.length;i++){
     let word = words[i]
-    flag = false
-    for(x in data){
-      try{
-        if(data[x].toLowerCase().indexOf(word) !== -1){
+    let flag = false
+    for(let j = 0; j< searchFields.length; j++){
+        if(data[searchFields[j]].toLowerCase().indexOf(word) !== -1){
           flag = true
         }
-      }catch(err){
-      }
-
     }
     if(!flag){
       return false
@@ -92,7 +89,6 @@ router.post("/", function(req,res){
   let a = new freelancer(req.body);
   a.save(function(err, saved){
     if(err){
-      console.log(err)
       res.status(400).json().end();
     }
     else{
