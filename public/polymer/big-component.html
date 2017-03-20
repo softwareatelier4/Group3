@@ -116,7 +116,6 @@ This is the polymer component for the search field.
         "_justSearched(justSearched)"
       ],
         _routePageChanged(newPage){
-          console.log(newPage)
           this.page= newPage
         },
         _subRouteChanged(id){
@@ -126,7 +125,6 @@ This is the polymer component for the search field.
           if(this.justSearched){
               this.set("route.path", "/search")
           }
-          console.log(this.route)
           this.justSearched=false
       }
 
