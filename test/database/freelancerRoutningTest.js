@@ -84,7 +84,7 @@ describe('PUT /freelancer/:freelancerid', function(){
         var body = res.body;
         body.should.be.empty;
 
-        //check if user was updated
+        //check if freelancer was updated
         request(app)
           .get('/freelancer/' + id)
           .set('Accept', 'application/json')
