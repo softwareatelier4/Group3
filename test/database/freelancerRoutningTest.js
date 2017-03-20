@@ -10,19 +10,20 @@ require("../../models/User.js");
 require("../../models/Freelancer.js")
 let Freelancer = mongoose.model("Freelancer")
 let newFreelancerData={
-  firstName: "peter",
-  lastName:"asdf",
-  email:"Ilija@gmail.com",
-  location:"lugano",
-  job:"carpenter",
-  telephoneNum:"123",
-  description:"i am a bad carpenter",
-  website:"xd.com",
-  skypeAcc:"asfd"
+  // firstName: "peter",
+  // lastName:"asdf",
+  // email:"Ilija@gmail.com",
+  // location:"lugano",
+  // job:"carpenter",
+  // telephoneNum:"123",
+  // description:"i am a bad carpenter",
+  // website:"xd.com",
+  // skypeAcc:"asfd"
 }
 const id = ObjectId();
 
 describe("freelancer db test POST",function(){
+  before(utils.dropDb)
   it("should add valid user",function(done){
     request(app)
     .post("freelancer")
@@ -30,7 +31,12 @@ describe("freelancer db test POST",function(){
     .send(newFreelancerData)
     .expect(201)
     .end(function(err,res){
-      done()
+      if(err){
+        done(err)
+      }else{
+        done()
+      }
+
     })
   })
   it("should not add freelancer to db if the data is invalid", function(done){
@@ -134,6 +140,7 @@ describe('GET /freelancer', function(){
   })
 
   describe('DELETE /freelancer/:freelancerid', function(){
+    after(utils.dropDb)
 
 
     it('should delete an existing freelancer', function(done){

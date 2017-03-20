@@ -52,7 +52,6 @@ router.post("/", function(req,res){
   let a = new review(req.body);
   a.save(function(err, saved){
     if(err){
-      console.log(err)
       res.status(400).json().end();
     }
     else{
