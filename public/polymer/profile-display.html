@@ -11,7 +11,9 @@ This is the polymer component for the search field.
     <style>
     h3,.desc{
       color: #595959;
+      font-weight: bold;
       font-style: italic;
+      font-family: Didact Gothic;
     }
     .desc span{
       color:black;
@@ -19,6 +21,7 @@ This is the polymer component for the search field.
     }
     h4{
       color: green;
+      font-family: Didact Gothic;
     }
     .collumn{
       align-self: stretch;
@@ -30,17 +33,32 @@ This is the polymer component for the search field.
       display: -webkit-flex;
       display: flex;
       align-items: stretch;
+      font-family: Didact Gothic;
     }
     #contact-container{
       background-color:  #e6e6e6;
-      padding: 2%;
+      padding: 8%;
+      border-left-style: solid;
+      border-width: 4px;
+      border-color: #10a494;
+      font-size: 18px;
+    }
+    .button {
+      background-color: #10a494;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
     }
 
     </style>
     <div id="body">
       <div class="collumn">
     <h2>[[profile.firstName]] [[profile.lastName]]<br>
-      <star-rating rating="[[profile.review]]"></star-rating>
+      <star-rating rating="4"></star-rating>
       </h2>
 
     <h3>[[profile.job]] in [[profile.location]]</h3>
@@ -49,16 +67,27 @@ This is the polymer component for the search field.
       <div class="desc">Member since: <span>{{profile.dateCreated}}</span></div>
     </div>
   </div>
-    <div class= "description-container collumn">
+    <div class= "collumn">
 
-        <h3>About</h3>
-        [[profile.description]]
-        <div id="contact-container">
-          <h4>Book Now!</h4>
+        <h2 style = "font-size:25px">About</h2>
+        <div style="overflow: scroll; width:300px;">
+          [[profile.description]]
+        </div>
+        <p></p>
+        <div id="contact-container" style = "width: 300px" >
           <div class= "desc">Email: <span>{{profile.email}}</span></div>
+          <p style="font-size:5px"></p>
           <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
+          <p style="font-size:5px"></p>
+          <div class= "desc">Website: <span>{{profile.website}}</span></div>
+          <p style="font-size:5px"></p>
+          <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
+          <p></p>
+          <center><div class = "button" >Book Now!</div></center>
 
         </div>
+
+
   </div>
 </div>
 
