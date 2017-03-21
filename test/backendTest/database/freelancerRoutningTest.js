@@ -1,13 +1,13 @@
 'use strict'
 var should = require("should")
-var app = require("../../app")
+var app = require("../../../app")
 var request = require('supertest');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird')
 const ObjectId = mongoose.Types.ObjectId
-let utils = require("../../utils.js")
-require("../../models/User.js");
-require("../../models/Freelancer.js")
+let utils = require("../../../utils.js")
+require("../../../models/User.js");
+require("../../../models/Freelancer.js")
 let Freelancer = mongoose.model("Freelancer")
 let newFreelancerData={
   "firstName": "peter",
