@@ -9,57 +9,81 @@ This is the polymer component for the search field.
   <template>
     <style>
       :host {
-        display: inline-block;
+        display: flex;
+        background-color: #f2f2f2;
+        padding-left: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 90%;
       }
       .profile-container{
-        width:100%;
+        width:70%;
         display: flex;
+        justify-content: space-around;
         flex-wrap: wrap;
-
+        position: relative;
+        background-color: black;
+        min-width:22em;
       }
       .freelancer-container{
-        background-color: #e6e6e6;
+        background-color: white;
         padding: 1vh;
         margin: 1vh;
-        width: 40%;
+        width: 30%;
+        min-width:20em;
+        flex-grow: 1;
         font-family: Didact Gothic;
         border-left-style: solid;
         border-width: 4px;
-        border-color: #10a494;
+        border-color: rgb(126,216,80);
       }
       .element-display{
         padding-left: 150px;
       }
-
       img {
         height: 120px;
         width: 120px;
         vertical-align: middle;
         object-fit: cover;
         float: left;
-        padding-top: 20px;
+        padding-top: 10px;
       }
       h2{
         font-family: Didact Gothic;
         margin: 1vh;
       }
+      .button {
+        background-color: rgb(126,216,80);
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        float:right;
+      }
     </style>
     <h2> Search Results:</h2>
     <div class= "profile-container">
       <template is="dom-repeat" items="{{searchData}}">
-        <a href="/profile/{{item._id}}">
+        <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
+          <div class="element-display"><star-rating rating='4'></star-rating></div>
           <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
           <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
           <div class= "element-display">Location: <span>{{item.location}}</span></div>
           <div class= "element-display">Email: <span>{{item.email}}</span></div>
           <div class= "element-display">Job: <span>{{item.job}}</span></div>
           <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
+          <p></p>
+          <center><a href="/profile/{{item._id}}" class = "button" >Visit profile </a></center>
           <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
           <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
+
         </div>
-        </a>
       </template>
   </div>
   </template>
