@@ -9,21 +9,29 @@ This is the polymer component for the search field.
   <template>
     <style>
       :host {
-        display: inline-block;
+        display: flex;
+        background-color: #f2f2f2;
+        padding-left: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
       }
       .profile-container{
-        width:100%;
+        width:70%;
         display: flex;
+        justify-content: space-around;
         flex-wrap: wrap;
         position: relative;
-
+        background-color: black;
+        min-width:22em;
       }
       .freelancer-container{
-        background-color: #e6e6e6;
+        background-color: white;
         padding: 1vh;
         margin: 1vh;
         width: 30%;
         min-width:20em;
+        flex-grow: 1;
         font-family: Didact Gothic;
         border-left-style: solid;
         border-width: 4px;
@@ -32,7 +40,6 @@ This is the polymer component for the search field.
       .element-display{
         padding-left: 150px;
       }
-
       img {
         height: 120px;
         width: 120px;
