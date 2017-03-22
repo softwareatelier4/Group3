@@ -237,9 +237,7 @@ This is the polymer component for the search field.
             str+=item+","
           }
         })
-        if(this.professions[this.profession].name =="Any"){
-
-        }else{
+        if(this.professions[this.profession].name !="Any"){
           str += this.professions[this.profession].name + ",";
         }
 
