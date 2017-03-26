@@ -1,4 +1,4 @@
-<link rel="import" href="./components/polymer/polymer.html">
+\<link rel="import" href="./components/polymer/polymer.html">
 <link rel="import" href="./profile-display.html">
 <link rel="import" href="./components/app-route/app-route.html" />
 <link rel="import" href="./components/app-route/app-location.html" />
@@ -10,8 +10,14 @@ This is the polymer component for the search field.
 <dom-module id="big-component">
   <template>
     <style>
+    :root{
+    --main-color:#494E6B;
+    --second-color:#98878F;
+    --third-color:#985E6D;
+    --fourth-color:#192231;
+    }
     body{
-      background-color: #f2f2f2;
+      background-color: var(--main-color);
     }
     /*.fields{
         display: flex;
@@ -42,7 +48,7 @@ This is the polymer component for the search field.
     }
     #divcont{
       width: 100%;
-      background-color: #f2f2f2;
+      background-color: whiter;
       height: 100%;
     }
 
