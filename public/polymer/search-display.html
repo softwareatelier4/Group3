@@ -124,13 +124,26 @@ This is the polymer component for the search field.
       },
 
       distance : function () {
-          var R = 6371e3; // metres
+          var R = 6371e3; // km
           // temporary we put location
-          var lat1 = this.numberToRadians(46.0058);
-          var lon1 = this.numberToRadians(8.9475);
-          var lat2 = this.numberToRadians(45.4612);
-          var lon2 = this.numberToRadians(9.1878);
+//          var lat1 = this.numberToRadians(46.0058);
+//          var lon1 = this.numberToRadians(8.9475);
+//          var lat2 = this.numberToRadians(45.4612);
+//          var lon2 = this.numberToRadians(9.1878);
+//
+//          var distLat = (lat2-lat1);
+//          var distLon = (lon2-lon1);
+//
+//          var a = Math.sin(distLat/2) * Math.sin(distLat/2) +
+//              Math.cos(lat1) * Math.cos(lat2) *
+//              Math.sin(distLon/2) * Math.sin(distLon/2);
+//          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
+          // second try
+          var lat1 = 46.0058;
+          var lon1 = 8.9475;
+          var lat2 = 45.4612;
+          var lon2 = 9.1878;
           var distLat = this.numberToRadians(lat2-lat1);
           var distLon = this.numberToRadians(lon2-lon1);
 
@@ -141,7 +154,6 @@ This is the polymer component for the search field.
 
           var computedDistance =  (R * c)/1000;
           console.log("distance = ", computedDistance);
-          console.log("90 = ", this.numberToRadians(90));
 
 
           return computedDistance;
