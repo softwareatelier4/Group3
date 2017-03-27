@@ -66,6 +66,9 @@ This is the polymer component for the search field.
       }
     </style>
     <h2> Search Results:</h2>
+
+
+
     <div class= "profile-container">
       <template is="dom-repeat" items="{{searchData}}">
         <!-- <a href="/profile/{{item._id}}"> -->
@@ -93,6 +96,7 @@ This is the polymer component for the search field.
 
       is: 'search-display',
       ready: function() {
+          this.distance();
         // this.employees = [
         //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
         //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
@@ -108,7 +112,7 @@ This is the polymer component for the search field.
       properties: {
         prop1: {
           type: String,
-          value: 'temp',
+          value: 'temp'
         },
         searchData:{
           type:Object,
@@ -117,7 +121,37 @@ This is the polymer component for the search field.
       },
       handleTap:function(e){
         console.log(e)
+      },
+
+      distance : function () {
+          var R = 6371e3; // metres
+          // temporary we put location
+          var lat1 = this.numberToRadians(46.0058);
+          var lon1 = this.numberToRadians(8.9475);
+          var lat2 = this.numberToRadians(45.4612);
+          var lon2 = this.numberToRadians(9.1878);
+
+          var distLat = this.numberToRadians(lat2-lat1);
+          var distLon = this.numberToRadians(lon2-lon1);
+
+          var a = Math.sin(distLat/2) * Math.sin(distLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(distLon/2) * Math.sin(distLon/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+          var computedDistance =  (R * c)/1000;
+          console.log("distance = ", computedDistance);
+          console.log("90 = ", this.numberToRadians(90));
+
+
+          return computedDistance;
+
+      },
+      
+      numberToRadians : function (n) {
+          return n * (Math.PI/180)
       }
     });
+
   </script>
 </dom-module>
