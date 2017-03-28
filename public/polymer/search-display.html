@@ -80,7 +80,7 @@ This is the polymer component for the search field.
           <div class= "element-display">Location: <span>{{item.location}}</span></div>
           <div class= "element-display">Email: <span>{{item.email}}</span></div>
           <div class= "element-display">Job: <span>{{item.job}}</span></div>
-          <div class= "element-display">Tel: <span>{{(item.telephoneNum)}}</span></div>
+          <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
           <div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>
           <p></p>
           <center><a href="/profile/{{item._id}}" class = "button" >Visit profile </a></center>
@@ -130,7 +130,7 @@ This is the polymer component for the search field.
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
           var computedDistance =  parseFloat((R * c)/1000).toFixed(2);
-          console.log("distance = ", computedDistance);
+//          console.log("distance = ", computedDistance);
 
 
           return computedDistance + " km";
