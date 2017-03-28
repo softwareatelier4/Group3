@@ -41,6 +41,13 @@ This is the polymer component for the search field.
       .element-display{
         padding-left: 150px;
       }
+      .element-display-right{
+        text-align: right;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 1px;
+
+      }
       img {
         height: 120px;
         width: 120px;
@@ -74,6 +81,7 @@ This is the polymer component for the search field.
         <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
+          <div class= "element-display-right"><span>{{distance(item.latitude, item.longitude)}} away</span></div>
           <div class="element-display"><star-rating rating='4'></star-rating></div>
           <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
           <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
@@ -81,7 +89,7 @@ This is the polymer component for the search field.
           <div class= "element-display">Email: <span>{{item.email}}</span></div>
           <div class= "element-display">Job: <span>{{item.job}}</span></div>
           <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
-          <div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>
+          <!--<div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>-->
           <p></p>
           <center><a href="/profile/{{item._id}}" class = "button" >Visit profile </a></center>
           <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
@@ -130,10 +138,14 @@ This is the polymer component for the search field.
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
           var computedDistance =  parseFloat((R * c)/1000).toFixed(2);
+          if (computedDistance.substr(computedDistance.length - 3, computedDistance.length) == .00)
+              computedDistance = computedDistance.substr(0, computedDistance.length - 3);
+          else if (computedDistance.substr(computedDistance.length - 1, computedDistance.length) == 0)
+              computedDistance = computedDistance.substr(0, computedDistance.length - 1);
 //          console.log("distance = ", computedDistance);
 
 
-          return computedDistance + " km";
+          return computedDistance + "km";
 
       },
       
