@@ -39,27 +39,28 @@ This is the polymer component for the search field.
       display: flex;
       flex-direction: row;
       /*background-color: #FFF;*/
-      background: linear-gradient(to left, rgb(126,216,80) , white);
-      min-height: 4em;
+      /*background: linear-gradient(to left, black , white);
+      min-height: 4em;*/
     }
     #l-container{
       width: 30%;
       background-color: white;
     }
     #top{
-      padding-left: 5%;
+      padding-left: 0%;
       display: flex;
-      -webkit-justify-content: flex-end;
-    justify-content: flex-end;
-    width: 95%;
-    background-color: black;
-    height: 5%;
-    min-height: 2.7em;
+      /*-webkit-justify-content: flex-end;
+      justify-content: flex-end;*/
+      width: 100%;
+      background-color: var(--main-color);
+      height: 6%;
+      min-height: 2.7em;
     }
     #r-container{
       width: 30%;
-      height: auto;
+      height: 88%;
       margin-left: auto;
+      margin-right: 10%;
       margin-bottom: auto;
     }
     #freelancer-input{
@@ -74,9 +75,9 @@ This is the polymer component for the search field.
       border-radius: 0px;
     }
     #logo {
-      color:rgb(126,216,80);
+      color:var(--third-color);
       margin:0;
-      background-color: black;
+      background-color: var(--main-color);
       width: auto;
       height: 10%;
       font-size: 2em;
@@ -85,7 +86,7 @@ This is the polymer component for the search field.
     #logo span{
       color:white;
       margin:0;
-      background-color: black;
+      background-color: var(--main-color);
       width: auto;
       height: 10%;
       font-family: 'Open Sans', sans-serif;
@@ -108,7 +109,7 @@ This is the polymer component for the search field.
       /*margin-left: 1%;
       margin-right: 1%;*/
     }
-    paper-button.green {
+    paper-button.meaningless-button {
       background: white;
       color: black;
       height: 100%;
@@ -116,9 +117,9 @@ This is the polymer component for the search field.
       margin: 0;
       border-radius: 0px;
     }
-    paper-button.green:hover {
+    paper-button.meaningless-button:hover {
       background: white;
-      color: rgb(126,216,80);
+      color: var(--second-color);
     }
     paper-button[disabled],
     paper-button[toggles][active] {
@@ -133,16 +134,18 @@ This is the polymer component for the search field.
     </style>
   </head>
   <div id="top">
+    <div id="logo"><i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+      </div>
     <div id="spaceMaker"> </div>
-  <div id="logo"><i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
-    </div>
-    <div id="r-container">
+    <!-- <div id="r-container">
     <input type="search" id="location-input" placeholder="{{city}}">
-  </div>
+  </div> -->
 </div>
 
   <div id="search-container">
-
+    <div id="l-container">
+    <input type="search" id="location-input" placeholder="{{city}}">
+    </div>
 
     <!--first field: Looking for-->
 
@@ -163,7 +166,7 @@ This is the polymer component for the search field.
 
 
     <!--search button-->
-    <paper-button id="search-button" class="green" on-tap="onSubmit">Search</paper-button>
+    <paper-button id="search-button" class="meaningless-button" on-tap="onSubmit">Search</paper-button>
 
     <!--last field: City -->
 

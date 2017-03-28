@@ -10,39 +10,39 @@ This is the polymer component for the search field.
     <style>
     :root{
     --main-color:#494E6B;
+    --main-color-lighter:#5d6389;
     --second-color:#98878F;
     --third-color:#985E6D;
     --fourth-color:#192231;
   }
       :host {
         display: flex;
-        background-color: #f2f2f2;
-        padding-left: 5%;
-        display: flex;
+        background-color: white;
+        padding-left: 20%;
         flex-direction: column;
         align-items: stretch;
         width: 90%;
       }
       .profile-container{
-        width:70%;
+        width:100%;
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
-        position: relative;
-        background-color: black;
+        position: center;
+        background-color: white;
         min-width:22em;
       }
       .freelancer-container{
-        background-color: white;
+        background: rgb(242, 242, 242);
         padding: 1vh;
         margin: 1vh;
-        width: 30%;
-        min-width:20em;
+        width: 40%;
+        min-width:50%;
         flex-grow: 1;
         font-family: Didact Gothic;
         border-left-style: solid;
-        border-width: 4px;
-        border-color: rgb(126,216,80);
+        border-width: 2px;
+        /*border-color: var(--third-color);*/
       }
       .element-display{
         padding-left: 150px;
@@ -60,7 +60,7 @@ This is the polymer component for the search field.
         margin: 1vh;
       }
       .button {
-        background-color: rgb(126,216,80);
+        background-color: var(--main-color);
         border: none;
         color: white;
         padding: 15px 32px;
@@ -70,8 +70,18 @@ This is the polymer component for the search field.
         font-size: 16px;
         float:right;
       }
+      #spacer {
+        height:10%;
+      }
+      .button:hover{
+        background-color: var(--main-color-lighter);
+      }
+      img:hover{
+        background-color: rgb(230, 230, 230);
+      }
     </style>
-    <h2> Search Results:</h2>
+    <!-- <h2> Search Results:</h2> -->
+    <div id="spacer"></div>
     <div class= "profile-container">
       <template is="dom-repeat" items="{{searchData}}">
         <!-- <a href="/profile/{{item._id}}"> -->

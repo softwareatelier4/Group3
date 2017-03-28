@@ -11,6 +11,7 @@ This is the polymer component for the search field.
     <style>
     :root{
     --main-color:#494E6B;
+    --main-color-lighter:#5d6389;
     --second-color:#98878F;
     --third-color:#985E6D;
     --fourth-color:#192231;
@@ -40,17 +41,19 @@ This is the polymer component for the search field.
       display: flex;
       align-items: stretch;
       font-family: Didact Gothic;
+      margin-left: 15%;
+      margin-right: 15%;
     }
     #contact-container{
       background-color:  #e6e6e6;
       padding: 8%;
       border-left-style: solid;
       border-width: 4px;
-      border-color: rgb(126,216,80);
+      border-color: var(--main-color);
       font-size: 18px;
     }
     .button {
-      background-color:  rgb(126,216,80);
+      background-color:var(--main-color);
       border: none;
       color: white;
       padding: 15px 32px;
@@ -58,6 +61,9 @@ This is the polymer component for the search field.
       text-decoration: none;
       display: inline-block;
       font-size: 16px;
+    }
+    .button:hover{
+      background-color: var(--main-color-lighter);
     }
 
     </style>
@@ -89,11 +95,14 @@ This is the polymer component for the search field.
           <p style="font-size:5px"></p>
           <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
           <p></p>
-          <center><a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" target="_top"><div class = "button" >Book Now!</div></a></center>
-
+          <center>
+            <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" target="_top">
+              <div class = "button" >
+                Book Now!
+              </div>
+            </a>
+          </center>
         </div>
-
-
   </div>
 </div>
 
@@ -124,15 +133,13 @@ This is the polymer component for the search field.
         this.profile=res.detail.response;
       }
 
-
     });
     function formatDate(date) {
       var monthNames = [
         "January", "February", "March",
-  "April", "May", "June", "July",
-    "August", "September", "October",
-  "November", "December"
-  ];
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"];
 
   var day = date.getDate();
   var monthIndex = date.getMonth();
