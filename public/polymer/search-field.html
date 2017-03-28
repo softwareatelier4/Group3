@@ -1,5 +1,5 @@
 
-!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -17,6 +17,10 @@
   <link rel="import" href="./components/paper-input/paper-input.html">
   <link rel="import" href="./components/iron-ajax/iron-ajax.html">
   <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script>
+      city = google.loader.ClientLocation.address.city
+  </script>
 
 
 <!--
@@ -126,17 +130,17 @@ This is the polymer component for the search field.
     }
     </style>
   </head>
+
   <div id="top">
     <div id="spaceMaker"> </div>
   <div id="logo"><i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
     </div>
     <div id="r-container">
-    <input type="search" id="location-input" placeholder="{{city}}">
+    <input type="search" id="location-input" placeholder="{{city}}"/>
   </div>
 </div>
 
   <div id="search-container">
-
 
     <!--first field: Looking for-->
 
@@ -212,7 +216,7 @@ This is the polymer component for the search field.
         },
         city: {
           type: String,
-          value: ''
+          value: city
         },
         req_url :{
           type: String,
@@ -248,6 +252,7 @@ This is the polymer component for the search field.
       },
       someFunction:function(res){
         this.searchData=res.detail.response
+
       }
 
     });
