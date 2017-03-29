@@ -1,7 +1,7 @@
 <link rel="import" href="./components/polymer/polymer.html">
 <link rel="import" href="./star-rating.html">
-<link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <!--
 This is the polymer component for the search field.
 -->
@@ -65,6 +65,10 @@ This is the polymer component for the search field.
     .button:hover{
       background-color: var(--main-color-lighter);
     }
+    a:visited {
+      color:#192231
+    }
+
 
     </style>
     <div id="body">
@@ -103,6 +107,23 @@ This is the polymer component for the search field.
             </a>
           </center>
         </div>
+
+        <a href = "{{profile.facebook}}">
+            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+        </a>
+        
+       <a href = "{{profile.linkedin}}">
+         <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+       </a>
+       
+       <a href = "{{profile.skypeAcc}}">
+        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+       </a>
+
+       <a href = "{{profile.github}}">
+       <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+       </a>
+
   </div>
 </div>
 
