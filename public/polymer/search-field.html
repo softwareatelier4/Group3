@@ -243,6 +243,7 @@ This is the polymer component for the search field.
       onSubmit : function(e){
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ')
+        let location = document.getElementById('location-input').value;
         words.forEach(function(item){
           if(item!== ""){
             str+=item+","
@@ -251,7 +252,7 @@ This is the polymer component for the search field.
         if(this.professions[this.profession].name !="Any"){
           str += this.professions[this.profession].name + ",";
         }
-        str += document.getElementById('location-input').value;
+        str += location;
         this.req_url=str;
         this.justSearched=true
       },
