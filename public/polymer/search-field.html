@@ -242,11 +242,11 @@ This is the polymer component for the search field.
       },
       onSubmit : function(e){
         let str= "/freelancer/query?words=";
-        let words = this.name.split(' ')
+        let words = this.name.split(' ');
         let location = document.getElementById('location-input').value;
         words.forEach(function(item){
           if(item!== ""){
-            str+=item+","
+            str+=item+",";
           }
         })
         if(this.professions[this.profession].name !="Any"){
@@ -254,10 +254,10 @@ This is the polymer component for the search field.
         }
         str += location;
         this.req_url=str;
-        this.justSearched=true
+        this.justSearched=true;
       },
       someFunction:function(res){
-        this.searchData=res.detail.response
+        this.searchData=res.detail.response;
       }
 
     });
