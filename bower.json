@@ -40,6 +40,7 @@
     "iron-ajax": "^1.4.3",
     "font-awesome": "^4.7.0",
     "iron-pages": "^1.0.8",
-    "app-route": "PolymerElements/app-route#^0.9.3"
+    "app-route": "PolymerElements/app-route#^0.9.3",
+    "paper-slider": "PolymerElements/paper-slider#^1.0.14"
   }
 }

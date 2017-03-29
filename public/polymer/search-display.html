@@ -1,4 +1,5 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/paper-slider/paper-slider.html">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <!--
@@ -16,6 +17,7 @@ This is the polymer component for the search field.
     --fourth-color:#192231;
   }
       :host {
+        padding-top: 15px;
         display: flex;
         background-color: white;
         padding-left: 20%;
@@ -90,6 +92,14 @@ This is the polymer component for the search field.
 
     <!-- <h2> Search Results:</h2> -->
     <div id="spacer"></div>
+    <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
+    <div class="freelancer-container">Distance: <span id="distanceLabel"></span></div><br>
+    <paper-slider id="distance" pin snaps max="250" value = "5" ></paper-slider>
+    <script>
+        distance.addEventListener('value-change', function() {
+            document.querySelector('#distanceLabel').textContent = distance.value + " km";
+     });
+    </script>
     <div class= "profile-container">
       <template is="dom-repeat" items="{{searchData}}" sort="_sort">
         <!-- <a href="/profile/{{item._id}}"> -->
@@ -119,6 +129,7 @@ This is the polymer component for the search field.
 
       is: 'search-display',
       ready: function() {
+        this.getValue();
 //          this.distance(45.4612, 9.1878);
       },
 
@@ -177,7 +188,13 @@ This is the polymer component for the search field.
 
             if (distA === distB) return 0;
             return distA < distB ? -1 : 1;
+        },
+
+        getValue : function()
+        {
+          console.log(document.getElementById("sliderContainer"));
         }
+
     });
 
   </script>
