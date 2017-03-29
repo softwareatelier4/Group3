@@ -6,3 +6,4 @@ public/polymer/public/
 *.log
 coverage/
 jenkins-test-results.xml
+.idea/*
