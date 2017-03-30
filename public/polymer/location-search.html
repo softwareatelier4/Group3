@@ -4,7 +4,7 @@
 
 <dom-module id="location-search">
   <template>
-    <google-maps-api id="maps" libraries="places" on-api-load="on_api_load"></google-maps-api>
+    <google-maps-api id="maps" api-key="AIzaSyAJ0dJTV5JvhT_N5NDDYcCq4D4qu8DVAvk" libraries="places" on-api-load="on_api_load"></google-maps-api>
     <paper-input id="input" class="input" type="text" value="{{value}}" />
   </template>
   <script>
@@ -17,16 +17,21 @@
       },
       options: {
         type: Object,
-        value: function () { return {}; }
+        value: function () { return {location:{lat:46.0037,lng:8.9511}}; }
       },
       place: {
         type: Object,
         value: function () { return {}; },
         notify: true
+      },
+      l:{
+        type: Object,
+        value: {location:{lat:46.0037,lng:8.9511}}
       }
     },
     on_api_load: function () {
-      this.autocomplete = new google.maps.places.Autocomplete(this.$.input, this.options);
+      this.autocomplete = new google.maps.places.Autocomplete(this.$.input, {});
+      console.log(this.autocomplete)
       google.maps.event.addListener(this.autocomplete, 'place_changed', this.on_change_place.bind(this));
     },
     on_change_place: function () {

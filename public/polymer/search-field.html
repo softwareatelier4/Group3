@@ -150,7 +150,7 @@ This is the polymer component for the search field.
     <!-- <div id="l-container">
     <input type="search" id="location-input" placeholder="{{city}}" value = "{{city}}">
     </div> -->
-    <location-search></location-search>
+    <location-search place="{{location}}"></location-search>
 
 
     <!--first field: Looking for-->
@@ -183,9 +183,10 @@ This is the polymer component for the search field.
   auto
   url="{{req_url}}"
   handle-as="json"
+  params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}'
   on-response="someFunction"></iron-ajax>
 
-  <script>
+  <!-- <script>
     (function() {
       var placesAutocomplete = places({
         container: document.querySelector('#location-input'),
@@ -198,7 +199,7 @@ This is the polymer component for the search field.
         }
       });
     })();
-  </script>
+  </script> -->
   </template>
 
 
@@ -242,12 +243,18 @@ This is the polymer component for the search field.
             type:Boolean,
             notify:true,
             value:false
+        },
+        location:{
+          type:Object,
+          value:{}
         }
       },
       onSubmit : function(e){
+        console.log(this.location)
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ');
-        let location = document.getElementById('location-input').value;
+        // let location = document.getElementById('location-input').value;
+
         words.forEach(function(item){
           if(item!== ""){
             str+=item+",";
@@ -256,7 +263,13 @@ This is the polymer component for the search field.
         if(this.professions[this.profession].name !="Any"){
           str += this.professions[this.profession].name + ",";
         }
-        str += location;
+        // str += location;
+        if(this.location.formatted_address == undefined){
+          window.alert("invalid address")
+        }else{
+          str+="&city="+this.location.name//formatted_address
+        }
+
         this.req_url=str;
         this.justSearched=true;
       },
