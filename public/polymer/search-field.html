@@ -264,10 +264,11 @@ This is the polymer component for the search field.
           str += this.professions[this.profession].name + ",";
         }
         // str += location;
+        str+="&city="
         if(this.location.formatted_address == undefined){
           window.alert("invalid address")
         }else{
-          str+="&city="+this.location.name//formatted_address
+          str+=this.location.name//formatted_address
         }
 
         this.req_url=str;
