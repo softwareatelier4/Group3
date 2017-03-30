@@ -54,7 +54,6 @@ This is the polymer component for the search field.
     }
 
     </style>
-    <body>
 
     <app-location route="{{route}}"></app-location>
     <app-route
@@ -67,7 +66,6 @@ This is the polymer component for the search field.
     route="{{subroute}}"
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
-
 
     <search-field search-data={{searchData}} just-searched={{justSearched}}></search-field>
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
@@ -86,7 +84,6 @@ This is the polymer component for the search field.
       </form>
       <profile-display freelancer-id="{{freelancerId}}" name="profile"></profile-display>
     </iron-pages>
-  </body>
 
 <!-- [[prop1]] -->
   </template>
