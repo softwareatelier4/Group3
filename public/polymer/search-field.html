@@ -190,7 +190,6 @@ This is the polymer component for the search field.
   auto
   url="{{req_url}}"
   handle-as="json"
-  params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}'
   on-response="someFunction"></iron-ajax>
 
   <!-- <script>
@@ -261,7 +260,11 @@ This is the polymer component for the search field.
         }
       },
       onSubmit : function(e){
-        console.log(this.location)
+        if(this.location.geometry){
+          console.log(this.location.geometry.location.lat())
+          console.log(this.location.geometry.location.lng())
+        }
+
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ');
         // let location = document.getElementById('location-input').value;
@@ -276,11 +279,11 @@ This is the polymer component for the search field.
         }
         // str += location;
         str+="&city="
-        if(this.location.formatted_address == undefined){
-          window.alert("invalid address")
-        }else{
-          str+=this.location.name//formatted_address
-        }
+        // if(this.location.formatted_address == undefined){
+        //   window.alert("invalid address")
+        // }else{
+        //   // str+=this.location.name//formatted_address
+        // }
 
         this.req_url=str;
         this.justSearched=true;
