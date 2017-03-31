@@ -176,7 +176,14 @@ This is the polymer component for the search field.
 
   </div>
   <div>Comments</div>
-  <paper-textarea label="Write a comment..." rows="3"></paper-textarea>
+  <div>
+
+  </div>
+  <div>
+  <paper-textarea id="" value="{{reviewComment}}" label="Review [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
+  <paper-button on-tap="handlePosting">POST</paper-button>
+  </div>
+
   <template is="dom-repeat"  items="{{reviews}}">
     <div>
       {{item.reviewText}}
@@ -196,6 +203,14 @@ This is the polymer component for the search field.
   on-response="handlereview">
 </iron-ajax>
 
+<iron-ajax
+  id="ajax"
+  handle-as="json"
+  content-type="application/json"
+  method="POST"
+  body="{{newReview}}"
+  url="/review"
+  debounce-duration="3000">
   </template>
 
   <script>
@@ -226,8 +241,18 @@ This is the polymer component for the search field.
       handlereview: function(res){
         this.reviews = res.detail.response;
         console.log(this.reviews);
+      },
+      handlePosting: function(){
+        let review ={}
+        review.freelancer=this.freelancerId;
+        review.reviewText=this.reviewComment;
+        review.reviewRatingOverall = 3;
+        review.reviewRatingPrice = 3;
+        review.reviewRatingQuality = 3;
+        this.newReview = JSON.stringify(review);
+        this.$.ajax.generateRequest()
+        this.push('reviews', review)
       }
-
     });
     function formatDate(date) {
       var monthNames = [
@@ -242,6 +267,7 @@ This is the polymer component for the search field.
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
+
 
 
 
