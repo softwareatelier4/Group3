@@ -1,4 +1,5 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/paper-input/paper-textarea.html"
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
@@ -38,9 +39,6 @@ This is the polymer component for the search field.
     #body{
       background-color:#f2f2f2;
       padding:5%;
-      display: -webkit-flex;
-      display: flex;
-      align-items: stretch;
       font-family: Didact Gothic;
       margin-left: 15%;
       margin-right: 15%;
@@ -68,6 +66,11 @@ This is the polymer component for the search field.
     }
     a:visited {
       color:#192231
+    }
+    #anotherContainer{
+      align-items: stretch;
+      display: -webkit-flex;
+      display: flex;
     }
 
 
@@ -116,6 +119,7 @@ This is the polymer component for the search field.
 
     </style>
   <div id="body">
+    <div id="anotherContainer">
     <div class="collumn">
       <h1>[[profile.firstName]] [[profile.lastName]]</h1>
       <h3>[[profile.job]] in [[profile.location]]</h3>
@@ -170,18 +174,44 @@ This is the polymer component for the search field.
       <gallery-display>
       </gallery-display>
     </div>
+
   </div>
+  <div>Comments</div>
+  <div>
+
+  </div>
+  <div>
+  <paper-textarea id="" value="{{reviewComment}}" label="Review [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
+  <paper-button on-tap="handlePosting">POST</paper-button>
+  </div>
+
+  <template is="dom-repeat"  items="{{reviews}}">
+    <div>
+      {{item.reviewText}}
+    </div>
+  </template>
+</div>
+
 
 <iron-ajax
   auto
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
-<!-- <iron-ajax
+<iron-ajax
   auto
   url="/review/freelancer/[[freelancerId]]"
   on-response="handlereview">
-</iron-ajax> -->
+</iron-ajax>
+
+<iron-ajax
+  id="ajax"
+  handle-as="json"
+  content-type="application/json"
+  method="POST"
+  body="{{newReview}}"
+  url="/review"
+  debounce-duration="3000">
   </template>
 
   <script>
@@ -212,8 +242,18 @@ This is the polymer component for the search field.
       handlereview: function(res){
         this.reviews = res.detail.response;
         console.log(this.reviews);
+      },
+      handlePosting: function(){
+        let review ={}
+        review.freelancer=this.freelancerId;
+        review.reviewText=this.reviewComment;
+        review.reviewRatingOverall = 3;
+        review.reviewRatingPrice = 3;
+        review.reviewRatingQuality = 3;
+        this.newReview = JSON.stringify(review);
+        this.$.ajax.generateRequest()
+        this.push('reviews', review)
       }
-
     });
     function formatDate(date) {
       var monthNames = [
@@ -228,6 +268,7 @@ This is the polymer component for the search field.
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
+
 
 
 

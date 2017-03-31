@@ -12,6 +12,7 @@ const freelancer = mongoose.model("Freelancer");
 const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
 router.get('/query', function(req,res){
+  console.log("here")
   let words = req.query.words.split(',')
   let location= [req.query.city.toLowerCase()]
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
@@ -62,7 +63,8 @@ router.get('/', function (req, res){
 
 router.get("/:id", function(req,res){
   freelancer.find({_id: req.params.id}, function (err, found) {
-      if (Object.keys(found).length === 0) {
+
+      if (Object.keys(found).length === 0 ) {
           res.status(404).end();
       }
     else{
@@ -108,7 +110,7 @@ router.put("/:id", function(req,res){
       res.sendStatus(400);
     }
     else{
-      res.sendStatus(200);
+      res.sendStatus(204);
     }
   })
 });

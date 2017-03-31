@@ -14,14 +14,15 @@ let newFreelancerData={
   "lastName":"asdf",
   "email":"Ilija@gmail.com",
   "location":"lugano",
+  "latitude" : "89876567",
+  "longitude" : "5345610",
+  "streetNum" : "9",
+  "street" : "Via bossi",
+  "country":"Italy",
   "job":"carpenter",
   "telephoneNum":"123",
-  "description":"i am a bad carpenter",
-  "website":"xd.com",
   "skypeAcc":"asfd",
-  "country":"asdf",
-  "streetNum":"1234",
-  "street":"asfd",
+  "description":"i am a bad carpenter"
 }
 const id = ObjectId();
 
@@ -53,20 +54,27 @@ describe("freelancer db test POST",function(){
     .send(freelancerData)
     .expect(400)
     .end(function(err,res){
-      done();
+      if(err){
+        done(err)
+      }else{
+        done()
+      }
+
     })
   })
 
   describe("Test full text search", function(){
-    before(utils.dropDb);
-    after(utils.dropDb)
     it("should find stuff", function(done){
       request(app)
-      .get("freelancer/query?words=carpenter,lugano")
+      .get("/freelancer/query?words=carpenter,lugano&city=")
       .send()
-      .expect(201)
+      .expect(200)
       .end(function(err,res){
-        done()
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
       })
     })
   })
@@ -83,6 +91,7 @@ describe('PUT /freelancer/:freelancerid', function(){
       "password" : "peg"
     };
 
+
     request(app)
       .put('/freelancer/' + id)
       .set('Content-Type', 'application/json')
@@ -97,11 +106,14 @@ describe('PUT /freelancer/:freelancerid', function(){
         request(app)
           .get('/freelancer/' + id)
           .set('Accept', 'application/json')
-          .expect('Content-Type', /json/, 'it should respond with json' )
           .expect(200)
           .end(function(err, res){
-            done();
-          });
+            if(err){
+              done(err)
+            }else{
+              done()
+            }
+        });
 
       });
   });
@@ -113,10 +125,13 @@ describe('GET /freelancer', function(){
       request(app)
         .get('/userRo')
         .set('Accept', 'application/json')
-        .expect('Content-Type', /json/, 'it should respond with json' )
         .expect(200)
         .end(function(err, res){
-          done();
+          if(err){
+            done(err)
+          }else{
+            done()
+          }
         });
     });
   });
@@ -128,11 +143,14 @@ describe('GET /freelancer', function(){
       request(app)
         .get('/freelancer/' + id)
         .set('Accept', 'application/json')
-        .expect('Content-Type', /json/, 'it should respond with json' )
         .expect(200)
         .end(function(err, res){
-          done();
-        });
+          if(err){
+            done(err)
+          }else{
+            done()
+          }
+                });
     });
     it('should respond with a 404 if the user does not exist', function(done){
         request(app)
@@ -150,11 +168,14 @@ describe('GET /freelancer', function(){
       request(app)
         .del('/freelancer/' + id)
         .set('Accept', 'application/json')
-        .expect('Content-Type', /json/, 'it should respond with json' )
         .expect(204)
         .end(function(err, res){
-          done();
-        });
+          if(err){
+            done(err)
+          }else{
+            done()
+          }
+          });
     });
 
     it('should not list the previous resource', function(done){

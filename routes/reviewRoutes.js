@@ -15,14 +15,23 @@ router.get('/', function (req, res){
     })
 });
 router.get("/freelancer/:id", function(req, res){
+  if(req.params.id == undefined){
+    res.status(404).end();
+    return;
+  }
   review.find({freelancer:req.params.id}).lean().exec(function(err,found){
     res.json(found);
   })
 })
 router.get("/:id", function(req,res){
-  console.log("here")
+
   review.find({_id: req.params.id}, function (err, found) {
+      if(err){
+        res.status(404).end();
+        return;
+      }
       if (Object.keys(found).length === 0) {
+        console.log("here")
           res.status(404).end();
       }
     else{
