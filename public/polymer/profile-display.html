@@ -2,12 +2,15 @@
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
 
 <!--
 This is the polymer component for the search field.
 -->
 
 <dom-module id="profile-display">
+  <style include="iron-flex"></style>
   <template>
     <style>
     :root{
@@ -48,11 +51,21 @@ This is the polymer component for the search field.
     #contact-container{
       background-color:  #e6e6e6;
       padding: 8%;
-      border-left-style: solid;
+      /*border-left-style: solid;*/
       border-width: 4px;
       border-color: var(--main-color);
       font-size: 18px;
     }
+
+    #rating-container{
+      background-color:  #e6e6e6;
+      padding: 8%;
+      /*border-left-style: solid;*/
+      border-width: 4px;
+      border-color: var(--main-color);
+      font-size: 18px;
+    }
+
     .button {
       background-color:var(--main-color);
       border: none;
@@ -73,17 +86,17 @@ This is the polymer component for the search field.
 
     fieldset, label { margin: 0; padding: 0; }
     body{ margin: 20px; }
-    h1 { font-size: 1.5em; margin: 10px; }
+    h1 {font-size: 2.5em; margin: 9px; }
 
     /****** Style Star Rating Widget *****/
 
-    .rating { 
+    .rating {
       border: none;
       float: left;
     }
 
-    .rating > input { display: none; } 
-    .rating > label:before { 
+    .rating > input { display: none; }
+    .rating > label:before {
       margin: 5px;
       font-size: 1.25em;
       font-family: FontAwesome;
@@ -91,14 +104,14 @@ This is the polymer component for the search field.
       content: "\f005";
     }
 
-    .rating > .half:before { 
+    .rating > .half:before {
       content: "\f089";
       position: absolute;
     }
 
-    .rating > label { 
-      color: #ddd; 
-    float: right; 
+    .rating > label {
+      color: #ddd;
+    float: right;
     }
 
     /***** CSS Magic to Highlight Stars on Hover *****/
@@ -110,80 +123,75 @@ This is the polymer component for the search field.
     .rating > input:checked + label:hover, /* hover current star when changing rating */
     .rating > input:checked ~ label:hover,
     .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 
 
     </style>
     <div id="body">
-      <div class="collumn">
-    <h2>[[profile.firstName]] [[profile.lastName]]<br>
-    </h2>
-    
+        <div class="collumn">
+            <h1>[[profile.firstName]] [[profile.lastName]]</h1>
+            <h3>[[profile.job]] in [[profile.location]]</h3>
 
-    <h3>[[profile.job]] in [[profile.location]]</h3>
-    <div class="freelancer-container">
-      <img src ="../img/profile_pic.png">
-      <div class="desc">Member since: <span>20. March 2017</span></div>
-      <div>
-       <div>
-        <h3> Overall </h3>
-          <star-rating rating= "4"></star-rating> <br>
-        <h3> Price </h3>
-          <star-rating rating="3"></star-rating> <br>
-        <h3> Quality </h3>
-          <star-rating rating="5"></star-rating> </br>
-    </div>
-      </div>
-    </div>
-  </div>
-    <div class= "collumn">
+            <div class="freelancer-container">
+                <img src ="../img/profile_pic.png">
+                <div class="desc">Member since: <span>20. March 2017</span></div>
+            </div>
 
-        <h2 style = "font-size:25px">About</h2>
-        <div style="overflow: scroll; width:300px;">
-          [[profile.description]]
-        </div>
-        <p></p>
-        <div id="contact-container" style = "width: 300px" >
-          <div class= "desc">Email: <span>{{profile.email}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Website: <span>{{profile.website}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
-          <p></p>
-          <center>
-            <paper-button  target="_top">
-              <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
-                Book Now!
-              </a>
-            </paper-button>
-          </center>
+            <div id="contact-container" style = "width: 300px" >
+              <div class= "desc">Email: <span>{{profile.email}}</span></div>
+              <p style="font-size:5px"></p>
+              <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
+              <p style="font-size:5px"></p>
+              <div class= "desc">Website: <span>{{profile.website}}</span></div>
+              <p style="font-size:5px"></p>
+              <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
+              <p></p>
+              <center>
+                <paper-button  target="_top">
+                  <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
+                    Book Now!
+                  </a>
+                </paper-button>
+              </center>
+            </div>
+            <a href = "{{profile.facebook}}">
+                <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+            </a>
+
+           <a href = "{{profile.linkedin}}">
+             <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+           </a>
+
+           <a href = "{{profile.skypeAcc}}">
+            <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+           </a>
+
+           <a href = "{{profile.github}}">
+           <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+           </a>
+
         </div>
 
-        <a href = "{{profile.facebook}}">
-            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
-        </a>
+        <div class= "collumn">
+           <h2>Rating</h2>
+           <div>
+                <h3> Overall </h3>
+                  <star-rating rating= "4"></star-rating> <br>
+                <h3> Price </h3>
+                  <star-rating rating="3"></star-rating> <br>
+                <h3> Quality </h3>
+                  <star-rating rating="5"></star-rating> <br>
+            </div>
+        </div>
+
+        <div class = "collumn">
+            <h2>About</h2>
+            <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+            <h2> Gallery </h2>
         
-       <a href = "{{profile.linkedin}}">
-         <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
-       </a>
-       
-       <a href = "{{profile.skypeAcc}}">
-        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
-       </a>
-
-       <a href = "{{profile.github}}">
-       <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
-       </a>
-  </div>
-</div>
-
-<div>
- 
-
-</div>
+        </div>
+    </div>
 
 <iron-ajax
   auto
