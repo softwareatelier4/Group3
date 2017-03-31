@@ -115,77 +115,61 @@ This is the polymer component for the search field.
 
 
     </style>
-    <div id="body">
-      <div class="collumn">
-    <h2>[[profile.firstName]] [[profile.lastName]]<br>
-    </h2>
-
-
-    <h3>[[profile.job]] in [[profile.location]]</h3>
-    <div class="freelancer-container">
-      <img src ="../img/profile_pic.png">
-      <div class="desc">Member since: <span>20. March 2017</span></div>
-      <div>
-       <div>
-        <h3> Overall </h3>
-          <star-rating rating= "4"></star-rating> <br>
-        <h3> Price </h3>
-          <star-rating rating="3"></star-rating> <br>
-        <h3> Quality </h3>
-          <star-rating rating="5"></star-rating> </br>
+  <div id="body">
+    <div class="collumn">
+      <h1>[[profile.firstName]] [[profile.lastName]]</h1>
+      <h3>[[profile.job]] in [[profile.location]]</h3>
+      <div class="freelancer-container">
+        <img src ="../img/profile_pic.png">
+        <div class="desc">Member since: <span>20. March 2017</span></div>
+      </div>
+      <div id="contact-container" style = "width: 300px" >
+        <div class= "desc">Email: <span>{{profile.email}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc">Website: <span>{{profile.website}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
+        <p></p>
+        <center>
+        <paper-button  target="_top">
+          <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
+            Book Now!</a>
+          </paper-button>
+        </center>
+      </div>
+      <a href = "{{profile.facebook}}">
+        <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.linkedin}}">
+        <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.skypeAcc}}">
+        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.github}}">
+        <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+      </a>
     </div>
+
+    <div class= "collumn">
+      <h2>Rating</h2>
+      <div>
+        <h3> Overall </h3>
+        <star-rating rating= "4"></star-rating> <br>
+        <h3> Price </h3>
+        <star-rating rating="3"></star-rating> <br>
+        <h3> Quality </h3>
+        <star-rating rating="5"></star-rating> <br>
       </div>
     </div>
+    <div class = "collumn">
+      <h2>About</h2>
+      <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+      <h2> Gallery </h2>
+    </div>
   </div>
-    <div class= "collumn">
-
-        <h2 style = "font-size:25px">About</h2>
-        <div style="overflow: scroll; width:300px;">
-          [[profile.description]]
-        </div>
-        <p></p>
-        <div id="contact-container" style = "width: 300px" >
-          <div class= "desc">Email: <span>{{profile.email}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Website: <span>{{profile.website}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
-          <p></p>
-          <center>
-            <paper-button  target="_top">
-              <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
-                Book Now!
-              </a>
-            </paper-button>
-          </center>
-        </div>
-
-        <a href = "{{profile.facebook}}">
-          <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
-        </a>
-
-       <a href = "{{profile.linkedin}}">
-         <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
-       </a>
-
-       <a href = "{{profile.skypeAcc}}">
-        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
-       </a>
-
-       <a href = "{{profile.github}}">
-         <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
-       </a>
-  </div>
-  <div id="gallery">
-  </div>
-</div>
-
-<div>
-
-
-</div>
 
 <iron-ajax
   auto
