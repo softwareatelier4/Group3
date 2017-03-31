@@ -38,9 +38,6 @@ This is the polymer component for the search field.
     #body{
       background-color:#f2f2f2;
       padding:5%;
-      display: -webkit-flex;
-      display: flex;
-      align-items: stretch;
       font-family: Didact Gothic;
       margin-left: 15%;
       margin-right: 15%;
@@ -68,6 +65,11 @@ This is the polymer component for the search field.
     }
     a:visited {
       color:#192231
+    }
+    #anotherContainer{
+      align-items: stretch;
+      display: -webkit-flex;
+      display: flex;
     }
 
 
@@ -116,6 +118,7 @@ This is the polymer component for the search field.
 
     </style>
   <div id="body">
+    <div id="anotherContainer">
     <div class="collumn">
       <h1>[[profile.firstName]] [[profile.lastName]]</h1>
       <h3>[[profile.job]] in [[profile.location]]</h3>
@@ -169,18 +172,28 @@ This is the polymer component for the search field.
       <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
       <h2> Gallery </h2>
     </div>
+
   </div>
+  <div>Comments</div>
+  <template is="dom-repeat"  items="{{reviews}}">
+    <div>
+      {{item.reviewText}}
+    </div>
+  </template>
+</div>
+
 
 <iron-ajax
   auto
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
-<!-- <iron-ajax
+<iron-ajax
   auto
   url="/review/freelancer/[[freelancerId]]"
   on-response="handlereview">
-</iron-ajax> -->
+</iron-ajax>
+
   </template>
 
   <script>
