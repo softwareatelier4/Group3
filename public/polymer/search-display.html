@@ -94,14 +94,14 @@ This is the polymer component for the search field.
     <div id="spacer"></div>
     <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
     <div class="freelancer-container">Distance: <span id="distanceLabel"></span></div><br>
-    <paper-slider id="distance" pin snaps max="250" value = "5" ></paper-slider>
+    <paper-slider id="slider_distance" pin snaps max="250" value = "5" ></paper-slider>
     <script>
-        distance.addEventListener('value-change', function() {
-            document.querySelector('#distanceLabel').textContent = distance.value + " km";
+        slider_distance.addEventListener('value-change', function() {
+            document.querySelector('#distanceLabel').textContent = slider_distance.value + " km";
      });
     </script>
     <div class= "profile-container">
-      <template is="dom-repeat" items="{{searchData}}" sort="_sort">
+      <template is="dom-repeat" items="{{searchData}}" filter="_filter" sort="_sort" >
         <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
@@ -130,6 +130,7 @@ This is the polymer component for the search field.
       is: 'search-display',
       ready: function() {
         this.getValue();
+
 //          this.distance(45.4612, 9.1878);
       },
 
@@ -174,6 +175,33 @@ This is the polymer component for the search field.
 
       },
 
+      distanceInt : function (lat2, lon2) {
+          var R = 6371e3; // km
+          // temporary we put location
+          var lat1 = 46.0058;
+          var lon1 = 8.9475;
+//          var lat2 = 45.4612;
+//          var lon2 = 9.1878;
+          var distLat = this.numberToRadians(lat2-lat1);
+          var distLon = this.numberToRadians(lon2-lon1);
+
+          var a = Math.sin(distLat/2) * Math.sin(distLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(distLon/2) * Math.sin(distLon/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+          var computedDistance =  parseFloat((R * c)/1000).toFixed(2);
+          if (computedDistance.substr(computedDistance.length - 3, computedDistance.length) == .00)
+              computedDistance = computedDistance.substr(0, computedDistance.length - 3);
+          else if (computedDistance.substr(computedDistance.length - 1, computedDistance.length) == 0)
+              computedDistance = computedDistance.substr(0, computedDistance.length - 1);
+//          console.log("distance = ", computedDistance);
+
+
+          return computedDistance;
+
+      },
+
       numberToRadians : function (n) {
           return n * (Math.PI/180)
       },
@@ -193,7 +221,12 @@ This is the polymer component for the search field.
         getValue : function()
         {
           console.log(document.getElementById("sliderContainer"));
-        }
+        },
+
+        _filter: function(person){
+
+              return (this.distanceInt(person.latitude, person.longitude) <= slider_distance.value);
+            }
 
     });
 
