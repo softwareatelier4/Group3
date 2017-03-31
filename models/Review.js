@@ -7,10 +7,12 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const ReviewSchema = new mongoose.Schema(
   {
-    reviewText : { type: String, default : ""},
-    reviewRating : {type: Number, min: 1, max : 5, required: true},
-    user : {type : ObjectId, ref : "User", required : true},
+    user : {type : ObjectId, ref : "User", required : false},
     freelancer : {type : ObjectId, ref : "Freelancer", required : true},
+    reviewText : { type: String, default : ""},
+    reviewRatingOverall : {type: Number, min: 1, max : 5, required: true},
+    reviewRatingPrice : {type: Number, min: 1, max : 5, required: true},
+    reviewRatingQuality : {type: Number, min: 1, max : 5, required: true},
     dateCreated : { type: Date, required: true, default: Date.now },
   })
 

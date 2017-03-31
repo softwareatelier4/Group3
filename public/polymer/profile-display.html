@@ -77,13 +77,13 @@ This is the polymer component for the search field.
 
     /****** Style Star Rating Widget *****/
 
-    .rating { 
+    .rating {
       border: none;
       float: left;
     }
 
-    .rating > input { display: none; } 
-    .rating > label:before { 
+    .rating > input { display: none; }
+    .rating > label:before {
       margin: 5px;
       font-size: 1.25em;
       font-family: FontAwesome;
@@ -91,14 +91,14 @@ This is the polymer component for the search field.
       content: "\f005";
     }
 
-    .rating > .half:before { 
+    .rating > .half:before {
       content: "\f089";
       position: absolute;
     }
 
-    .rating > label { 
-      color: #ddd; 
-    float: right; 
+    .rating > label {
+      color: #ddd;
+    float: right;
     }
 
     /***** CSS Magic to Highlight Stars on Hover *****/
@@ -110,7 +110,7 @@ This is the polymer component for the search field.
     .rating > input:checked + label:hover, /* hover current star when changing rating */
     .rating > input:checked ~ label:hover,
     .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 
 
@@ -119,7 +119,7 @@ This is the polymer component for the search field.
       <div class="collumn">
     <h2>[[profile.firstName]] [[profile.lastName]]<br>
     </h2>
-    
+
 
     <h3>[[profile.job]] in [[profile.location]]</h3>
     <div class="freelancer-container">
@@ -163,25 +163,27 @@ This is the polymer component for the search field.
         </div>
 
         <a href = "{{profile.facebook}}">
-            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+          <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
         </a>
-        
+
        <a href = "{{profile.linkedin}}">
          <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
        </a>
-       
+
        <a href = "{{profile.skypeAcc}}">
         <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
        </a>
 
        <a href = "{{profile.github}}">
-       <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+         <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
        </a>
+  </div>
+  <div id="gallery">
   </div>
 </div>
 
 <div>
- 
+
 
 </div>
 
@@ -190,6 +192,11 @@ This is the polymer component for the search field.
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
+<!-- <iron-ajax
+  auto
+  url="/review/freelancer/[[freelancerId]]"
+  on-response="handlereview">
+</iron-ajax> -->
   </template>
 
   <script>
@@ -201,15 +208,25 @@ This is the polymer component for the search field.
             {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
             job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
       },
+      attached:function(){
+        console.log("here")
+      },
 
       properties: {
         freelancerId: {
           type: String
         },
+        reviews: {
+          type: []
+        }
       },
       handleResponse:function(res){
         this.profile.displayDate = formatDate(new Date(res.detail.response.dateCreated));
         this.profile=res.detail.response;
+      },
+      handlereview: function(res){
+        this.reviews = res.detail.response;
+        console.log(this.reviews);
       }
 
     });

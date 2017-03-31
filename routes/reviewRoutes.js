@@ -14,8 +14,13 @@ router.get('/', function (req, res){
         res.json(found);
     })
 });
-
+router.get("/freelancer/:id", function(req, res){
+  review.find({freelancer:req.params.id}).lean().exec(function(err,found){
+    res.json(found);
+  })
+})
 router.get("/:id", function(req,res){
+  console.log("here")
   review.find({_id: req.params.id}, function (err, found) {
       if (Object.keys(found).length === 0) {
           res.status(404).end();
@@ -29,6 +34,8 @@ router.get("/:id", function(req,res){
     }
   })
 });
+
+
 
 router.delete("/:id",function(req,res){
   review.find({_id: req.params.id}, function(err,found){
