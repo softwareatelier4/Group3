@@ -112,7 +112,42 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
-}]
+},
+{
+  "_id":ObjectId(),
+  "firstName": "Milano",
+  "lastName":"Parker",
+  "email":"Peter_p@gmail.com",
+  "location":"Bellinzona",
+  "latitude": "46.2",
+  "longitude": "9.0167",
+  "job":"Carpenter",
+  "telephoneNum":"123",
+  "description":"i am a bad carpenter",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
+},
+{
+  "_id":ObjectId(),
+  "firstName": "Peter",
+  "lastName":"Parker",
+  "email":"Peter_p@gmail.com",
+  "location":"Milano",
+  "latitude": "46.2",
+  "longitude": "9.0167",
+  "job":"Carpenter",
+  "telephoneNum":"123",
+  "description":"i am a bad carpenter",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
+}
+]
 }
 
 var seedData = [];

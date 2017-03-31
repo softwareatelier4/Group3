@@ -2,6 +2,7 @@
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+
 <!--
 This is the polymer component for the search field.
 -->
@@ -70,17 +71,70 @@ This is the polymer component for the search field.
     }
 
 
+    fieldset, label { margin: 0; padding: 0; }
+    body{ margin: 20px; }
+    h1 { font-size: 1.5em; margin: 10px; }
+
+    /****** Style Star Rating Widget *****/
+
+    .rating { 
+      border: none;
+      float: left;
+    }
+
+    .rating > input { display: none; } 
+    .rating > label:before { 
+      margin: 5px;
+      font-size: 1.25em;
+      font-family: FontAwesome;
+      display: inline-block;
+      content: "\f005";
+    }
+
+    .rating > .half:before { 
+      content: "\f089";
+      position: absolute;
+    }
+
+    .rating > label { 
+      color: #ddd; 
+    float: right; 
+    }
+
+    /***** CSS Magic to Highlight Stars on Hover *****/
+
+    .rating > input:checked ~ label, /* show gold star when clicked */
+    .rating:not(:checked) > label:hover, /* hover current star */
+    .rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+    .rating > input:checked + label:hover, /* hover current star when changing rating */
+    .rating > input:checked ~ label:hover,
+    .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
+
+
     </style>
     <div id="body">
       <div class="collumn">
     <h2>[[profile.firstName]] [[profile.lastName]]<br>
-      <star-rating rating="4"></star-rating>
-      </h2>
+    </h2>
+    
 
     <h3>[[profile.job]] in [[profile.location]]</h3>
     <div class="freelancer-container">
       <img src ="../img/profile_pic.png">
       <div class="desc">Member since: <span>20. March 2017</span></div>
+      <div>
+       <div>
+        <h3> Overall </h3>
+          <star-rating rating= "4"></star-rating> <br>
+        <h3> Price </h3>
+          <star-rating rating="3"></star-rating> <br>
+        <h3> Quality </h3>
+          <star-rating rating="5"></star-rating> </br>
+    </div>
+      </div>
     </div>
   </div>
     <div class= "collumn">
@@ -123,8 +177,12 @@ This is the polymer component for the search field.
        <a href = "{{profile.github}}">
        <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
        </a>
-
   </div>
+</div>
+
+<div>
+ 
+
 </div>
 
 <iron-ajax
@@ -167,6 +225,9 @@ This is the polymer component for the search field.
   var year = date.getFullYear();
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
-  }
+}
+
+
+
   </script>
 </dom-module>

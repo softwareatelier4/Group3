@@ -9,10 +9,11 @@ require("../models/Freelancer.js");
 //
 const user = mongoose.model("User");
 const freelancer = mongoose.model("Freelancer");
-const searchFields = ["firstName","lastName","email","location","street","country","job","description"]
+const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
 router.get('/query', function(req,res){
   let words = req.query.words.split(',')
+  let location= [req.query.city.toLowerCase()]
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
     words[i]= words[i].toLowerCase()
   }
@@ -22,8 +23,11 @@ router.get('/query', function(req,res){
     }else{
       let result=[]
       found.forEach(function(item){
-        if(check(item, words)){
-          result.push(item)
+        if(check(item, words,textSearchFields)){
+          if(check(item, location, ["location"])){
+            result.push(item)
+          }
+
         }
       })
       res.json(result).end()
@@ -31,8 +35,8 @@ router.get('/query', function(req,res){
   })
 })
 
-function check(data, words){
-
+// returns true if all words are contained in data
+function check(data, words, searchFields){
   for(let i = 0; i<words.length;i++){
     let word = words[i]
     let flag = false

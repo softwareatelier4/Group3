@@ -16,6 +16,7 @@
   <link rel="import" href="./components/paper-item/paper-item.html">
   <link rel="import" href="./components/paper-input/paper-input.html">
   <link rel="import" href="./components/iron-ajax/iron-ajax.html">
+    <link rel="import" href="./location-search.html">
   <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script>
@@ -37,6 +38,7 @@ This is the polymer component for the search field.
   --fourth-color:#192231;
 }
   #search-container{
+      background: white;
       padding-left: 5%;
       width: 95%;
       height: 7%;
@@ -104,6 +106,12 @@ This is the polymer component for the search field.
       height:inherit;
       width: 100%;
     }
+    #logo.search-field{
+      color:white;
+    }
+    location-search{
+      width: 20%;
+    }
     .fa-handshake-o{
       /*color: #00b359
       /*margin-left: 1%;
@@ -112,7 +120,7 @@ This is the polymer component for the search field.
     paper-button.meaningless-button {
       background: white;
       color: black;
-      height: 100%;
+      height: initial;
       width: 10%;
       margin: 0;
       border-radius: 0px;
@@ -145,11 +153,12 @@ This is the polymer component for the search field.
     <input type="search" id="location-input" placeholder="{{city}}">
   </div> -->
 </div>
-
   <div id="search-container">
-    <div id="l-container">
+    <!-- <div id="l-container">
     <input type="search" id="location-input" placeholder="{{city}}" value = "{{city}}">
-    </div>
+    </div> -->
+    <location-search place="{{location}}"></location-search>
+
 
     <!--first field: Looking for-->
 
@@ -181,9 +190,10 @@ This is the polymer component for the search field.
   auto
   url="{{req_url}}"
   handle-as="json"
+  params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}'
   on-response="someFunction"></iron-ajax>
 
-  <script>
+  <!-- <script>
     (function() {
       var placesAutocomplete = places({
         container: document.querySelector('#location-input'),
@@ -200,7 +210,7 @@ This is the polymer component for the search field.
         }
       });
     })();
-  </script>
+  </script> -->
   </template>
 
 
@@ -244,12 +254,18 @@ This is the polymer component for the search field.
             type:Boolean,
             notify:true,
             value:false
+        },
+        location:{
+          type:Object,
+          value:{}
         }
       },
       onSubmit : function(e){
+        console.log(this.location)
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ');
-        let location = document.getElementById('location-input').value;
+        // let location = document.getElementById('location-input').value;
+
         words.forEach(function(item){
           if(item!== ""){
             str+=item+",";
@@ -258,7 +274,14 @@ This is the polymer component for the search field.
         if(this.professions[this.profession].name !="Any"){
           str += this.professions[this.profession].name + ",";
         }
-        str += location;
+        // str += location;
+        str+="&city="
+        if(this.location.formatted_address == undefined){
+          window.alert("invalid address")
+        }else{
+          str+=this.location.name//formatted_address
+        }
+
         this.req_url=str;
         this.justSearched=true;
       },
