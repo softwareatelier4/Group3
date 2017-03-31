@@ -2,7 +2,7 @@
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
-
+<link rel="import" href="./gallery-display.html">
 <!--
 This is the polymer component for the search field.
 -->
@@ -167,7 +167,8 @@ This is the polymer component for the search field.
     <div class = "collumn">
       <h2>About</h2>
       <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
-      <h2> Gallery </h2>
+      <gallery-display>
+      </gallery-display>
     </div>
   </div>
 
