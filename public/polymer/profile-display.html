@@ -1,9 +1,9 @@
 <link rel="import" href="./components/polymer/polymer.html">
-<link rel="import" href="./components/paper-input/paper-textarea.html"
+<link rel="import" href="./components/paper-input/paper-textarea.html">
 <link rel="import" href="./star-rating.html">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
-<link rel="import" href="./gallery-display.html">
+<!-- <link rel="import" href="./gallery-display.html"> -->
 <!--
 This is the polymer component for the search field.
 -->
@@ -116,6 +116,28 @@ This is the polymer component for the search field.
     .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 
+    /*css for the review displaying*/
+    .starRatingContainer{
+      display: flex;
+      justify-content: space-between;
+      width:15vw;
+    }
+    .reviewText{
+      margin-left:5vw; 
+      flex-grow:3;
+      overflow: auto;
+    }
+    .reviewRatings{
+      flex-grow:2;
+      width: 100%;
+
+    }
+    .reviewContainer{
+      display: flex;
+      width: 100%;
+      background: grey;
+      justify-content:flex-start;
+    }
 
     </style>
   <div id="body">
@@ -171,24 +193,39 @@ This is the polymer component for the search field.
     <div class = "collumn">
       <h2>About</h2>
       <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
-      <gallery-display>
-      </gallery-display>
+      <!-- <gallery-display></gallery-display> -->
     </div>
 
   </div>
   <div>Comments</div>
-  <div>
+  <div class="reviewRatings">
+  <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
+  <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
+  <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{rQuality}}"></star-rating></div>
+</div>
 
-  </div>
+
   <div>
-  <paper-textarea id="" value="{{reviewComment}}" label="Review [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
+  <paper-textarea id="" value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
   <paper-button on-tap="handlePosting">POST</paper-button>
   </div>
 
   <template is="dom-repeat"  items="{{reviews}}">
     <div>
-      {{item.reviewText}}
+      <div class="reviewContainer">
+
+      <div class="reviewRatings">
+      <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
+      <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
+      <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
+      </div>
+      <div class="reviewText">
+        {{item.reviewText}}
+      </div>
+
+      </div>
     </div>
+    <br />
   </template>
 </div>
 
@@ -233,7 +270,10 @@ This is the polymer component for the search field.
         },
         reviews: {
           type: []
-        }
+        },
+        rOverall:{value:1},
+        rPrice:{value:1},
+        rQuality:{value:1}
       },
       handleResponse:function(res){
         this.profile.displayDate = formatDate(new Date(res.detail.response.dateCreated));
@@ -247,9 +287,12 @@ This is the polymer component for the search field.
         let review ={}
         review.freelancer=this.freelancerId;
         review.reviewText=this.reviewComment;
-        review.reviewRatingOverall = 3;
-        review.reviewRatingPrice = 3;
-        review.reviewRatingQuality = 3;
+        review.reviewRatingOverall = this.rOverall;
+        review.reviewRatingPrice = this.rPrice;
+        review.reviewRatingQuality = this.rQuality;
+console.log(this.rOverall)
+console.log(this.rPrice)
+        console.log(this.rQuality)
         this.newReview = JSON.stringify(review);
         this.$.ajax.generateRequest()
         this.push('reviews', review)
