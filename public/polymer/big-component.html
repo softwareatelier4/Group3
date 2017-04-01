@@ -71,14 +71,14 @@ This is the polymer component for the search field.
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
 
-    <search-field search-data={{searchData}} just-searched={{justSearched}}></search-field>
+    <search-field search-data={{searchData}} current-coordinates="{{currentCoordinates}}" just-searched={{justSearched}}></search-field>
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
       <form name="search">
           <div class = "input-fields">
               <div class = 'fields'>
                   <div id='divcont'>
 
-                      <search-display search-data={{searchData}}></search-display>
+                      <search-display  current-coordinates="{{currentCoordinates}}" search-data={{searchData}}></search-display>
                       <div>
                           <!-- <img src = "../img/background.jpg" class = "background-image"> -->
                       </div>
@@ -122,9 +122,11 @@ This is the polymer component for the search field.
           default:false
       },route:{
 
+      },currentCoordinates:{
+        observer:"_f"
       }
 
-      },
+    },
       observers:[
         "_routePageChanged(routeData.view)",
         "_subRouteChanged(subRouteData.freelancer_id)",
@@ -141,6 +143,9 @@ This is the polymer component for the search field.
               this.set("route.path", "/search")
           }
           this.justSearched=false
+      },
+      _f(){
+        console.log("asdfasdfasfd")
       }
 
 

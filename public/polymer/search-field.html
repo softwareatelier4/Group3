@@ -253,13 +253,21 @@ This is the polymer component for the search field.
         },
         location:{
           type:Object,
-          value:{}
+          value:{},
+          observer:'_locationChanged'
+        },
+        currentCoordinates:{
+          type:Object,
+          value:{
+            lat:46.0058,
+            long:8.9475
+          },
+          notify:true
+
         }
       },
       onSubmit : function(e){
         if(this.location.geometry){
-          console.log(this.location.geometry.location.lat())
-          console.log(this.location.geometry.location.lng())
         }
 
         let str= "/freelancer/query?words=";
@@ -287,7 +295,18 @@ This is the polymer component for the search field.
       },
       someFunction:function(res){
         this.searchData=res.detail.response;
+      },
+      _locationChanged:function(){
+
+        if(this.location.geometry){
+          console.log("location changed")
+          this.set('currentCoordinates.lat', this.location.geometry.location.lat())
+          this.set('currentCoordinates.long', this.location.geometry.location.lng())
+
+        }
+
       }
+
 
     });
   </script>
