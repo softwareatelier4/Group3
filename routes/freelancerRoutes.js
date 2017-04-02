@@ -42,8 +42,10 @@ function check(data, words, searchFields){
     let word = words[i]
     let flag = false
     for(let j = 0; j< searchFields.length; j++){
-        if(data[searchFields[j]].toLowerCase().indexOf(word) !== -1){
-          flag = true
+        if(data[searchFields[j]]){
+          if(data[searchFields[j]].toLowerCase().indexOf(word) !== -1){
+            flag = true
+          }
         }
     }
     if(!flag){
