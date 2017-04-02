@@ -300,9 +300,7 @@ This is the polymer component for the search field.
       _locationChanged:function(){
 
         if(this.location.geometry){
-          console.log("location changed")
-          this.set('currentCoordinates.lat', this.location.geometry.location.lat())
-          this.set('currentCoordinates.long', this.location.geometry.location.lng())
+          this.set('currentCoordinates', {lat:this.location.geometry.location.lat(),long:this.location.geometry.location.lng()})
 
         }
 

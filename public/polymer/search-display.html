@@ -114,7 +114,7 @@ This is the polymer component for the search field.
     <div id="spacer"></div>
 
     <div id="sliderContainer">
-  <paper-slider id="slider_distance" pin snaps max="201" value = "5" >
+  <paper-slider id="slider_distance" pin snaps max="10000" value = "5" >
   </paper-slider><div id="distanceLabel">0 km</div>
   </div>
     <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
@@ -185,7 +185,7 @@ This is the polymer component for the search field.
 
       },
       observers:[
-        "_coordinatesChanged(currentCoordinates.lat)",
+        // "_coordinatesChanged(currentCoordinates.lat,currentCoordinates.long)",
       ],
 
         _sort : function (a, b) {
@@ -204,7 +204,13 @@ This is the polymer component for the search field.
             this.$.searchRepeatDisplay.render();
           },
           _coordinatesChanged:function(){
-            this.$.searchRepeatDisplay.render();
+            // console.log("hehe")
+            // console.log(this.currentCoordinates.lat, this.currentCoordinates.long)
+            // for(let i = 0; i< this.searchData.length; i++){
+            //   let x = this.searchData[i]
+            //   console.log(x.firstName, this.googleDistance(x.latitude,x.longitude))
+            // }
+            this.$.searchRepeatDisplay.render()
           },
           googleDistance:function(lat1, long1){
             lat1=parseFloat(lat1)

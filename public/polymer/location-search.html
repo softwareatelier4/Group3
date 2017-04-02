@@ -31,17 +31,12 @@
       google.maps.event.addListener(this.autocomplete, 'place_changed', this.on_change_place.bind(this));
     },
     on_change_place: function () {
-      var c1 = new google.maps.LatLng(40.714, -74.00599999999997);
-      var c2 = new google.maps.LatLng(46.0037, 8.9511);
-      console.log("distance")
-      console.log(google.maps.geometry.spherical.computeDistanceBetween(c1, c2));
 
       this.place = this.autocomplete.getPlace();
       if (!this.place.address_components) {
         return;
       }
       this.value = this.place.formatted_address;
-      console.log(this.place)
     }
   })
   </script>
