@@ -20,34 +20,30 @@ This is the polymer component for the search field.
   }
       :host {
 
-        padding-top: 15px;
-
         display: flex;
-        background-color: white;
-        padding-left: 20%;
-        flex-direction: column;
+        background: rgb(242, 242, 242);
+        padding-left: 5%;
+        flex-direction: row;
         align-items: stretch;
-        width: 90%;
+        max-width: 95%;
+      }
+      #flexwrapper{
+        flex-grow: 1;
       }
       .profile-container{
-        width:100%;
+        width:95%;
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
         background-color: white;
         min-width:22em;
-        margin-top: 15%;
       }
       .freelancer-container{
         background: rgb(242, 242, 242);
-        padding: 1vh;
-        margin: 1vh;
-        width: 40%;
-        min-width:50%;
+        width: 95%;
         flex-grow: 1;
-        font-family: Didact Gothic;
-        border-left-style: solid;
-        border-width: 2px;
+        /*border-left-style: solid;*/
+        /*border-width: 2px;*/
         /*border-color: var(--third-color);*/
       }
       .element-display{
@@ -91,12 +87,11 @@ This is the polymer component for the search field.
          text-align: center;
          text-decoration: none;
          display: block;
-
-
       }
 
       #spacer {
-        height:10%;
+        height:30%;
+        width: 95%;
       }
       .button:hover{
         background-color: var(--main-color-lighter);
@@ -104,13 +99,27 @@ This is the polymer component for the search field.
       img:hover{
         background-color: rgb(230, 230, 230);
       }
+      #distanceLabel{
+        padding: 2%;
+      }
+      #sliderContainer{
+        width: 20%;
+        display: flex;
+        align-items: stretch;
+      }
     </style>
 
     <!-- <h2> Search Results:</h2> -->
+    <div id="flexwrapper">
     <div id="spacer"></div>
+
+    <div id="sliderContainer">
+  <paper-slider id="slider_distance" pin snaps max="201" value = "5" >
+  </paper-slider><div id="distanceLabel">0 km</div>
+  </div>
     <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
-    <div class="freelancer-container">Distance: <span id="distanceLabel"></span></div><br>
-    <paper-slider id="slider_distance" pin snaps max="10000" value = "5" ></paper-slider>
+    <div class="freelancer-container">
+
     <div class= "profile-container">
       <template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" filter="_filter" sort="_sort" >
         <!-- <a href="/profile/{{item._id}}"> -->
@@ -135,8 +144,10 @@ This is the polymer component for the search field.
           <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
 
         </div>
+      </div>
+    </div>
+    </div>
       </template>
-  </div>
   <google-maps-api id="maps" api-key="AIzaSyAJ0dJTV5JvhT_N5NDDYcCq4D4qu8DVAvk" libraries="places"></google-maps-api>
 
   </template>
@@ -148,7 +159,11 @@ This is the polymer component for the search field.
       ready: function() {
         let that = this;
         this.$.slider_distance.addEventListener('value-change', function() {
+          if(slider_distance.value == slider_distance.max){
+            document.querySelector('#distanceLabel').textContent = "∞";
+          }else{
             document.querySelector('#distanceLabel').textContent = slider_distance.value + " km";
+          }
             that.reFilter();
           });
 
