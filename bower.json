@@ -47,6 +47,9 @@
     "app-layout": "PolymerElements/app-layout#^0.10.7",
     "paper-icon-button": "^1.1.4",
     "paper-dialog": "^1.1.0",
-    "paper-slider": "PolymerElements/paper-slider#^1.0.14"
+    "paper-slider": "PolymerElements/paper-slider#^1.0.14",
+    "file-upload": "^2.2.1",
+    "paper-fab": "^1.2.1",
+    "iron-form": "^1.1.4"
   }
 }
