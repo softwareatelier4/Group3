@@ -15,25 +15,19 @@
         type: String,
         notify: true
       },
-      options: {
-        type: Object,
-        value: function () { return {location:{lat:46.0037,lng:8.9511}}; }
-      },
       place: {
         type: Object,
         value: function () { return {}; },
         notify: true
       },
-      l:{
-        type: Object,
-        value: {location:{lat:46.0037,lng:8.9511}}
-      }
     },
     on_api_load: function () {
-      // console.log(this.$.input.$.input)
-      this.autocomplete = new google.maps.places.Autocomplete(this.$.input.$.input, this.options);
+      let defaultBounds=new google.maps.LatLngBounds(
+        new google.maps.LatLng(46.0037, 8.9511),
+        new google.maps.LatLng(46.0037, 8.9511)) //lugano we only need to get the information by ip now
 
-
+      let o = {bounds:defaultBounds}
+      this.autocomplete = new google.maps.places.Autocomplete(this.$.input.$.input, o);
       google.maps.event.addListener(this.autocomplete, 'place_changed', this.on_change_place.bind(this));
     },
     on_change_place: function () {
