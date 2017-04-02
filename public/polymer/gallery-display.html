@@ -4,54 +4,59 @@
 
 <dom-module id="gallery-display">
 <style>
-#mydiv {
+.pictureGallery {
   overflow: auto;
   width: 515px;
   height: 515px;
 }
-.imgClass{
+div.gallery {
+  border: 1px solid #ccc;
+  float: left;
+  width: 161px;
+  height: 161px
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
   width: 160px;
   height: 160px;
 }
-.paperDialogImgClass{
-  width: 500px;
-  height: 500px;
-}
+
+
+
+
 </style>
 
 <template>
-  <div id='mydiv'>
-    <paper-button raised onclick="dialog.open()">
-      <img class="imgClass" src='../img/alex.jpg'/>
-    </paper-button>
-    <paper-dialog id="dialog">
-      <img class="paperDialogImgClass" src='../img/alex.jpg'/>
-      </paper-dialog>
-      <img class="imgClass" src='../img/profile_pic.png'/>
-      <!-- <paper-button raised onclick="dialog.open()">
-        <img class="imgClass" src='../img/profile_pic.png'/>
+  <div class="pictureGallery">
+    <div class="gallery">
+      <paper-button raised onclick="dialog.open()">
+        <img  src='../img/alex.jpg'/>
       </paper-button>
       <paper-dialog id="dialog">
-        <img class="paperDialogImgClass" src='../img/profile_pic.png'/>
-        </paper-dialog> -->
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
-      <img class="imgClass" src='../img/alex.jpg'/>
+        <img  src='../img/alex.jpg'/>
+      </paper-dialog>
     </div>
-  </template>
-  <script>
-  Polymer({
-    is: 'gallery-display',
+    <!-- <paper-button raised onclick="dialog.open()">
+    <img class="imgClass" src='../img/profile_pic.png'/>
+  </paper-button>
+  <paper-dialog id="dialog">
+  <img class="paperDialogImgClass" src='../img/profile_pic.png'/>
+</paper-dialog> -->
+<div class="gallery">
+  <a target="_blank" href="../img/alex.jpg">
+    <img src="../img/alex.jpg" alt="Trolltunga Norway">
+  </a>
+</div>
+</template>
+<script>
+Polymer({
+  is: 'gallery-display',
 
-  })
+})
 
-  </script>
+</script>
 </dom-module>
