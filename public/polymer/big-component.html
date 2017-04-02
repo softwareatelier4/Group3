@@ -46,7 +46,7 @@ This is the polymer component for the search field.
       width: 100%;
     }
     search-display{
-      width: 50%;
+      width: 100%;
     }
     iron-pages{
       width: 100%;
@@ -123,7 +123,6 @@ This is the polymer component for the search field.
       },route:{
 
       },currentCoordinates:{
-        observer:"_f"
       }
 
     },
@@ -143,9 +142,6 @@ This is the polymer component for the search field.
               this.set("route.path", "/search")
           }
           this.justSearched=false
-      },
-      _f(){
-        console.log("asdfasdfasfd")
       }
 
 

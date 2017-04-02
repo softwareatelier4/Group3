@@ -31,7 +31,6 @@ router.get("/:id", function(req,res){
         return;
       }
       if (Object.keys(found).length === 0) {
-        console.log("here")
           res.status(404).end();
       }
     else{
@@ -90,7 +89,15 @@ router.put("/:id", function(req,res){
   })
 });
 
-
-
+router.put("/respond/:id",function(req,res){
+  review.update({_id:req.params.id}, {$push:{replys:req.body.responseText}}, function(err,modified){
+    if(err){
+      res.sendStatus(400);
+    }
+    else{
+      res.json({responseText:req.body.responseText, reviewId:req.params.id});
+    }
+  })
+})
 
 module.exports = router;

@@ -8,10 +8,12 @@ const readChunk = require('read-chunk');
 const fileType = require('file-type');
 require("../models/User.js");
 require("../models/Freelancer.js");
+require("../models/Review.js")
 //
 //
 const user = mongoose.model("User");
 const freelancer = mongoose.model("Freelancer");
+const review = mongoose.model("Review")
 const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
 router.get('/query', function(req,res){
@@ -34,11 +36,36 @@ router.get('/query', function(req,res){
 
         }
       })
-      res.json(result).end()
+      addAveragesToTheResultAndSend(result,req,res)
+
     }
   })
 })
+function addAveragesToTheResultAndSend(a,req,res){
+  let counter = 0
+  a.forEach(function(item){
 
+    review.find({freelancer:item._id}).lean().exec(function(err,found){
+      let overall = 0
+      let price = 0
+      let quality = 0
+      let n = found.length
+      found.forEach(function(rev){
+        overall+= rev.reviewRatingOverall
+        price+=rev.reviewRatingPrice
+        quality+=rev.reviewRatingQuality
+      })
+
+      item.overall = Math.round(overall/n)||5
+      item.price = Math.round(price/n)||5
+      item.quality = Math.round(quality/n)||5
+      if(++counter == a.length){
+        console.log(a)
+        res.json(a).end()
+      }
+    })
+  })
+}
 // returns true if all words are contained in data
 function check(data, words, searchFields){
   for(let i = 0; i<words.length;i++){
@@ -74,10 +101,31 @@ router.get("/:id", function(req,res){
       }
     else{
       found[0] = found[0].toObject();
-      res.json(found[0]);
+      addAveragesToOneResultAndSend(found[0],req,res)
     }
   })
 });
+
+
+function addAveragesToOneResultAndSend(a,req,res){
+    review.find({freelancer:a._id}).lean().exec(function(err,found){
+      let overall = 0
+      let price = 0
+      let quality = 0
+      let n = found.length
+      found.forEach(function(rev){
+        overall+= rev.reviewRatingOverall
+        price+=rev.reviewRatingPrice
+        quality+=rev.reviewRatingQuality
+      })
+
+      a.overall = Math.round(overall/n)||5
+      a.price = Math.round(price/n)||5
+      a.quality = Math.round(quality/n)||5
+      res.json(a);
+    })
+}
+
 router.delete("/:id",function(req,res){
   freelancer.find({_id: req.params.id},function(err,found){
     if(err || Object.keys(found).length === 0){

@@ -93,7 +93,6 @@ This is the polymer component for the search field.
       display: inline-block;
       content: "\f005";
     }
-
     .rating > .half:before {
       content: "\f089";
       position: absolute;
@@ -183,11 +182,11 @@ This is the polymer component for the search field.
       <h2>Rating</h2>
       <div>
         <h3> Overall </h3>
-        <star-rating rating= "4"></star-rating> <br>
+        <star-rating rating= "{{profile.overall}}"></star-rating> <br>
         <h3> Price </h3>
-        <star-rating rating="3"></star-rating> <br>
+        <star-rating rating="{{profile.price}}"></star-rating> <br>
         <h3> Quality </h3>
-        <star-rating rating="5"></star-rating> <br>
+        <star-rating rating="{{profile.quality}}"></star-rating> <br>
       </div>
     </div>
     <div class = "collumn">
@@ -206,11 +205,11 @@ This is the polymer component for the search field.
 
 
   <div>
-  <paper-textarea id="" value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
+  <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
   <paper-button on-tap="handlePosting">POST</paper-button>
   </div>
 
-  <template is="dom-repeat"  items="{{reviews}}">
+  <template id="reviewsRepeat" is="dom-repeat"  items="{{reviews}}">
     <div>
       <div class="reviewContainer">
 
@@ -220,9 +219,21 @@ This is the polymer component for the search field.
       <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
       </div>
       <div class="reviewText">
+
         {{item.reviewText}}
       </div>
-
+      </div>
+      <div>
+        Responses
+      </div>
+      <template is="dom-repeat"  items="{{item.replys}}">
+        <div>
+          {{item}}
+        </div>
+      </template>
+      <div class="replyArea">
+      <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
+      <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
       </div>
     </div>
     <br />
@@ -231,12 +242,12 @@ This is the polymer component for the search field.
 
 
 <iron-ajax
-  auto
+  id="getFreelancerData"
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
 <iron-ajax
-  auto
+  id="getReviewData"
   url="/review/freelancer/[[freelancerId]]"
   on-response="handlereview">
 </iron-ajax>
@@ -248,8 +259,21 @@ This is the polymer component for the search field.
   method="POST"
   body="{{newReview}}"
   url="/review"
+  on-response="handleReviewResponse"
   debounce-duration="3000">
+  <iron-ajax
+    id="ajax2"
+    handle-as="json"
+    content-type="application/json"
+    method="PUT"
+    on-response="handleReplyResponse"
+    debounce-duration="3000">
+
+
   </template>
+
+<!-- add answer to review -->
+
 
   <script>
     Polymer({
@@ -259,18 +283,18 @@ This is the polymer component for the search field.
         this.profile =
             {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
             job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
-      },
-      attached:function(){
-        console.log("here")
+
       },
 
       properties: {
         freelancerId: {
-          type: String
+          type: String,
+          observer:"getData"
         },
         reviews: {
           type: []
         },
+        profile:{value:{overall:1,price:1,quality:1}},
         rOverall:{value:1},
         rPrice:{value:1},
         rQuality:{value:1}
@@ -281,7 +305,6 @@ This is the polymer component for the search field.
       },
       handlereview: function(res){
         this.reviews = res.detail.response;
-        console.log(this.reviews);
       },
       handlePosting: function(){
         let review ={}
@@ -290,12 +313,47 @@ This is the polymer component for the search field.
         review.reviewRatingOverall = this.rOverall;
         review.reviewRatingPrice = this.rPrice;
         review.reviewRatingQuality = this.rQuality;
-console.log(this.rOverall)
-console.log(this.rPrice)
-        console.log(this.rQuality)
         this.newReview = JSON.stringify(review);
         this.$.ajax.generateRequest()
-        this.push('reviews', review)
+
+      },
+      handleReviewResponse:function(e){
+        if(e.detail.status == 200){
+          this.push('reviews', e.detail.response)
+        }else{
+          window.alert("there was a problem with adding your review")
+        }
+
+      },
+      handleCommentResponse:function(e){
+            let reviewId=e.target.getAttribute("data-id")
+
+            let text=e.target.parentNode.querySelector("paper-textarea").value
+            let req = this.$.ajax2
+            req.url = "/review/respond/"+reviewId
+            req.body=JSON.stringify({responseText:text})
+            req.generateRequest()
+          },
+      handleReplyResponse:function(e){
+        if(e.detail.status == 200){
+          let reviewId = e.detail.response.reviewId
+          for(let i =0; i<this.reviews.length;i++){
+            if(this.reviews[i]._id == reviewId ){
+              this.push(`reviews.${i}.replys`,e.detail.response.responseText)
+            }
+          }
+
+        }else{
+          window.alert("there was a problem with adding your reply")
+        }
+
+      },
+      getData:function(){
+        if(this.freelancerId.length>5){
+          this.$.getReviewData.generateRequest()
+          this.$.getFreelancerData.generateRequest()
+        }
+
       }
     });
     function formatDate(date) {

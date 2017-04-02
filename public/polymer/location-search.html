@@ -5,7 +5,7 @@
 <dom-module id="location-search">
   <template>
     <google-maps-api id="maps" api-key="AIzaSyAJ0dJTV5JvhT_N5NDDYcCq4D4qu8DVAvk" libraries="places" on-api-load="on_api_load"></google-maps-api>
-    <paper-input id="input" class="input" label="location" type="text" value="{{value}}" />
+    <paper-input id="input" class="input" label="Location" type="text" value="{{value}}" />
   </template>
   <script>
   Polymer({
@@ -22,26 +22,39 @@
       },
     },
     on_api_load: function () {
-      let defaultBounds=new google.maps.LatLngBounds(
-        new google.maps.LatLng(46.0037, 8.9511),
-        new google.maps.LatLng(46.0037, 8.9511)) //lugano we only need to get the information by ip now
+      let that = this
+       //lugano we only need to get the information by ip now
+        navigator.geolocation.getCurrentPosition(function(position) {
+           var pos = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+           };
+           console.log(pos)
+           let defaultBounds=new google.maps.LatLngBounds(
+             new google.maps.LatLng(pos.lat, pos.lng),
+             new google.maps.LatLng(pos.lat, pos.lng))
+             let o = {bounds:defaultBounds}
+             that.autocomplete = new google.maps.places.Autocomplete(that.$.input.$.input, o);
+             google.maps.event.addListener(that.autocomplete, 'place_changed', that.on_change_place.bind(that));
+         },function(){
+           let defaultBounds=new google.maps.LatLngBounds(
+             new google.maps.LatLng(46.0037, 8.9511),
+             new google.maps.LatLng(46.0037, 8.9511))
+             let o = {bounds:defaultBounds}
+             that.autocomplete = new google.maps.places.Autocomplete(that.$.input.$.input, o);
+             google.maps.event.addListener(that.autocomplete, 'place_changed', that.on_change_place.bind(that));
+           //geolocation disabled use lugano as standard
+         })
 
-      let o = {bounds:defaultBounds}
-      this.autocomplete = new google.maps.places.Autocomplete(this.$.input.$.input, o);
-      google.maps.event.addListener(this.autocomplete, 'place_changed', this.on_change_place.bind(this));
+
     },
     on_change_place: function () {
-      var c1 = new google.maps.LatLng(40.714, -74.00599999999997);
-      var c2 = new google.maps.LatLng(46.0037, 8.9511);
-      console.log("distance")
-      console.log(google.maps.geometry.spherical.computeDistanceBetween(c1, c2));
 
       this.place = this.autocomplete.getPlace();
       if (!this.place.address_components) {
         return;
       }
       this.value = this.place.formatted_address;
-      console.log(this.place)
     }
   })
   </script>
