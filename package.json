@@ -21,6 +21,8 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "file-type": "^4.1.0",
+    "formidable": "^1.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
@@ -29,6 +31,7 @@
     "morgan": "^1.8.1",
     "path": "^0.12.7",
     "places.js": "^1.4.10",
+    "read-chunk": "^2.0.0",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
   }

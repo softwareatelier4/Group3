@@ -47,7 +47,6 @@ div.gallery img {
     <paper-dialog id="dialog">
       <img class="paperDialogClass" src='../img/alex.jpg'/>
     </paper-dialog>
-
     <!-- <paper-button raised onclick="dialog.open()">
     <img class="imgClass" src='../img/profile_pic.png'/>
   </paper-button>
@@ -60,8 +59,8 @@ div.gallery img {
 </a>
 -->
 </div>
-<form is="iron-form" method="PUT" id="pictureForm" action="/freelancer/58e137c49003395208455b44">
-    <input type="file" id="pictureInput" name="picture">
+<form  enctype="multipart/form-data" method="POST" id="pictureForm" action="/freelancer/58e137c49003395208455b44">
+    <input type="file" id="pictureInput" name="file">
     <paper-button raised on-tap="_submit">Submit</paper-button>
 </form>
 
@@ -69,7 +68,12 @@ div.gallery img {
 <script>
 Polymer({
   is: 'gallery-display',
-  ready: function() {},
+  ready: function() {
+    this.$.pictureForm.addEventListener('iron-form-presubmit', function() {
+      this.request.method = 'put';
+      this.request.url  = "/freelancer";
+    });
+  },
   attached:function(){
     console.log("here")
   },
@@ -78,8 +82,24 @@ Polymer({
 
   _submit : function(e){
     console.log("aqa");
-    Polymer.dom(event).localTarget.parentElement.submit();
-  }
+    let imgPath = document.getElementById("pictureInput");
+    let reader = new FileReader()
+    reader.onload = function(){
+      var dataURL = reader.result;
+       var data = {
+        "dataURL" : dataURL,
+      }
+      //this thing can be either here or outside I put here since at the begining I was trying to send dataURL.
+      var formData = new FormData();
+      formData.append("thefile", imgPath.files[0]);
+      var r = new XMLHttpRequest();
+      r.open("POST", "/freelancer/"+"58e137c49003395208455b44", true)
+      r.setRequestHeader("Content-Type", "multipart/form-data");
+      console.log(formData);
+      r.send(formData);
+    }
+    reader.readAsDataURL(imgPath.files[0]);
+}
 
 })
 

@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
+const formidable = require("formidable");
+const readChunk = require('read-chunk');
+const fileType = require('file-type');
 require("../models/User.js");
 require("../models/Freelancer.js");
 //
@@ -105,8 +108,18 @@ router.post("/", function(req,res){
   })
 });
 
-router.put("/:id", function(req,res){
+router.post("/:id", function(req,res){
   let a = req.body;
+  let form = new formidable.IncomingForm({
+    uploadDir: __dirname + '/../img/',
+    keepExtensions: true,
+    multiples: true,
+  });
+
+  form.parse(req.body, function(err, fields, files) {
+    //let fileName = files.file.name;
+    console.log(fields);
+  });
   freelancer.update({_id:req.params.id}, a, function(err,modified){
     if(err){
       res.sendStatus(400);
