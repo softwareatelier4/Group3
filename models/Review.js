@@ -13,6 +13,7 @@ const ReviewSchema = new mongoose.Schema(
     reviewRatingOverall : {type: Number, min: 1, max : 5, required: true},
     reviewRatingPrice : {type: Number, min: 1, max : 5, required: true},
     reviewRatingQuality : {type: Number, min: 1, max : 5, required: true},
+    replys:{type:[String],required:false},
     dateCreated : { type: Date, required: true, default: Date.now },
   })
 
