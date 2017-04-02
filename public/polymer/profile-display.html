@@ -182,11 +182,11 @@ This is the polymer component for the search field.
       <h2>Rating</h2>
       <div>
         <h3> Overall </h3>
-        <star-rating rating= "4"></star-rating> <br>
+        <star-rating rating= "{{profile.overall}}"></star-rating> <br>
         <h3> Price </h3>
-        <star-rating rating="3"></star-rating> <br>
+        <star-rating rating="{{profile.price}}"></star-rating> <br>
         <h3> Quality </h3>
-        <star-rating rating="5"></star-rating> <br>
+        <star-rating rating="{{profile.quality}}"></star-rating> <br>
       </div>
     </div>
     <div class = "collumn">
@@ -242,12 +242,12 @@ This is the polymer component for the search field.
 
 
 <iron-ajax
-  auto
+  id="getFreelancerData"
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
 <iron-ajax
-  auto
+  id="getReviewData"
   url="/review/freelancer/[[freelancerId]]"
   on-response="handlereview">
 </iron-ajax>
@@ -288,11 +288,13 @@ This is the polymer component for the search field.
 
       properties: {
         freelancerId: {
-          type: String
+          type: String,
+          observer:"getData"
         },
         reviews: {
           type: []
         },
+        profile:{value:{overall:1,price:1,quality:1}},
         rOverall:{value:1},
         rPrice:{value:1},
         rQuality:{value:1}
@@ -343,6 +345,13 @@ This is the polymer component for the search field.
 
         }else{
           window.alert("there was a problem with adding your reply")
+        }
+
+      },
+      getData:function(){
+        if(this.freelancerId.length>5){
+          this.$.getReviewData.generateRequest()
+          this.$.getFreelancerData.generateRequest()
         }
 
       }

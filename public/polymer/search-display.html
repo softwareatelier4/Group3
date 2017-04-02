@@ -21,7 +21,7 @@ This is the polymer component for the search field.
       :host {
 
         display: flex;
-        background: rgb(242, 242, 242);
+        /*background: rgb(242, 242, 242);*/
         padding-left: 5%;
         flex-direction: row;
         align-items: stretch;
@@ -31,7 +31,7 @@ This is the polymer component for the search field.
         flex-grow: 1;
       }
       .profile-container{
-        width:95%;
+        width:90%;
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
@@ -40,12 +40,19 @@ This is the polymer component for the search field.
       }
       .freelancer-container{
         background: rgb(242, 242, 242);
-        width: 95%;
+        width: 100%;
         flex-grow: 1;
+
+        padding:1%;
         /*border-left-style: solid;*/
         /*border-width: 2px;*/
         /*border-color: var(--third-color);*/
       }
+      .freelancer-container:nth-child(even) {
+        background: red;
+        background: rgb(230, 230, 230);
+      }
+
       .element-display{
         padding-left: 150px;
       }
@@ -90,7 +97,8 @@ This is the polymer component for the search field.
       }
 
       #spacer {
-        height:30%;
+        min-height: 6.6em;
+        height:13%;
         width: 95%;
       }
       .button:hover{
@@ -101,11 +109,15 @@ This is the polymer component for the search field.
       }
       #distanceLabel{
         padding: 2%;
+        min-width: 4em;
+        overflow: scroll;
       }
       #sliderContainer{
-        width: 20%;
+        width: 30%;
+        min-width: 12em;
         display: flex;
         align-items: stretch;
+        height: 2em;
       }
     </style>
 
@@ -114,11 +126,12 @@ This is the polymer component for the search field.
     <div id="spacer"></div>
 
     <div id="sliderContainer">
-  <paper-slider id="slider_distance" pin snaps max="10000" value = "5" >
-  </paper-slider><div id="distanceLabel">0 km</div>
+
+  <paper-slider id="slider_distance" snaps max="201" value = "5">
+  </paper-slider><span id="distanceLabel">0 km</span>
+
   </div>
     <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
-    <div class="freelancer-container">
 
     <div class= "profile-container">
       <template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" filter="_filter" sort="_sort" >
@@ -126,7 +139,7 @@ This is the polymer component for the search field.
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
           <div class= "element-display-right"><span>{{googleDistance(item.latitude, item.longitude)}} away</span></div>
-          <div class="element-display"><star-rating rating='4'></star-rating></div>
+          <div class="element-display"><star-rating rating="{{item.overall}}"></star-rating></div>
           <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
           <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
           <div class= "element-display">Location: <span>{{item.location}}</span></div>
@@ -140,14 +153,12 @@ This is the polymer component for the search field.
                   <a href = "/profile/{{item._id}}" class = "button2"> Visit profile </a>
               </paper-button>
          </center>
+         </div>
+         </template>
           <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
           <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
-
-        </div>
-      </div>
     </div>
     </div>
-      </template>
   <google-maps-api id="maps" api-key="AIzaSyAJ0dJTV5JvhT_N5NDDYcCq4D4qu8DVAvk" libraries="places"></google-maps-api>
 
   </template>
@@ -160,7 +171,7 @@ This is the polymer component for the search field.
         let that = this;
         this.$.slider_distance.addEventListener('value-change', function() {
           if(slider_distance.value == slider_distance.max){
-            document.querySelector('#distanceLabel').textContent = "∞";
+            document.querySelector('#distanceLabel').textContent = "∞ km";
           }else{
             document.querySelector('#distanceLabel').textContent = slider_distance.value + " km";
           }
