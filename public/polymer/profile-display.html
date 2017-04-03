@@ -32,23 +32,16 @@ This is the polymer component for the search field.
       color: green;
       font-family: Didact Gothic;
     }
-    .collumn{
-      align-self: stretch;
-      padding:2%;
-    }
     #body{
+      width: 85.5%;
       background-color:#f2f2f2;
-      padding:5%;
-      font-family: Didact Gothic;
-      margin-left: 15%;
-      margin-right: 15%;
+      padding-left:5%;
+      padding-top: 5%;
+      padding-right: 9.5%;
     }
     #contact-container{
       background-color:  #e6e6e6;
       padding: 8%;
-      border-left-style: solid;
-      border-width: 4px;
-      border-color: var(--main-color);
       font-size: 18px;
     }
     .button {
@@ -68,11 +61,16 @@ This is the polymer component for the search field.
       color:#192231
     }
     #anotherContainer{
-      align-items: stretch;
+      width: 100%;
+      display: flex;
+      align-items: space-between;
       display: -webkit-flex;
       display: flex;
     }
-
+    .collumn{
+      padding:2%;
+      flex-grow: 1;
+    }
 
     fieldset, label { margin: 0; padding: 0; }
     body{ margin: 20px; }
@@ -119,23 +117,29 @@ This is the polymer component for the search field.
     .starRatingContainer{
       display: flex;
       justify-content: space-between;
-      width:15vw;
+      min-width: 3em;
+      max-width: 10em;
     }
     .reviewText{
-      margin-left:5vw;
+      min-width: 60%;
       flex-grow:3;
       overflow: auto;
     }
     .reviewRatings{
-      flex-grow:2;
-
+      flex-grow:1;
+      padding: 1%;
     }
     .reviewContainer{
       display: flex;
       width: 100%;
-      border-style: outset;
+      /*border-style: outset;*/
+      border-left: 1%;
       /*background: grey;*/
       justify-content:flex-start;
+      padding: 0 1%;
+    }
+    .responseText{
+      padding: 0 2%;
     }
     .fa-3x{
       color: black;
@@ -152,22 +156,40 @@ This is the polymer component for the search field.
         <div class="desc">Member since: <span>20. March 2017</span></div>
       </div>
       <div id="contact-container" style = "width: 300px" >
-        <div class= "desc">Email: <span>{{profile.email}}</span></div>
+        <div class= "desc"><i class="fa fa-envelope" aria-hidden="true"></i>
+           <span>{{profile.email}}</span></div>
         <p style="font-size:5px"></p>
-        <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
+        <div class= "desc"><i class="fa fa-phone" aria-hidden="true"></i>
+          <span>{{profile.telephoneNum}}</span></div>
         <p style="font-size:5px"></p>
-        <div class= "desc">Website: <span>{{profile.website}}</span></div>
+        <div class= "desc"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
+          <span>{{profile.website}}</span></div>
         <p style="font-size:5px"></p>
-        <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
+        <div class= "desc"><i class="fa fa-skype" aria-hidden="true"></i>
+          <span>{{profile.skypeAcc}}</span></div>
         <p></p>
         <center>
+          <a href = "{{profile.facebook}}">
+            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.linkedin}}">
+            <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.skypeAcc}}">
+            <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.github}}">
+            <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+          </a>
         <paper-button  target="_top">
           <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
             Book Now!</a>
           </paper-button>
         </center>
       </div>
-      <a href = "{{profile.facebook}}">
+<!-- <<<<<<< HEAD
+======= -->
+      <!-- <a href = "{{profile.facebook}}">
         <i class="fa fa-facebook-official fa-3x" aria-hidden="true" ></i>
       </a>
       <a href = "{{profile.linkedin}}">
@@ -180,17 +202,8 @@ This is the polymer component for the search field.
         <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
       </a>
     </div>
+>>>>>>> 6e985bde8b8bd990581b9ff1f23dc9e6e4e2721e -->
 
-    <div class= "collumn">
-      <h2>Rating</h2>
-      <div>
-        <h3> Overall </h3>
-        <star-rating rating= "{{profile.overall}}"></star-rating> <br>
-        <h3> Price </h3>
-        <star-rating rating="{{profile.price}}"></star-rating> <br>
-        <h3> Quality </h3>
-        <star-rating rating="{{profile.quality}}"></star-rating> <br>
-      </div>
     </div>
     <div class = "collumn">
       <h2>About</h2>
@@ -198,6 +211,17 @@ This is the polymer component for the search field.
       <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
     </div>
 
+  </div>
+  <div class= "collumn">
+    <h2>Rating</h2>
+    <div>
+      <h3> Overall </h3>
+      <star-rating rating= "{{profile.overall}}"></star-rating> <br>
+      <h3> Price </h3>
+      <star-rating rating="{{profile.price}}"></star-rating> <br>
+      <h3> Quality </h3>
+      <star-rating rating="{{profile.quality}}"></star-rating> <br>
+    </div>
   </div>
   <div>Comments</div>
   <div class="reviewRatings">
@@ -230,7 +254,7 @@ This is the polymer component for the search field.
         Responses
       </div>
       <template is="dom-repeat"  items="{{item.replys}}">
-        <div>
+        <div id="responseText">
           {{item}}
         </div>
       </template>
