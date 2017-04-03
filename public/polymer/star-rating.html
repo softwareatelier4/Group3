@@ -36,7 +36,9 @@ This is the polymer component for the search field.
 
       is: 'star-rating',
       attached: function() {
-        console.log(this.rating)
+        if(this.rating == undefined){
+          this.rating = 1
+        }
             this.stars = new Array(Math.round(this.rating)%6);
             this.emptyStars = new Array(5-Math.round(this.rating)%6);
       },

@@ -39,14 +39,18 @@ div.gallery img {
 
 <template>
   <div class="pictureGallery">
+    <template id="reviewsRepeat" is="dom-repeat"  items="{{profile.pictureGallery}}">
     <div class="gallery">
-      <paper-button raised onclick="dialog.open()">
-        <img  src='../img/alex.jpg'/>
+      <paper-button raised onclick="{{item}}.open()">
+        <img  src='{{item}}'/>
       </paper-button>
+
+
     </div>
-    <paper-dialog id="dialog">
-      <img class="paperDialogClass" src='../img/alex.jpg'/>
+    <paper-dialog id="{{item}}">
+      <img class="paperDialogClass" src='{{item}}'/>
     </paper-dialog>
+    </template>
     <!-- <paper-button raised onclick="dialog.open()">
     <img class="imgClass" src='../img/profile_pic.png'/>
   </paper-button>
@@ -81,10 +85,9 @@ Polymer({
       var formData = new FormData();
       formData.append("file", imgPath.files[0]);
       var r = new XMLHttpRequest();
-      r.open("POST", "/freelancer/"+"58e137c49003395208455b44", true)
+      r.open("POST", "/freelancer/"+that.freelancerId, true)
       // r.setRequestHeader("Content-Type", "multipart/form-data");
       r.send(formData);
-      console.log("xd")
     })
   },
   attached:function(){
