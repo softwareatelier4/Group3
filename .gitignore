@@ -7,3 +7,4 @@ public/polymer/public/
 coverage/
 jenkins-test-results.xml
 .idea/*
+public/img/*

@@ -4,8 +4,11 @@ const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
 const formidable = require("formidable");
+const fs = require('fs');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
+const multer = require("multer")
+var upload = multer({ dest: './public/img/' }).single("file")
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
@@ -156,25 +159,51 @@ router.post("/", function(req,res){
   })
 });
 
-router.post("/:id", function(req,res){
-  let a = req.body;
-  let form = new formidable.IncomingForm({
-    uploadDir: __dirname + '/../img/',
-    keepExtensions: true,
-    multiples: true,
-  });
-
-  form.parse(req.body, function(err, fields, files) {
-    //let fileName = files.file.name;
-    console.log(fields);
-  });
-  freelancer.update({_id:req.params.id}, a, function(err,modified){
+router.post("/:id",function(req,res){
+  upload(req,res,function(err){
     if(err){
-      res.sendStatus(400);
-    }
-    else{
-      res.sendStatus(204);
+      console.log(err)
+      res.status(400).end()
+    }else{
+      console.log(req.file)
+      res.status(201).end()
     }
   })
+  console.log(req.body)
+  // let a = req.body;
+  // let form = new formidable.IncomingForm();
+  //   form.on('fileBegin', function (name, file){
+  //       file.path = __dirname + '/public/img' + file.name;
+  //   });
+  //
+  //   form.on('file', function (name, file){
+  //       console.log('Uploaded ' + file.name);
+  //   });
+		// form.parse(req, (err,fields,files)=>{
+		// 	if(err){
+    //     console.log(a)
+    //     res.status(400).end();
+    //     return;
+    //   }
+		// 	fs.rename(files.file.path,"../public/img/"+files.file.name,(err)=>{
+		// 		console.log(err);
+		// 		return;
+		// 	})
+
+
+  // let form = new formidable.IncomingForm();
+  //
+  // form.parse(req.body, function(err, fields, files) {
+  //   //let fileName = files.file.name;
+  //   console.log(fields);
+  // });
+  // freelancer.update({_id:req.params.id}, a, function(err,modified){
+  //   if(err){
+  //     res.sendStatus(400);
+  //   }
+  //   else{
+  //     res.sendStatus(204);
+  //   }
+  // })
 });
 module.exports = router;
