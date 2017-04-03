@@ -1,6 +1,9 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/paper-slider/paper-slider.html">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="import" href="./components/google-apis/google-maps-api.html">
+
 <!--
 This is the polymer component for the search field.
 -->
@@ -8,38 +11,57 @@ This is the polymer component for the search field.
 <dom-module id="search-display">
   <template>
     <style>
+    :root{
+    --main-color:#494E6B;
+    --main-color-lighter:#5d6389;
+    --second-color:#98878F;
+    --third-color:#985E6D;
+    --fourth-color:#192231;
+  }
       :host {
+
         display: flex;
-        background-color: #f2f2f2;
+        /*background: rgb(242, 242, 242);*/
         padding-left: 5%;
-        display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: stretch;
-        width: 90%;
+        max-width: 95%;
+      }
+      #flexwrapper{
+        flex-grow: 1;
       }
       .profile-container{
-        width:70%;
+        width:90%;
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
-        position: relative;
-        background-color: black;
+        background-color: white;
         min-width:22em;
       }
       .freelancer-container{
-        background-color: white;
-        padding: 1vh;
-        margin: 1vh;
-        width: 30%;
-        min-width:20em;
+        background: rgb(242, 242, 242);
+        width: 100%;
         flex-grow: 1;
-        font-family: Didact Gothic;
-        border-left-style: solid;
-        border-width: 4px;
-        border-color: rgb(126,216,80);
+
+        padding:1%;
+        /*border-left-style: solid;*/
+        /*border-width: 2px;*/
+        /*border-color: var(--third-color);*/
       }
+      .freelancer-container:nth-child(even) {
+        background: red;
+        background: rgb(230, 230, 230);
+      }
+
       .element-display{
         padding-left: 150px;
+      }
+      .element-display-right{
+        text-align: right;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 1px;
+
       }
       img {
         height: 120px;
@@ -54,7 +76,7 @@ This is the polymer component for the search field.
         margin: 1vh;
       }
       .button {
-        background-color: rgb(126,216,80);
+        background-color: var(--main-color);
         border: none;
         color: white;
         padding: 15px 32px;
@@ -62,30 +84,85 @@ This is the polymer component for the search field.
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        float:right;
+        float: right;
+        text-transform: uppercase;
+      }
+
+      .button2{
+         border: none;
+         color: white;
+         text-align: center;
+         text-decoration: none;
+         display: block;
+      }
+
+      #spacer {
+        min-height: 6.6em;
+        height:13%;
+        width: 95%;
+      }
+      .button:hover{
+        background-color: var(--main-color-lighter);
+      }
+      img:hover{
+        background-color: rgb(230, 230, 230);
+      }
+      #distanceLabel{
+        padding: 2%;
+        min-width: 4em;
+        overflow: scroll;
+      }
+      #sliderContainer{
+        width: 30%;
+        min-width: 12em;
+        display: flex;
+        align-items: stretch;
+        height: 2em;
       }
     </style>
-    <h2> Search Results:</h2>
+
+    <!-- <h2> Search Results:</h2> -->
+    <div id="flexwrapper">
+    <div id="spacer"></div>
+
+    <div id="sliderContainer">
+
+  <paper-slider id="slider_distance" snaps max="201" value = "5">
+  </paper-slider><span id="distanceLabel">0 km</span>
+
+  </div>
+    <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
+
     <div class= "profile-container">
-      <template is="dom-repeat" items="{{searchData}}">
+      <template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" filter="_filter" sort="_sort" >
         <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
-          <div class="element-display"><star-rating rating='4'></star-rating></div>
+          <div class= "element-display-right"><span>{{googleDistance(item.latitude, item.longitude)}} away</span></div>
+          <div class="element-display"><star-rating rating="{{item.overall}}"></star-rating></div>
           <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
           <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
           <div class= "element-display">Location: <span>{{item.location}}</span></div>
           <div class= "element-display">Email: <span>{{item.email}}</span></div>
           <div class= "element-display">Job: <span>{{item.job}}</span></div>
           <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
+          <!--<div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>-->
           <p></p>
-          <center><a href="/profile/{{item._id}}" class = "button" >Visit profile </a></center>
+          <center>
+            <a href="/profile/{{item._id}}">
+              <paper-button class = "button">
+                 Visit profile
+              </paper-button>
+            </a>
+         </center>
+         </div>
+         </template>
           <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
           <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
+    </div>
+    </div>
+  <google-maps-api id="maps" api-key="AIzaSyAJ0dJTV5JvhT_N5NDDYcCq4D4qu8DVAvk" libraries="places"></google-maps-api>
 
-        </div>
-      </template>
-  </div>
   </template>
 
   <script>
@@ -93,31 +170,79 @@ This is the polymer component for the search field.
 
       is: 'search-display',
       ready: function() {
-        // this.employees = [
-        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' },
-        //     {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-        //     job: 'Plumber', Tel: "0123456789",Review:'4',CreationDate: '01' }
-        // ];
+        let that = this;
+        this.$.slider_distance.addEventListener('value-change', function() {
+          if(slider_distance.value == slider_distance.max){
+            document.querySelector('#distanceLabel').textContent = "∞ km";
+          }else{
+            document.querySelector('#distanceLabel').textContent = slider_distance.value + " km";
+          }
+            that.reFilter();
+          });
+
       },
 
       properties: {
         prop1: {
           type: String,
-          value: 'temp',
+          value: 'temp'
         },
         searchData:{
           type:Object,
           value:[]
+        },
+        currentCoordinates:{
+          type:Object,
+          observer:"_coordinatesChanged"
         }
+
       },
-      handleTap:function(e){
-        console.log(e)
-      }
+      observers:[
+        // "_coordinatesChanged(currentCoordinates.lat,currentCoordinates.long)",
+      ],
+
+        _sort : function (a, b) {
+            var distA = this.googleDistance(a.latitude, a.longitude);
+            var distB = this.googleDistance (b.latitude, b.longitude);
+
+            if (distA === distB) return 0;
+            return distA < distB ? -1 : 1;
+        },
+
+        _filter: function(person){
+              slider_distance.value = parseFloat(slider_distance.value);
+              return (this.googleDistance(person.latitude, person.longitude) <= slider_distance.value);
+            },
+        reFilter:function(){
+            this.$.searchRepeatDisplay.render();
+          },
+          _coordinatesChanged:function(){
+            // console.log("hehe")
+            // console.log(this.currentCoordinates.lat, this.currentCoordinates.long)
+            // for(let i = 0; i< this.searchData.length; i++){
+            //   let x = this.searchData[i]
+            //   console.log(x.firstName, this.googleDistance(x.latitude,x.longitude))
+            // }
+            this.$.searchRepeatDisplay.render()
+          },
+          googleDistance:function(lat1, long1){
+            lat1=parseFloat(lat1)
+            lon1=parseFloat(long1)
+            var c1 = new google.maps.LatLng(lat1, long1);
+            var c2 = new google.maps.LatLng(this.currentCoordinates.lat, this.currentCoordinates.long);
+            let retVal = google.maps.geometry.spherical.computeDistanceBetween(c1, c2)
+            return Math.round(retVal/10)/100 //to kilometers
+          }
+
     });
+
+    function linkToProfile(el)
+    {
+        el.addEventListener('transitionend', function(e)
+        {
+            location.href = "/profile/{{item._id}}";
+        })
+    }
+
   </script>
 </dom-module>

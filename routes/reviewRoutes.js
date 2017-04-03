@@ -14,9 +14,22 @@ router.get('/', function (req, res){
         res.json(found);
     })
 });
-
+router.get("/freelancer/:id", function(req, res){
+  if(req.params.id == undefined){
+    res.status(404).end();
+    return;
+  }
+  review.find({freelancer:req.params.id}).lean().exec(function(err,found){
+    res.json(found);
+  })
+})
 router.get("/:id", function(req,res){
+
   review.find({_id: req.params.id}, function (err, found) {
+      if(err){
+        res.status(404).end();
+        return;
+      }
       if (Object.keys(found).length === 0) {
           res.status(404).end();
       }
@@ -29,6 +42,8 @@ router.get("/:id", function(req,res){
     }
   })
 });
+
+
 
 router.delete("/:id",function(req,res){
   review.find({_id: req.params.id}, function(err,found){
@@ -74,7 +89,15 @@ router.put("/:id", function(req,res){
   })
 });
 
-
-
+router.put("/respond/:id",function(req,res){
+  review.update({_id:req.params.id}, {$push:{replys:req.body.responseText}}, function(err,modified){
+    if(err){
+      res.sendStatus(400);
+    }
+    else{
+      res.json({responseText:req.body.responseText, reviewId:req.params.id});
+    }
+  })
+})
 
 module.exports = router;

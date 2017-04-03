@@ -1,7 +1,9 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/paper-input/paper-textarea.html">
 <link rel="import" href="./star-rating.html">
-<link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+<link rel="import" href="./gallery-display.html">
 <!--
 This is the polymer component for the search field.
 -->
@@ -9,6 +11,13 @@ This is the polymer component for the search field.
 <dom-module id="profile-display">
   <template>
     <style>
+    :root{
+    --main-color:#494E6B;
+    --main-color-lighter:#5d6389;
+    --second-color:#98878F;
+    --third-color:#985E6D;
+    --fourth-color:#192231;
+  }
     h3,.desc{
       color: #595959;
       font-weight: bold;
@@ -23,28 +32,20 @@ This is the polymer component for the search field.
       color: green;
       font-family: Didact Gothic;
     }
-    .collumn{
-      align-self: stretch;
-      padding:2%;
-    }
     #body{
+      width: 85.5%;
       background-color:#f2f2f2;
-      padding:5%;
-      display: -webkit-flex;
-      display: flex;
-      align-items: stretch;
-      font-family: Didact Gothic;
+      padding-left:5%;
+      padding-top: 5%;
+      padding-right: 9.5%;
     }
     #contact-container{
       background-color:  #e6e6e6;
       padding: 8%;
-      border-left-style: solid;
-      border-width: 4px;
-      border-color: rgb(126,216,80);
       font-size: 18px;
     }
     .button {
-      background-color:  rgb(126,216,80);
+      background-color:var(--main-color);
       border: none;
       color: white;
       padding: 15px 32px;
@@ -53,50 +54,253 @@ This is the polymer component for the search field.
       display: inline-block;
       font-size: 16px;
     }
+    .button:hover{
+      background-color: var(--main-color-lighter);
+    }
+    a:visited {
+      color:#192231
+    }
+    #anotherContainer{
+      width: 100%;
+      display: flex;
+      align-items: space-between;
+      display: -webkit-flex;
+      display: flex;
+    }
+    .collumn{
+      padding:2%;
+      flex-grow: 1;
+    }
+
+    fieldset, label { margin: 0; padding: 0; }
+    body{ margin: 20px; }
+    h1 { font-size: 1.5em; margin: 10px; }
+
+    /****** Style Star Rating Widget *****/
+
+    .rating {
+      border: none;
+      float: left;
+    }
+
+    .rating > input { display: none; }
+    .rating > label:before {
+      margin: 5px;
+      font-size: 1.25em;
+      font-family: FontAwesome;
+      display: inline-block;
+      content: "\f005";
+    }
+    .rating > .half:before {
+      content: "\f089";
+      position: absolute;
+    }
+
+    .rating > label {
+      color: #ddd;
+    float: right;
+    }
+
+    /***** CSS Magic to Highlight Stars on Hover *****/
+
+    .rating > input:checked ~ label, /* show gold star when clicked */
+    .rating:not(:checked) > label:hover, /* hover current star */
+    .rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+    .rating > input:checked + label:hover, /* hover current star when changing rating */
+    .rating > input:checked ~ label:hover,
+    .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+    .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+
+    /*css for the review displaying*/
+    .starRatingContainer{
+      display: flex;
+      justify-content: space-between;
+      min-width: 3em;
+      max-width: 10em;
+    }
+    .reviewText{
+      min-width: 60%;
+      flex-grow:3;
+      overflow: auto;
+    }
+    .reviewRatings{
+      flex-grow:1;
+      padding: 1%;
+    }
+    .reviewContainer{
+      display: flex;
+      width: 100%;
+      /*border-style: outset;*/
+      border-left: 1%;
+      /*background: grey;*/
+      justify-content:flex-start;
+      padding: 0 1%;
+    }
+    .responseText{
+      padding: 0 2%;
+    }
+    .fa-3x{
+      color: black;
+    }
 
     </style>
-    <div id="body">
-      <div class="collumn">
-    <h2>[[profile.firstName]] [[profile.lastName]]<br>
-      <star-rating rating="4"></star-rating>
-      </h2>
+  <div id="body">
+    <div id="anotherContainer">
+    <div class="collumn">
+      <h1>[[profile.firstName]] [[profile.lastName]]</h1>
+      <h3>[[profile.job]] in [[profile.location]]</h3>
+      <div class="freelancer-container">
+        <img src ="../img/profile_pic.png">
+        <div class="desc">Member since: <span>20. March 2017</span></div>
+      </div>
+      <div id="contact-container" style = "width: 300px" >
+        <div class= "desc"><i class="fa fa-envelope" aria-hidden="true"></i>
+           <span>{{profile.email}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc"><i class="fa fa-phone" aria-hidden="true"></i>
+          <span>{{profile.telephoneNum}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
+          <span>{{profile.website}}</span></div>
+        <p style="font-size:5px"></p>
+        <div class= "desc"><i class="fa fa-skype" aria-hidden="true"></i>
+          <span>{{profile.skypeAcc}}</span></div>
+        <p></p>
+        <center>
+          <a href = "{{profile.facebook}}">
+            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.linkedin}}">
+            <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.skypeAcc}}">
+            <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+          </a>
+          <a href = "{{profile.github}}">
+            <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+          </a>
+        <paper-button  target="_top">
+          <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
+            Book Now!</a>
+          </paper-button>
+        </center>
+      </div>
+<!-- <<<<<<< HEAD
+======= -->
+      <!-- <a href = "{{profile.facebook}}">
+        <i class="fa fa-facebook-official fa-3x" aria-hidden="true" ></i>
+      </a>
+      <a href = "{{profile.linkedin}}">
+        <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.skypeAcc}}">
+        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.github}}">
+        <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+      </a>
+    </div>
+>>>>>>> 6e985bde8b8bd990581b9ff1f23dc9e6e4e2721e -->
 
-    <h3>[[profile.job]] in [[profile.location]]</h3>
-    <div class="freelancer-container">
-      <img src ="../img/profile_pic.png">
-      <div class="desc">Member since: <span>20. March 2017</span></div>
+    </div>
+    <div class = "collumn">
+      <h2>About</h2>
+      <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+      <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
+    </div>
+
+  </div>
+  <div class= "collumn">
+    <h2>Rating</h2>
+    <div>
+      <h3> Overall </h3>
+      <star-rating rating= "{{profile.overall}}"></star-rating> <br>
+      <h3> Price </h3>
+      <star-rating rating="{{profile.price}}"></star-rating> <br>
+      <h3> Quality </h3>
+      <star-rating rating="{{profile.quality}}"></star-rating> <br>
     </div>
   </div>
-    <div class= "collumn">
-
-        <h2 style = "font-size:25px">About</h2>
-        <div style="overflow: scroll; width:300px;">
-          [[profile.description]]
-        </div>
-        <p></p>
-        <div id="contact-container" style = "width: 300px" >
-          <div class= "desc">Email: <span>{{profile.email}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Tel: <span>{{profile.telephoneNum}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Website: <span>{{profile.website}}</span></div>
-          <p style="font-size:5px"></p>
-          <div class= "desc">Skype: <span>{{profile.skypeAcc}}</span></div>
-          <p></p>
-          <center><a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" target="_top"><div class = "button" >Book Now!</div></a></center>
-
-        </div>
-
-
-  </div>
+  <div>Comments</div>
+  <div class="reviewRatings">
+  <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
+  <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
+  <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{rQuality}}"></star-rating></div>
 </div>
 
+
+  <div>
+  <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
+  <paper-button on-tap="handlePosting">POST</paper-button>
+  </div>
+
+  <template id="reviewsRepeat" is="dom-repeat"  items="{{reviews}}">
+    <div>
+      <div class="reviewContainer">
+
+      <div class="reviewRatings">
+      <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
+      <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
+      <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
+      </div>
+      <div class="reviewText">
+
+        {{item.reviewText}}
+      </div>
+      </div>
+      <div>
+        Responses
+      </div>
+      <template is="dom-repeat"  items="{{item.replys}}">
+        <div id="responseText">
+          {{item}}
+        </div>
+      </template>
+      <div class="replyArea">
+      <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
+      <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
+      </div>
+    </div>
+    <br />
+  </template>
+</div>
+
+
 <iron-ajax
-  auto
+  id="getFreelancerData"
   url="/freelancer/[[freelancerId]]"
   on-response="handleResponse"
 ></iron-ajax>
+<iron-ajax
+  id="getReviewData"
+  url="/review/freelancer/[[freelancerId]]"
+  on-response="handlereview">
+</iron-ajax>
+
+<iron-ajax
+  id="ajax"
+  handle-as="json"
+  content-type="application/json"
+  method="POST"
+  body="{{newReview}}"
+  url="/review"
+  on-response="handleReviewResponse"
+  debounce-duration="3000">
+  <iron-ajax
+    id="ajax2"
+    handle-as="json"
+    content-type="application/json"
+    method="PUT"
+    on-response="handleReplyResponse"
+    debounce-duration="3000">
+
+
   </template>
+
+<!-- add answer to review -->
+
 
   <script>
     Polymer({
@@ -106,33 +310,95 @@ This is the polymer component for the search field.
         this.profile =
             {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
             job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
+
       },
 
       properties: {
         freelancerId: {
-          type: String
+          type: String,
+          observer:"getData"
         },
+        reviews: {
+          type: []
+        },
+        profile:{value:{overall:1,price:1,quality:1}},
+        rOverall:{value:1},
+        rPrice:{value:1},
+        rQuality:{value:1}
       },
       handleResponse:function(res){
         this.profile.displayDate = formatDate(new Date(res.detail.response.dateCreated));
         this.profile=res.detail.response;
+      },
+      handlereview: function(res){
+        this.reviews = res.detail.response;
+      },
+      handlePosting: function(){
+        let review ={}
+        review.freelancer=this.freelancerId;
+        review.reviewText=this.reviewComment;
+        review.reviewRatingOverall = this.rOverall;
+        review.reviewRatingPrice = this.rPrice;
+        review.reviewRatingQuality = this.rQuality;
+        this.newReview = JSON.stringify(review);
+        this.$.ajax.generateRequest()
+
+      },
+      handleReviewResponse:function(e){
+        if(e.detail.status == 200){
+          this.push('reviews', e.detail.response)
+        }else{
+          window.alert("there was a problem with adding your review")
+        }
+
+      },
+      handleCommentResponse:function(e){
+            let reviewId=e.target.getAttribute("data-id")
+
+            let text=e.target.parentNode.querySelector("paper-textarea").value
+            let req = this.$.ajax2
+            req.url = "/review/respond/"+reviewId
+            req.body=JSON.stringify({responseText:text})
+            req.generateRequest()
+          },
+      handleReplyResponse:function(e){
+        if(e.detail.status == 200){
+          let reviewId = e.detail.response.reviewId
+          for(let i =0; i<this.reviews.length;i++){
+            if(this.reviews[i]._id == reviewId ){
+              this.push(`reviews.${i}.replys`,e.detail.response.responseText)
+            }
+          }
+
+        }else{
+          window.alert("there was a problem with adding your reply")
+        }
+
+      },
+      getData:function(){
+        if(this.freelancerId.length>5){
+          this.$.getReviewData.generateRequest()
+          this.$.getFreelancerData.generateRequest()
+        }
+
       }
-
-
     });
     function formatDate(date) {
       var monthNames = [
         "January", "February", "March",
-  "April", "May", "June", "July",
-    "August", "September", "October",
-  "November", "December"
-  ];
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"];
 
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
-  }
+}
+
+
+
+
   </script>
 </dom-module>

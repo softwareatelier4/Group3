@@ -1,8 +1,8 @@
-<link rel="import" href="./components/polymer/polymer.html">
+\<link rel="import" href="./components/polymer/polymer.html">
 <link rel="import" href="./profile-display.html">
 <link rel="import" href="./components/app-route/app-route.html" />
 <link rel="import" href="./components/app-route/app-location.html" />
-<link rel="import" href="./components/iron-pages/iron-pages.html"
+<link rel="import" href="./components/iron-pages/iron-pages.html" />
 <!--
 This is the polymer component for the search field.
 -->
@@ -10,8 +10,14 @@ This is the polymer component for the search field.
 <dom-module id="big-component">
   <template>
     <style>
+    :root{
+    --main-color:#494E6B;
+    --second-color:#98878F;
+    --third-color:#985E6D;
+    --fourth-color:#192231;
+    }
     body{
-      background-color: #f2f2f2;
+      background-color: var(--main-color);
     }
     /*.fields{
         display: flex;
@@ -28,26 +34,33 @@ This is the polymer component for the search field.
         width: 100%;
         height: 40%;
     }*/
+    .search-field-0 #logo.search-field{
+      color:white;
+    }
     search-field{
       width: 100%;
+      position: fixed;
+      z-index: 100;
     }
     form{
       width: 100%;
     }
     search-display{
-      width: 95%;
+      width: 100%;
     }
     iron-pages{
       width: 100%;
     }
     #divcont{
       width: 100%;
-      background-color: #f2f2f2;
+      background-color: white;
       height: 100%;
+    }
+    profile-display{
+      width: 100%;
     }
 
     </style>
-    <body>
 
     <app-location route="{{route}}"></app-location>
     <app-route
@@ -61,15 +74,14 @@ This is the polymer component for the search field.
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
 
-
-    <search-field search-data={{searchData}} just-searched={{justSearched}}></search-field>
+    <search-field search-data={{searchData}} current-coordinates="{{currentCoordinates}}" just-searched={{justSearched}}></search-field>
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
       <form name="search">
           <div class = "input-fields">
               <div class = 'fields'>
                   <div id='divcont'>
 
-                      <search-display search-data={{searchData}}></search-display>
+                      <search-display  current-coordinates="{{currentCoordinates}}" search-data={{searchData}}></search-display>
                       <div>
                           <!-- <img src = "../img/background.jpg" class = "background-image"> -->
                       </div>
@@ -79,7 +91,6 @@ This is the polymer component for the search field.
       </form>
       <profile-display freelancer-id="{{freelancerId}}" name="profile"></profile-display>
     </iron-pages>
-  </body>
 
 <!-- [[prop1]] -->
   </template>
@@ -94,6 +105,8 @@ This is the polymer component for the search field.
           type: String,
           value: '© Job Advisor',
         },
+        behaviors: [ Polymer.IronResizableBehavior ],
+        listeners: { "iron-resize": "onWidthChange" },
         searchData:{
           type:[],
           value:[]
@@ -112,9 +125,10 @@ This is the polymer component for the search field.
           default:false
       },route:{
 
+      },currentCoordinates:{
       }
 
-      },
+    },
       observers:[
         "_routePageChanged(routeData.view)",
         "_subRouteChanged(subRouteData.freelancer_id)",

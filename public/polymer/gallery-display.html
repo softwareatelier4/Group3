@@ -1,0 +1,125 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/paper-dialog/paper-dialog.html">
+<!-- <link rel="import" href="./components/fil-upload/file-upload.html"> -->
+<link rel="import" href="./components/file-upload/file-upload.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
+
+<dom-module id="gallery-display">
+<style>
+.pictureGallery {
+  overflow: auto;
+  width: 515px;
+  height: 515px;
+}
+div.gallery {
+  border: 1px solid #ccc;
+  float: left;
+  width: 185px;
+  height: 185px
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 160px;
+  height: 160px;
+}
+.paperDialogClass{
+  width: 480px;
+  height: 480px;
+}
+
+
+
+
+</style>
+
+<template>
+  <div class="pictureGallery">
+    <template id="reviewsRepeat" is="dom-repeat"  items="{{profile.pictureGallery}}">
+    <div class="gallery">
+      <paper-button raised onclick="{{item}}.open()">
+        <img  src='{{item}}'/>
+      </paper-button>
+
+
+    </div>
+    <paper-dialog id="{{item}}">
+      <img class="paperDialogClass" src='{{item}}'/>
+    </paper-dialog>
+
+    </template>
+
+    <!-- <paper-button raised onclick="dialog.open()">
+    <img class="imgClass" src='../img/profile_pic.png'/>
+  </paper-button>
+  <paper-dialog id="dialog">
+  <img class="paperDialogImgClass" src='../img/profile_pic.png'/>
+</paper-dialog> -->
+<!-- <div class="gallery">
+<a target="_blank" href="../img/alex.jpg">
+<img src="../img/alex.jpg" alt="Trolltunga Norway">
+</a>
+-->
+</div>
+<!-- <form  is="iron-form" enctype="multipart/form-data" method="POST" id="pictureForm" action="/freelancer/58e137c49003395208455b44"> -->
+<form id="pictureForm">
+    <input type="file" id="pictureInput" name="file">
+    <input type="submit" name="submit"></input>
+    <!-- <paper-button raised on-tap="_submit">Submit</paper-button> -->
+</form>
+<!-- <form action="/freelancer/58e137c49003395208455b44" target="_blank" enctype="multipart/form-data" id="upload-form" method="post">
+  <input type="file" name="file"></input>
+  <input type="submit" name="submit"></input>
+</form> -->
+</template>
+<script>
+Polymer({
+  is: 'gallery-display',
+  ready: function() {
+    let that =this
+    this.$.pictureForm.addEventListener("submit",function(e){
+      e.preventDefault()
+      let imgPath = that.$.pictureInput;
+      var formData = new FormData();
+      formData.append("file", imgPath.files[0]);
+      var r = new XMLHttpRequest();
+      r.open("POST", "/freelancer/"+that.freelancerId, true)
+      // r.setRequestHeader("Content-Type", "multipart/form-data");
+      r.send(formData);
+    })
+  },
+  attached:function(){
+    console.log("here")
+  },
+  properties: {
+  },
+
+  _submit : function(e){
+    console.log("aqa");
+    let imgPath = document.getElementById("pictureInput");
+    // let reader = new FileReader()
+    // reader.onload = function(){
+    //   var dataURL = reader.result;
+    //    var data = {
+    //     "dataURL" : dataURL,
+    //   }
+      //this thing can be either here or outside I put here since at the begining I was trying to send dataURL.
+      var formData = new FormData();
+      formData.append("filename", imgPath.files[0]);
+      console.log(imgPath.files)
+      var r = new XMLHttpRequest();
+      r.open("POST", "/freelancer/"+"58e137c49003395208455b44", true)
+      // r.setRequestHeader("Content-Type", "multipart/form-data");
+      console.log(formData);
+      r.send(formData);
+    // }
+}
+
+})
+
+</script>
+</dom-module>

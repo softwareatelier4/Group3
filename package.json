@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "npm run test-mocha",
-    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/* --colors --reporter mocha-jenkins-reporter",
+    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/backendTest/* --colors --reporter mocha-jenkins-reporter",
     "start": "DEBUG='job-advisor-server' node ./bin/www"
   },
   "keywords": [
@@ -21,14 +21,19 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "express-formidable": "^1.0.0",
+    "file-type": "^4.1.0",
+    "formidable": "^1.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
     "mongodb": "^2.2.24",
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
+    "multer": "^1.3.0",
     "path": "^0.12.7",
     "places.js": "^1.4.10",
+    "read-chunk": "^2.0.0",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
   }
