@@ -138,8 +138,13 @@ This is the polymer component for the search field.
       justify-content:flex-start;
       padding: 0 1%;
     }
-    .responseText{
+    .resp_txt{
       padding: 0 2%;
+      border-bottom: thin solid grey;
+    }
+
+    .resp_title{
+      padding-left: 5%;
     }
     .fa-3x{
       color: black;
@@ -149,8 +154,10 @@ This is the polymer component for the search field.
   <div id="body">
     <div id="anotherContainer">
     <div class="collumn">
+      <br>
       <h1>[[profile.firstName]] [[profile.lastName]]</h1>
-      <h3>[[profile.job]] in [[profile.location]]</h3>
+      <h3><star-rating rating= "{{profile.overall}}"></star-rating><br>
+        [[profile.job]] in [[profile.location]]</h3>
       <div class="freelancer-container">
         <img src ="../img/profile_pic.png">
         <div class="desc">Member since: <span>20. March 2017</span></div>
@@ -223,7 +230,7 @@ This is the polymer component for the search field.
       <star-rating rating="{{profile.quality}}"></star-rating> <br>
     </div>
   </div>
-  <div>Comments</div>
+  <h2>Comments</h2>
   <div class="reviewRatings">
   <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
   <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
@@ -250,14 +257,17 @@ This is the polymer component for the search field.
         {{item.reviewText}}
       </div>
       </div>
-      <div>
+      <div class="resp_title">
+      <h4>
         Responses
-      </div>
-      <template is="dom-repeat"  items="{{item.replys}}">
-        <div id="responseText">
+      </h4>
+
+      <template is="dom-repeat"  items="{{item.replys}}" class="responseText">
+        <p class="resp_txt">
           {{item}}
-        </div>
+        </p>
       </template>
+      <div>
       <div class="replyArea">
       <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
       <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
