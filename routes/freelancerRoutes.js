@@ -176,7 +176,7 @@ router.post("/:id",function(req,res){
           console.log(err)
           res.status(400).end()
         }else{
-          res.status(201).end()
+          res.status(201).json({src:href})
         }
 
       })

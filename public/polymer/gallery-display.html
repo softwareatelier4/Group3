@@ -41,18 +41,18 @@ div.gallery img {
   <div class="pictureGallery">
     <template id="reviewsRepeat" is="dom-repeat"  items="{{profile.pictureGallery}}">
     <div class="gallery">
-      <paper-button raised onclick="{{item}}.open()">
+      <paper-button raised on-tap="handleDialog">
         <img  src='{{item}}'/>
       </paper-button>
 
 
     </div>
-    <paper-dialog id="{{item}}">
-      <img class="paperDialogClass" src='{{item}}'/>
-    </paper-dialog>
+
 
     </template>
-
+    <paper-dialog id="asdf">
+      <img class="paperDialogClass" src=""/>
+    </paper-dialog>
     <!-- <paper-button raised onclick="dialog.open()">
     <img class="imgClass" src='../img/profile_pic.png'/>
   </paper-button>
@@ -90,6 +90,16 @@ Polymer({
       r.open("POST", "/freelancer/"+that.freelancerId, true)
       // r.setRequestHeader("Content-Type", "multipart/form-data");
       r.send(formData);
+      r.onreadystatechange=function(){
+        if(r.readyState == 4){
+          if(r.status==201){
+
+            let o = JSON.parse(r.responseText)
+            that.push('profile.pictureGallery', o.src)
+            that.$.pictureForm.reset()
+          }
+        }
+      }
     })
   },
   attached:function(){
@@ -97,26 +107,12 @@ Polymer({
   },
   properties: {
   },
-
-  _submit : function(e){
-    console.log("aqa");
-    let imgPath = document.getElementById("pictureInput");
-    // let reader = new FileReader()
-    // reader.onload = function(){
-    //   var dataURL = reader.result;
-    //    var data = {
-    //     "dataURL" : dataURL,
-    //   }
-      //this thing can be either here or outside I put here since at the begining I was trying to send dataURL.
-      var formData = new FormData();
-      formData.append("filename", imgPath.files[0]);
-      console.log(imgPath.files)
-      var r = new XMLHttpRequest();
-      r.open("POST", "/freelancer/"+"58e137c49003395208455b44", true)
-      // r.setRequestHeader("Content-Type", "multipart/form-data");
-      console.log(formData);
-      r.send(formData);
-    // }
+handleDialog:function(e){
+  console.log(this)
+  let dialog = this.$.asdf
+  console.log(e.target)
+  dialog.querySelector("img").src = e.target.src
+  dialog.toggle()
 }
 
 })
