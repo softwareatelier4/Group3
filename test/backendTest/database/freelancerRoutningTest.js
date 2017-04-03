@@ -9,6 +9,7 @@ let utils = require("../../../utils.js")
 require("../../../models/User.js");
 require("../../../models/Freelancer.js")
 let Freelancer = mongoose.model("Freelancer")
+const id = ObjectId();
 let newFreelancerData={
   "firstName": "peter",
   "lastName":"asdf",
@@ -22,9 +23,10 @@ let newFreelancerData={
   "job":"carpenter",
   "telephoneNum":"123",
   "skypeAcc":"asfd",
-  "description":"i am a bad carpenter"
+  "description":"i am a bad carpenter",
+  "_id": id.toString()
 }
-const id = ObjectId();
+
 
 describe("freelancer db test POST",function(){
 
@@ -80,44 +82,44 @@ describe("freelancer db test POST",function(){
   })
 })
 
-describe('PUT /freelancer/:freelancerid', function(){
-
-  it('should update an existing freelancer', function(done){
-    var freelancerData =  {
-
-      "firstName" : "Seth",
-      "lastName" : "MacFarlane",
-      "email" : "hello",
-      "password" : "peg"
-    };
-
-
-    request(app)
-      .put('/freelancer/' + id)
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json')
-      .send(freelancerData)
-      .expect(204)
-      .end(function(err, res){
-        var body = res.body;
-        body.should.be.empty;
-
-        //check if freelancer was updated
-        request(app)
-          .get('/freelancer/' + id)
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function(err, res){
-            if(err){
-              done(err)
-            }else{
-              done()
-            }
-        });
-
-      });
-  });
-})
+// describe('PUT /freelancer/:freelancerid', function(){ //we dont have a put method anymore
+//
+//   it('should update an existing freelancer', function(done){
+//     var freelancerData =  {
+//
+//       "firstName" : "Seth",
+//       "lastName" : "MacFarlane",
+//       "email" : "hello",
+//       "password" : "peg"
+//     };
+//
+//
+//     request(app)
+//       .put('/freelancer/' + id)
+//       .set('Content-Type', 'application/json')
+//       .set('Accept', 'application/json')
+//       .send(freelancerData)
+//       .expect(204)
+//       .end(function(err, res){
+//         var body = res.body;
+//         body.should.be.empty;
+//
+//         //check if freelancer was updated
+//         request(app)
+//           .get('/freelancer/' + id)
+//           .set('Accept', 'application/json')
+//           .expect(200)
+//           .end(function(err, res){
+//             if(err){
+//               done(err)
+//             }else{
+//               done()
+//             }
+//         });
+//
+//       });
+//   });
+// })
 
 describe('GET /freelancer', function(){
 

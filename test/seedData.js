@@ -61,6 +61,7 @@ var freelancers={
     "country":"Switzerland",
     "streetNum":"12",
     "street":"via Buffi",
+    "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
 },
 {
   "_id":ObjectId(),
@@ -78,6 +79,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
 },
 {
   "_id":ObjectId(),
@@ -95,6 +97,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
 },
 {
   "_id":ObjectId(),
@@ -107,8 +110,10 @@ var freelancers={
   "job":"Carpenter",
   "telephoneNum":"123",
   "description":"i am a bad carpenter",
-  "website":"xd.com",
-  "skypeAcc":"asfd",
+  "website":"www.shaw.com",
+  "skypeAcc":"peter_shaw",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
+
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
@@ -129,6 +134,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
 },
 {
   "_id":ObjectId(),
@@ -146,6 +152,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
 }
 ]
 }
