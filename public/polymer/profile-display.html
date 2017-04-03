@@ -61,7 +61,6 @@ This is the polymer component for the search field.
       color:#192231
     }
     #anotherContainer{
-      background-color: grey;
       width: 100%;
       display: flex;
       align-items: space-between;
@@ -118,27 +117,32 @@ This is the polymer component for the search field.
     .starRatingContainer{
       display: flex;
       justify-content: space-between;
-      width:15vw;
+      min-width: 3em;
+      max-width: 10em;
     }
     .reviewText{
-      margin-left:5vw;
+      min-width: 60%;
       flex-grow:3;
       overflow: auto;
     }
     .reviewRatings{
-      flex-grow:2;
-      width: 100%;
+      flex-grow:1;
       padding: 1%;
     }
     .reviewContainer{
       display: flex;
       width: 100%;
-      background: grey;
+      /*border-style: outset;*/
+      border-left: 1%;
+      /*background: grey;*/
       justify-content:flex-start;
       padding: 0 1%;
     }
     .responseText{
       padding: 0 2%;
+    }
+    .fa-3x{
+      color: black;
     }
 
     </style>
@@ -183,6 +187,22 @@ This is the polymer component for the search field.
           </paper-button>
         </center>
       </div>
+<!-- <<<<<<< HEAD
+======= -->
+      <!-- <a href = "{{profile.facebook}}">
+        <i class="fa fa-facebook-official fa-3x" aria-hidden="true" ></i>
+      </a>
+      <a href = "{{profile.linkedin}}">
+        <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.skypeAcc}}">
+        <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+      </a>
+      <a href = "{{profile.github}}">
+        <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+      </a>
+    </div>
+>>>>>>> 6e985bde8b8bd990581b9ff1f23dc9e6e4e2721e -->
 
     </div>
     <div class = "collumn">
