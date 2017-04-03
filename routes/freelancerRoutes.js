@@ -162,14 +162,27 @@ router.post("/", function(req,res){
 router.post("/:id",function(req,res){
   upload(req,res,function(err){
     if(err){
+
       console.log(err)
       res.status(400).end()
     }else{
-      console.log(req.file)
-      res.status(201).end()
+      if(req.file== undefined){
+        res.status(400).end()
+        return;
+      }
+      let href = "/img/"+req.file.filename
+      freelancer.update({_id:req.params.id}, {$push:{pictureGallery:href}}, function(err,modified){
+        if(err){
+          console.log(err)
+          res.status(400).end()
+        }else{
+          res.status(201).end()
+        }
+
+      })
+
     }
   })
-  console.log(req.body)
   // let a = req.body;
   // let form = new formidable.IncomingForm();
   //   form.on('fileBegin', function (name, file){
