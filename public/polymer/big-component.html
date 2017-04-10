@@ -1,8 +1,9 @@
-\<link rel="import" href="./components/polymer/polymer.html">
-<link rel="import" href="./profile-display.html">
+<link rel="import" href="./components/polymer/polymer.html"/>
+<link rel="import" href="./profile-display.html"/>
 <link rel="import" href="./components/app-route/app-route.html" />
 <link rel="import" href="./components/app-route/app-location.html" />
 <link rel="import" href="./components/iron-pages/iron-pages.html" />
+<link rel="import" href="./user-login.html"/>
 <!--
 This is the polymer component for the search field.
 -->
@@ -90,6 +91,7 @@ This is the polymer component for the search field.
           </div>
       </form>
       <profile-display freelancer-id="{{freelancerId}}" name="profile"></profile-display>
+      <user-login name="login"></user-login>
     </iron-pages>
 
 <!-- [[prop1]] -->

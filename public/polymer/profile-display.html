@@ -336,6 +336,7 @@ This is the polymer component for the search field.
         review.reviewRatingPrice = this.rPrice;
         review.reviewRatingQuality = this.rQuality;
         this.newReview = JSON.stringify(review);
+        this.$.ajax.params.secretKey = localStorage.secretKey
         this.$.ajax.generateRequest()
 
       },
@@ -343,7 +344,7 @@ This is the polymer component for the search field.
         if(e.detail.status == 200){
           this.push('reviews', e.detail.response)
         }else{
-          window.alert("there was a problem with adding your review")
+          window.alert("You need to be logged in to comment")
         }
 
       },
