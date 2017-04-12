@@ -4,27 +4,58 @@
 <link rel="import" href="./components/paper-input/paper-input.html">
 <dom-module id="user-login">
 <style>
+
+:root{
+    --main-color:#494E6B;
+    --container-color:#e6e6e6;
+}
+
 #spacer {
   min-height: 6.6em;
   height:13%;
   width: 95%;
 }
+
+#login-container{
+  background-color: var(--container-color);
+  color: white;
+  padding: 8%;
+  font-size: 18px;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+#login-button{
+    background-color:var(--main-color);
+    margin-top: 10%;
+    width: 100%;
+
+}
+
 .redBackGround{
     background-color: red;
      transition: background-color 300ms linear;
 }
-.whiteBackgroundColor{
-    background-color: white;
+.trasparentBackgroundColor{
+    background-color: var(--container-color);
     transition: background-color 300ms linear;
 }
+
+
 </style>
 <template>
     <div id="spacer"></div>
-    <form is="iron-form" method="get" action="/userRouting/login" on-iron-form-response="handleResponse">
-        <paper-input id="userNameInput" class$="{{changeBackground}}" name="userName" label="user name"></paper-input>
-        <paper-input  name="password" class$="{{changeBackground}}" label="password"></paper-input>
-        <paper-button raised on-tap="_submit">Login</paper-button>
-    </form>
+
+    <div id = "login-container">
+        <form is="iron-form" method="get" action="/userRouting/login" on-iron-form-response="handleResponse">
+            <paper-input id="userNameInput" class$="{{changeBackground}}" name="userName" label="Username"></paper-input>
+            <paper-input  name="password" class$="{{changeBackground}}" label="Password" type = "password"></paper-input>
+            <paper-button id = "login-button" raised on-tap="_submit" >Login</paper-button>
+        </form>
+    </div>
+
 </template>
 
 <script>
@@ -41,13 +72,15 @@ Polymer({
     },
     handleResponse:function(res){
         if(res.detail.response != null){
-            localStorage.secretKey=res.detail.response._id
+            localStorage.secretKey = res.detail.response._id
             window.location="/search"
-        }else{
+        }
+        else
+        {
             this.changeBackground="redBackGround"
             let that = this
             setTimeout(function(){
-                that.changeBackground="whiteBackgroundColor"
+                that.changeBackground="trasparentBackgroundColor"
             },300)
         }
     }
