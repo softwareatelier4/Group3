@@ -111,7 +111,13 @@ This is the polymer component for the search field.
     .rating > input:checked ~ label:hover,
     .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
     .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
-
+    /*css for uploading image on feedback*/
+    .box__dragndrop,
+    .box__uploading,
+    .box__success,
+    .box__error {
+      display: none;
+    }
 
     /*css for the review displaying*/
     .starRatingContainer{
@@ -195,6 +201,7 @@ This is the polymer component for the search field.
           </paper-button>
         </center>
       </div>
+<
 
     </div>
     <div class = "collumn">
@@ -224,6 +231,18 @@ This is the polymer component for the search field.
 
 
   <div>
+    <div>
+      <form class="box" method="post" action="" enctype="multipart/form-data">
+    <div class="box__input">
+      <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+      <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+      <button class="box__button" type="submit">Upload</button>
+    </div>
+    <div class="box__uploading">Uploading&hellip;</div>
+    <div class="box__success">Done!</div>
+    <div class="box__error">Error! <span></span>.</div>
+  </form>
+    </div>
   <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
   <paper-button on-tap="handlePosting">POST</paper-button>
   </div>
@@ -242,6 +261,7 @@ This is the polymer component for the search field.
         {{item.reviewText}}
       </div>
       </div>
+
       <div class="resp_title">
       <h4>
         Responses
@@ -336,6 +356,7 @@ This is the polymer component for the search field.
         review.reviewRatingPrice = this.rPrice;
         review.reviewRatingQuality = this.rQuality;
         this.newReview = JSON.stringify(review);
+        this.$.ajax.params.secretKey = localStorage.secretKey
         this.$.ajax.generateRequest()
 
       },
@@ -343,7 +364,7 @@ This is the polymer component for the search field.
         if(e.detail.status == 200){
           this.push('reviews', e.detail.response)
         }else{
-          window.alert("there was a problem with adding your review")
+          window.alert("You need to be logged in to comment")
         }
 
       },

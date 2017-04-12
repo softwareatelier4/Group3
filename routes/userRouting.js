@@ -21,6 +21,12 @@ router.get('/', function (req, res){
     })
 });
 
+router.get('/login',function(req,res){
+    user.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
+        res.json(found)
+    })
+})
+
 router.get("/:id", function(req,res){
   user.find({_id: req.params.id},{password:0}, function (err, found) {
       if (Object.keys(found).length === 0) {

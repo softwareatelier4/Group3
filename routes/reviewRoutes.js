@@ -4,9 +4,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
 require("../models/Review.js");
+require("../models/User.js");
 
 const review = mongoose.model("Review");
-
+const user = mongoose.model("User");
 
 router.get('/', function (req, res){
     review.find({},
@@ -64,16 +65,26 @@ router.delete("/:id",function(req,res){
 });
 
 router.post("/", function(req,res){
-  let a = new review(req.body);
-  a.save(function(err, saved){
-    if(err){
-      res.status(400).json().end();
-    }
-    else{
-    saved = saved.toObject();
-    res.json(saved);
-  }
+
+  console.log(req.query.secretKey)
+  user.findOne({_id:req.query.secretKey}).lean().exec(function(err,found){
+      if(found == undefined){
+          res.status(203).end()
+      }else{
+            let a = new review(req.body);
+            a.save(function(err, saved){
+            if(err){
+              res.status(203).json().end();
+            }
+            else{
+            saved = saved.toObject();
+            res.json(saved);
+          }
+          })
+
+      }
   })
+
 });
 
 
