@@ -73,7 +73,7 @@ Polymer({
     handleResponse:function(res){
         if(res.detail.response != null){
             localStorage.secretKey = res.detail.response._id
-            window.location="/search"
+            window.location = "/search"
         }
         else
         {
@@ -81,7 +81,7 @@ Polymer({
             let password = document.getElementsByClassName("underline")[5]
             username.style.backgroundColor = 'red';
             password.style.backgroundColor = 'red';
-            
+
             setTimeout(function(){
                 username.style.backgroundColor = '#e6e6e6';
                 password.style.backgroundColor = '#e6e6e6';

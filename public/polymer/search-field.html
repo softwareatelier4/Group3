@@ -93,11 +93,19 @@ This is the polymer component for the search field.
       width:20%;
     }
 
-    .login{
+    #login{
         position: absolute;
         margin-left: 80%;
+        visibility: hidden;
     }
-    
+
+    #logout{
+        position: absolute;
+        margin-left: 87%;
+        visibility: hidden;
+    }
+
+
     paper-input{
       background-color: white;
       height: inherit;
@@ -183,17 +191,21 @@ This is the polymer component for the search field.
           </div>
         </a>
 
-        <div class = "login">
-            <a href = "/login">
+        <div id = "login">
+            <a id ="login-button" href = "/login">
                 <paper-button class="indigo">Login</paper-button>
             </a>
 
-            <a href = "/">
+            <a id = "signup-button" href = "/">
                 <paper-button class="indigo">Sign up</paper-button>
             </a>
         </div>
 
-
+        <div id = "logout">
+            <a id = "logout-button" href = "/">
+                <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
+            </a>
+        </div>
 
 
     <div id="spaceMaker"> </div>
@@ -264,6 +276,20 @@ This is the polymer component for the search field.
 <!-- Api for location filter -->
 
   <script>
+    window.onload = function(e)
+    {
+        if (localStorage.secretKey != "")
+        {
+            document.getElementById("login").style.visibility = "hidden";
+            document.getElementById("logout").style.visibility = "visible";
+        }
+        else
+        {
+            document.getElementById("login").style.visibility = "visible";
+            document.getElementById("logout").style.visibility = "hidden";
+        }
+    }
+
     Polymer({
       is: 'search-field',
       ready: function(){
@@ -343,6 +369,10 @@ This is the polymer component for the search field.
 
         this.req_url=str;
         this.justSearched=true;
+      },
+      _submit:function(){
+          localStorage.secretKey = ""
+          window.location = "/search"
       },
       someFunction:function(res){
         this.searchData=res.detail.response;
