@@ -156,6 +156,7 @@ This is the polymer component for the search field.
     .fa-3x{
       color: black;
     }
+
 /*example*/
     </style>
   <div id="body">
@@ -250,15 +251,15 @@ This is the polymer component for the search field.
     <div>
       <div class="reviewContainer">
 
-      <div class="reviewRatings">
-      <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
-      <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
-      <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
-      </div>
-      <div class="reviewText">
+        <div class="reviewRatings">
+          <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
+          <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
+          <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
+        </div>
 
-        {{item.reviewText}}
-      </div>
+        <div class="reviewText">
+          {{item.reviewText}}
+        </div>
       </div>
 
       <div class="resp_title">
