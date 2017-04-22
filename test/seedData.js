@@ -163,6 +163,15 @@ var freelancers={
 ]
 }
 
+var admins = {
+  name : 'Admin',
+  data : [
+    {
+      "userName" : "admin"
+      "password" : "admin"
+      "email" : "admin@usi.ch"
+    }
+
 var seedData = [];
 seedData.push(users);
 seedData.push(freelancers)

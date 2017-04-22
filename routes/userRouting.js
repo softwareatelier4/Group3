@@ -4,9 +4,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
 require("../models/User.js");
+requiee("../models/Admin.js");
 
 const user = mongoose.model("User");
-
+const admin = mogoose.model("Admin");
 
 router.get('/', function (req, res){
     user.find({},{password:0},
@@ -23,6 +24,12 @@ router.get('/', function (req, res){
 
 router.get('/login',function(req,res){
     user.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
+        console.log(found);
+        res.json(found)
+    })
+})
+router.get('/adminlogin',function(req,res){
+    admin.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
         console.log(found);
         res.json(found)
     })

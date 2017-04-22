@@ -49,7 +49,7 @@
     <div id="spacer"></div>
 
     <div id = "login-container">
-        <form is="iron-form" method="get" action="/userRouting/login" on-iron-form-response="handleResponse">
+        <form is="iron-form" method="get" action="/userRouting/adminlogin" on-iron-form-response="handleResponse">
             <paper-input id="userNameInput" class$="{{changeBackground}}" name="userName" label="Username"></paper-input>
             <paper-input id = "passwordInput" name="password" class$="{{changeBackground}}" label="Password" type = "password"></paper-input>
             <paper-button id = "login-button" raised on-tap="_submit" >Login</paper-button>
