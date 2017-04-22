@@ -62,6 +62,7 @@ var freelancers={
     "streetNum":"12",
     "street":"via Buffi",
     "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
+    "verified" : "false"
 },
 {
   "_id":ObjectId(),
@@ -80,6 +81,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
+  "verified" : "false"
 },
 {
   "_id":ObjectId(),
@@ -98,6 +100,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
+  "verified" : "false"
 },
 {
   "_id":ObjectId(),
@@ -117,6 +120,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
+  "verified" : "false"
 },
 {
   "_id":ObjectId(),
@@ -135,6 +139,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
+  "verified" : "false"
 },
 {
   "_id":ObjectId(),
@@ -153,6 +158,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19"
+  "verified" : "true"
 }
 ]
 }
