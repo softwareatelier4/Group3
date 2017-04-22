@@ -176,6 +176,7 @@ var admins = {
 
 var seedData = [];
 seedData.push(users);
-seedData.push(freelancers)
+seedData.push(freelancers);
+seedData.push(admins);
 
 module.exports = seedData;
