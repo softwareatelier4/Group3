@@ -1,0 +1,95 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/paper-input/paper-input.html">
+<dom-module id="user-login">
+<style>
+
+:root{
+    --main-color:#494E6B;
+    --container-color:#e6e6e6;
+}
+
+#spacer {
+  min-height: 6.6em;
+  height:13%;
+  width: 95%;
+}
+
+#login-container{
+  background-color: var(--container-color);
+  color: white;
+  padding: 8%;
+  font-size: 18px;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+#login-button{
+    background-color:var(--main-color);
+    margin-top: 10%;
+    width: 100%;
+
+}
+
+.redBackGround{
+    background-color: red;
+     transition: background-color 300ms linear;
+}
+.trasparentBackgroundColor{
+    background-color: var(--container-color);
+    transition: background-color 300ms linear;
+}
+
+
+</style>
+<template>
+    <div id="spacer"></div>
+
+    <div id = "login-container">
+        <form is="iron-form" method="get" action="/userRouting/login" on-iron-form-response="handleResponse">
+            <paper-input id="userNameInput" class$="{{changeBackground}}" name="userName" label="Username"></paper-input>
+            <paper-input id = "passwordInput" name="password" class$="{{changeBackground}}" label="Password" type = "password"></paper-input>
+            <paper-button id = "login-button" raised on-tap="_submit" >Login</paper-button>
+        </form>
+    </div>
+
+</template>
+
+<script>
+Polymer({
+    is:"user-login",
+    properties:{
+        changeBackground:{
+            type:String,
+            value:""
+        }
+    },
+    _submit:function(){
+        Polymer.dom(event).localTarget.parentElement.submit();
+    },
+    handleResponse:function(res){
+        if(res.detail.response != null){
+            localStorage.secretKey = res.detail.response._id;
+            localStorage.username = res.detail.response.userName;
+            window.location = "/search"
+        }
+        else
+        {
+            let username = document.getElementsByClassName("underline")[4]
+            let password = document.getElementsByClassName("underline")[5]
+            username.style.backgroundColor = 'red';
+            password.style.backgroundColor = 'red';
+
+            setTimeout(function(){
+                username.style.backgroundColor = '#e6e6e6';
+                password.style.backgroundColor = '#e6e6e6';
+            },500)
+        }
+    }
+})
+</script>
+
+</dom-module>
