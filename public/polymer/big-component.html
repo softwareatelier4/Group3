@@ -4,6 +4,7 @@
 <link rel="import" href="./components/app-route/app-location.html" />
 <link rel="import" href="./components/iron-pages/iron-pages.html" />
 <link rel="import" href="./user-login.html"/>
+<link rel="import" href="./profile-edit.html"/>
 <!--
 This is the polymer component for the search field.
 -->
@@ -60,7 +61,9 @@ This is the polymer component for the search field.
     profile-display{
       width: 100%;
     }
+    profile-edit{
 
+    }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -74,6 +77,7 @@ This is the polymer component for the search field.
     route="{{subroute}}"
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
+
 
     <search-field search-data={{searchData}} current-coordinates="{{currentCoordinates}}" just-searched={{justSearched}}></search-field>
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
@@ -92,6 +96,7 @@ This is the polymer component for the search field.
       </form>
       <profile-display freelancer-id="{{freelancerId}}" name="profile"></profile-display>
       <user-login name="login"></user-login>
+      <profile-edit name="edit-profile"></profile-edit>
     </iron-pages>
 
 <!-- [[prop1]] -->

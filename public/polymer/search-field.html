@@ -106,6 +106,10 @@ This is the polymer component for the search field.
         margin-left: 80%;
         visibility: hidden;
     }
+    #edit-button{
+      position: absolute;
+      margin-left: 62%;
+    }
 
     #welcome{
         color: white;
@@ -198,6 +202,12 @@ This is the polymer component for the search field.
           </div>
         </a>
 
+        <div>
+          <a id = "edit-button" href = "/edit-profile">
+            <paper-button class = "indigo">Edit</paper-button>
+          </a>
+        </div>
+
         <div id = "login">
             <a id ="login-button" href = "/login">
                 <paper-button class="indigo">Login</paper-button>
@@ -209,13 +219,14 @@ This is the polymer component for the search field.
         </div>
 
         <div id = "logout">
-            <p id = "welcome">
 
+            <p id = "welcome">
             </p>
             <a id = "logout-button" href = "/">
                 <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
             </a>
         </div>
+
 
 
     <div id="spaceMaker"> </div>
