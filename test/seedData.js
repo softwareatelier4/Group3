@@ -167,10 +167,12 @@ var admins = {
   name : 'Admin',
   data : [
     {
-      "userName" : "admin"
-      "password" : "admin"
+      "userName" : "admin",
+      "password" : "admin",
       "email" : "admin@usi.ch"
     }
+  ]
+}
 
 var seedData = [];
 seedData.push(users);
