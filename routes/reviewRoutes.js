@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
 require("../models/Review.js");
+require("../models/Review.js");
 require("../models/User.js");
 
 const review = mongoose.model("Review");
