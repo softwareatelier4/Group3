@@ -183,6 +183,12 @@ router.post("/:id",function(req,res){
 
     }
   })
+
+  router.get("/unverified", function(req,res){
+    freelancer.find({verified:false}).lean().exec(function(err,found){
+      res.json(found);
+    })
+  })
   // let a = req.body;
   // let form = new formidable.IncomingForm();
   //   form.on('fileBegin', function (name, file){
