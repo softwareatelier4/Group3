@@ -1,0 +1,63 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+
+<dom-module id="admin-page">
+
+  <style>
+    #top{
+      padding-left: 5%;
+      display: flex;
+      width: 100%;
+      background-color: var(--main-color);
+      height: 6%;
+      min-height: 2.7em;
+    }
+    #logo {
+      color:var(--third-color);
+      padding-top: 2%;
+      background-color: var(--main-color);
+      width: auto;
+      height: 10%;
+      font-size: 2em;
+      font-family: 'Inconsolata', monospace;
+      text-decoration: none;
+
+    }
+  </style>
+
+  <template>
+
+    <div id="top">
+            <div id="logo">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+            </div>
+
+    <template id="membersRepeat" is="dom-repeat"  items="{{freelancers}}">
+
+    </template>
+
+    <iron-ajax
+      id=""
+      url="/unverified"
+      on-response="unvResponse"
+    ></iron-ajax>
+
+  </template>
+
+<script>
+Polymer({
+    is:"admin-page",
+    properties:{
+      freelancers: {
+        type: []
+      },
+    },
+
+    handleResponse:function(res){
+
+    },
+
+})
+
+</script>
+</dom-module>

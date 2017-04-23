@@ -6,6 +6,7 @@ mongoose.Promise = require('bluebird')
 mongoose.connect(config.mongoUrl+config.mongoDbName)
 require("./models/User.js")
 require("./models/Freelancer.js")
+require("./models/Admin.js")
 
 //drop db
 function dropDatabase(done){

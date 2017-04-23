@@ -19,6 +19,13 @@ const freelancer = mongoose.model("Freelancer");
 const review = mongoose.model("Review")
 const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
+router.get("/unverified", function(req,res){
+  console.log("here")
+  freelancer.find({verified:false}).lean().exec(function(err,found){
+    res.json(found);
+  })
+})
+
 router.get('/query', function(req,res){
   console.log("here")
   let words = req.query.words.split(',')
@@ -183,6 +190,8 @@ router.post("/:id",function(req,res){
 
     }
   })
+
+
   // let a = req.body;
   // let form = new formidable.IncomingForm();
   //   form.on('fileBegin', function (name, file){

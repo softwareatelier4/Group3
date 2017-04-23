@@ -62,7 +62,7 @@ var freelancers={
     "streetNum":"12",
     "street":"via Buffi",
     "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
-    "verified" : "false"
+    "verified" : "false",
 },
 {
   "_id":ObjectId(),
@@ -81,7 +81,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
-  "verified" : "false"
+  "verified" : "false",
 },
 {
   "_id":ObjectId(),
@@ -100,7 +100,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
-  "verified" : "false"
+  "verified" : "false",
 },
 {
   "_id":ObjectId(),
@@ -120,7 +120,7 @@ var freelancers={
   "country":"Switzerland",
   "streetNum":"12",
   "street":"via Buffi",
-  "verified" : "false"
+  "verified" : "false",
 },
 {
   "_id":ObjectId(),
@@ -139,7 +139,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
-  "verified" : "false"
+  "verified" : "false",
 },
 {
   "_id":ObjectId(),
@@ -158,13 +158,25 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
-  "verified" : "true"
+  "verified" : "true",
 }
 ]
 }
 
+var admins = {
+  name : 'Admin',
+  data : [
+    {
+      "userName" : "admin",
+      "password" : "admin",
+      "email" : "admin@usi.ch",
+    }
+  ]
+}
+
 var seedData = [];
 seedData.push(users);
-seedData.push(freelancers)
+seedData.push(freelancers);
+seedData.push(admins);
 
 module.exports = seedData;
