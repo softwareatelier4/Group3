@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <link rel="import" href="./gallery-display.html">
+<link rel="import" href="./components/paper-button/paper-button.html">
 
 <dom-module id="profile-edit">
 
@@ -16,15 +17,62 @@
   --third-color:#985E6D;
   --fourth-color:#192231;
   }
-  </style>
-  </template>
-  <div>
+  #button{
+    background-color:var(--main-color);
+  }
+  paper-button.indigo {
+      background-color: var(--main-color);
+      color: white;
+      --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+      };
+  }
 
+  paper-button.indigo:hover {
+      background-color: var(--paper-indigo-400);
+  }
+  #verify-button{
+    position: absolute;
+    margin-top: 40%;
+    margin-left: 60%;
+  }
+  a:link {
+      text-decoration: none;
+  }
+
+  a:visited {
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: none;
+  }
+
+  a:active {
+      text-decoration: none;
+  }
+
+  </style>
+
+  <div>
+    Attach one File to prove your identity and your cv
+    <a href="mailto:admin@jobadvisor.com?Subject=Verify%20This%20user" id = "verify-button">
+      <paper-button class = "indigo">Get Verified</paper-button>
+    </a>
   </div>
+
+
+
+  </template>
+
 
   <script>
   Polymer({
     is: 'profile-edit',
+    ready:function(){
+      console.log('asdfasfasdfs')
+    }
   });
   </script>
 </dom-module>
