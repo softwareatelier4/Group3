@@ -1,8 +1,44 @@
 <link rel="import" href="./components/polymer/polymer.html">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 
 <dom-module id="admin-page">
+
+  <style>
+    #top{
+      padding-left: 5%;
+      display: flex;
+      /*-webkit-justify-content: flex-end;
+      justify-content: flex-end;*/
+      width: 100%;
+      background-color: var(--main-color);
+      height: 6%;
+      min-height: 2.7em;
+    }
+    #logo {
+      color:var(--third-color);
+      padding-top: 2%;
+      background-color: var(--main-color);
+      width: auto;
+      height: 10%;
+      font-size: 2em;
+      font-family: 'Inconsolata', monospace;
+      text-decoration: none;
+
+    }
+    #logocontent{
+      text-decoration: none;
+    }
+  </style>
+
   <template>
-    <div>TEST</div>
+
+    <div id="top">
+          <a id="logocontent" href="/">
+            <div id="logo">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+            </div>
+          </a>
+
   </template>
 
 <script>
