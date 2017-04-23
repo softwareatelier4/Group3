@@ -7,7 +7,7 @@ require("../models/User.js");
 require("../models/Admin.js");
 
 const user = mongoose.model("User");
-<<<<<<< HEAD
+
 
 router.get("/xd", function(req,res){
   let f;
@@ -34,9 +34,9 @@ router.get("/xd", function(req,res){
     res.json(null);
   }
 });
-=======
+
 const admin = mongoose.model("Admin");
->>>>>>> 39ba3977e12bd38ae66200b7ba5161f10e23d84e
+
 
 router.get('/', function (req, res){
     user.find({},{password:0},
