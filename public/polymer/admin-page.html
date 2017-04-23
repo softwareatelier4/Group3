@@ -23,6 +23,32 @@
       text-decoration: none;
 
     }
+    .button {
+      background-color: var(--main-color);
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      float: right;
+      text-transform: uppercase;
+    }
+    .freelancer-container{
+      background: rgb(242, 242, 242);
+      width: 100%;
+      flex-grow: 1;
+
+      padding:1%;
+      /*border-left-style: solid;*/
+      /*border-width: 2px;*/
+      /*border-color: var(--third-color);*/
+    }
+    .freelancer-container:nth-child(even) {
+      background: red;
+      background: rgb(230, 230, 230);
+    }
   </style>
 
   <template>
@@ -34,6 +60,17 @@
 
     <template id="membersRepeat" is="dom-repeat"  items="{{freelancers}}">
 
+      <div  class="freelancer-container">
+        <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
+        <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
+        <div class= "element-display">Email: <span>{{item.email}}</span></div>
+        <p></p>
+        <center>
+          <paper-button class = "button">
+            Visit profile
+          </paper-button>
+       </center>
+       </div>
     </template>
 
     <iron-ajax
