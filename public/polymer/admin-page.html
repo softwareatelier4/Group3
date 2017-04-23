@@ -34,13 +34,30 @@
                 <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
             </div>
 
+    <template id="membersRepeat" is="dom-repeat"  items="{{freelancers}}">
+
+    </template>
+
+    <iron-ajax
+      id=""
+      url="/unverified"
+      on-response="unvResponse"
+    ></iron-ajax>
+
   </template>
 
 <script>
 Polymer({
     is:"admin-page",
     properties:{
-    }
+      freelancers: {
+        type: []
+      },
+    },
+
+    handleResponse:function(res){
+
+    },
 
 })
 
