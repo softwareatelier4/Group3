@@ -74,7 +74,7 @@ Polymer({
         if(res.detail.response != null){
             localStorage.secretKey = res.detail.response._id;
             localStorage.username = res.detail.response.userName;
-            window.location = "/admin_page"
+            window.location = "/overview.html"
         }
         else
         {
