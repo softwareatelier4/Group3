@@ -9,9 +9,18 @@ const readChunk = require('read-chunk');
 const fileType = require('file-type');
 const multer = require("multer")
 var upload = multer({ dest: './public/img/' }).single("file")
+var upload2 = multer();
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
+var mailer = require('nodemailer');
+var transporter = mailer.createTransport({
+service: 'Gmail',
+auth: {
+    user: 'paolofalcionix@gmail.com',
+    pass: 'BirbaLea2014'
+}
+});
 //
 //
 const user = mongoose.model("User");
@@ -36,6 +45,48 @@ router.put("/verify/:id", function(req,res){
       res.status(201).end()
     }
   })
+})
+
+router.post("/smtp", function(req,res){
+//   mailer.SMTP = {
+//     host: 'gmail.com',
+//     port: 587,
+//     use_authentication: true,
+//     user: 'paolofalcionix@gmail.com',
+//     pass: 'BirbaLea2014'
+// };
+// upload2.array("file",3);
+// upload2(req,res,function(err){
+//   console.log("enter error");
+//   if(err){
+//
+//     console.log(err)
+//     res.status(400).end()
+//   }else{
+//     if(req.file== undefined){
+//       res.status(400).end()
+//       return;
+//     }
+//     let href = "/img/"+req.file.filename
+//     freelancer.update({_id:req.params.id}, {$push:{pictureGallery:href}}, function(err,modified){
+//       if(err){
+//         console.log(err)
+//         res.status(400).end()
+//       }else{
+//         res.status(201).json({src:href})
+//       }
+//
+//     })
+//
+//   }
+// })
+transporter.sendMail({
+from: 'paolofalcionix@gmail.com',
+  to: 'ilijagjorgjiev03@gmail.com',
+  subject: 'Become Freelancer!',
+  text: 'Become Freelancer!',
+  attachments: [{filename: "/Users/ilijagjorgjiev/Desktop/damiano.jpg"}]
+});
 })
 
 router.get('/query', function(req,res){

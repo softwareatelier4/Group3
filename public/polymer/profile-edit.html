@@ -112,6 +112,9 @@
 
             <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
       </form>
+      <paper-dialog id="dialog">
+        Submit both an ID and CV.
+      </paper-dialog>
   </div>
 
 
@@ -133,11 +136,20 @@
     _submit:function(){
         let idInput = document.getElementById("idInput");
         let cvInput = document.getElementById("cvInput");
+        let extraInput = document.getElementById("extraInput");
+        console.log(idInput.files[0]);
         if(idInput.value && cvInput.value){
-          console.log(true);
+          var formData = new FormData();
+          formData.append("file", idInput.files[0]);
+          formData.append("file", cvInput.files[0]);
+          if(extraInput.value) formData.append("file", extraInput.files[0]);
+          var r = new XMLHttpRequest();
+           r.open("POST", "/freelancer/smtp", true)
+           r.send(formData);
         }
         else{
-          console.log(false);
+          let dialog = document.getElementById("dialog");
+          dialog.open();
         }
     }
 })
