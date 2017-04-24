@@ -96,6 +96,27 @@ describe('GET /userRouting', function(){
     });
   });
 
+  describe('GET /xd', function(){
+    var newUserData = {
+      "firstName" : "Seth",
+      "lastName" : "asdf",
+      "userName" : "seth",
+      "email" : "seth.macfarlane@gmail.com",
+      "password" : "peg"
+    }
+      it('should add user if userdata is valid', function(done){
+        request(app)
+          .get('/userRouting/xD')
+          .set('Accept', 'application/json')
+          .send(newUserData)
+          .expect('Content-Type', /json/, 'it should respond with json' )
+          .expect(200)
+          .end(function(err, res){
+            done();
+          });
+      });
+    });
+
   describe('GET /userRouting/:userid', function(){
 
 
@@ -118,7 +139,7 @@ describe('GET /userRouting', function(){
   })
 
   describe('DELETE /userRouting/:userid', function(){
-
+    after(utils.dropDb)
 
     it('should delete an existing user', function(done){
       request(app)
