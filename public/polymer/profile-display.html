@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <link rel="import" href="./gallery-display.html">
+<link rel="import" href="./components/file-upload/file-upload.html">
 <!--
 This is the polymer component for the search field.
 -->
@@ -99,6 +100,10 @@ This is the polymer component for the search field.
     .rating > label {
       color: #ddd;
     float: right;
+    }
+    .revImg{
+      max-width: 30%;
+
     }
 
     /***** CSS Magic to Highlight Stars on Hover *****/
@@ -233,16 +238,10 @@ This is the polymer component for the search field.
 
   <div>
     <div>
-      <form class="box" method="post" action="" enctype="multipart/form-data">
-    <div class="box__input">
-      <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
-      <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-      <button class="box__button" type="submit">Upload</button>
-    </div>
-    <div class="box__uploading">Uploading&hellip;</div>
-    <div class="box__success">Done!</div>
-    <div class="box__error">Error! <span></span>.</div>
-  </form>
+<!-- <file-upload dropText="Or Drop Here" droppable="true" manualUpload="true"
+raised="true" accept="image/*" >Add Photo</file-upload> -->
+<input type="file" id="reviewImg" name="files[]" accept="image/*">
+<output id="list"></output>
     </div>
   <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
   <paper-button on-tap="handlePosting">POST</paper-button>
@@ -259,8 +258,11 @@ This is the polymer component for the search field.
         </div>
 
         <div class="reviewText">
-          {{item.reviewText}}
+          {{item.reviewText}}<br>
+            <img class="revImg" src=[[item.reviewImg]]></img>
         </div>
+
+
       </div>
 
       <div class="resp_title">
@@ -303,14 +305,14 @@ This is the polymer component for the search field.
   body="{{newReview}}"
   url="/review"
   on-response="handleReviewResponse"
-  debounce-duration="3000">
+  debounce-duration="3000"></iron-ajax>
   <iron-ajax
     id="ajax2"
     handle-as="json"
     content-type="application/json"
     method="PUT"
     on-response="handleReplyResponse"
-    debounce-duration="3000">
+    debounce-duration="3000"></iron-ajax>
 
 
   </template>
@@ -325,9 +327,10 @@ This is the polymer component for the search field.
       ready: function() {
         this.profile =
             {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-            job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
+            job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' };
 
-      },
+
+          },
 
       properties: {
         freelancerId: {
@@ -350,24 +353,40 @@ This is the polymer component for the search field.
         this.reviews = res.detail.response;
       },
       handlePosting: function(){
-        let review ={}
-        review.freelancer=this.freelancerId;
-        review.reviewText=this.reviewComment;
-        review.reviewRatingOverall = this.rOverall;
-        review.reviewRatingPrice = this.rPrice;
-        review.reviewRatingQuality = this.rQuality;
-        this.newReview = JSON.stringify(review);
-        this.$.ajax.params.secretKey = localStorage.secretKey
-        this.$.ajax.generateRequest()
+
+
+      var formData = new FormData();
+          formData.append("file", reviewImg.files[0]);
+          formData.append("freelancer", this.freelancerId);
+          formData.append("reviewText", this.reviewComment);
+          formData.append("reviewRatingOverall", this.rOverall);
+          formData.append("reviewRatingPrice", this.rPrice);
+          formData.append("reviewRatingQuality", this.rQuality);
+          formData.append("secretKey",localStorage.secretKey);
+          var r = new XMLHttpRequest();
+      // r.open("POST", "/review/"+this.freelancerId, true);
+      r.open("POST", "/review", true);
+      // r.setRequestHeader("Content-Type", "multipart/form-data");
+      console.log(formData.getAll('secretKey'));
+
+      r.send(formData);
+      r.onreadystatechange=function(){
+          if(r.readyState == 4){
+            console.log(r.responseText);
+            if(r.status==201){
+                this.$.handleReviewResponse(r);
+              }
+          }
+      }
 
       },
       handleReviewResponse:function(e){
         if(e.detail.status == 200){
+          console.log(e.detail.response);
           this.push('reviews', e.detail.response)
         }else{
           window.alert("You need to be logged in to comment")
         }
-
       },
       handleCommentResponse:function(e){
             let reviewId=e.target.getAttribute("data-id")
