@@ -24,7 +24,8 @@ let newFreelancerData={
   "telephoneNum":"123",
   "skypeAcc":"asfd",
   "description":"i am a bad carpenter",
-  "_id": id.toString()
+  "_id": id.toString(),
+  "verified":"true"
 }
 
 
@@ -161,6 +162,52 @@ describe('GET /freelancer', function(){
           .expect(404, done);
       });
   })
+
+  describe('get unverified', function(){
+    it("should send all unverified users",function(done){
+      request(app)
+      .get("/freelancer/unverified")
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+
+  describe('verifying', function(){
+    it("should verify freelancer",function(done){
+      request(app)
+      .put("/freelancer/verify/"+id)
+      .expect(201)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+
+  describe('post pictures', function(){
+    it("should return error if no picture is sent",function(done){
+      request(app)
+      .post("/freelancer/"+id)
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+
 
   describe('DELETE /freelancer/:freelancerid', function(){
     after(utils.dropDb)

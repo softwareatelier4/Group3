@@ -43,6 +43,9 @@
       float: right;
       text-transform: uppercase;
     }
+    .button:hover{
+      background-color: var(--main-color-lighter);
+    }
     .freelancer-container{
       background: rgb(242, 242, 242);
       width: 100%;
@@ -52,6 +55,9 @@
     .freelancer-container:nth-child(even) {
       background: red;
       background: rgb(230, 230, 230);
+    }
+    .green{
+      background-color: green;
     }
   </style>
 
@@ -70,7 +76,7 @@
         <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
         <div class= "element-display">Email: <span>{{item.email}}</span></div>
         <br>
-          <paper-button class = "button">
+          <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
             Verify
           </paper-button>
 
@@ -82,6 +88,12 @@
       id="ajax"
       url="/freelancer/unverified"
       on-response="handleResponse"
+    ></iron-ajax>
+
+    <iron-ajax
+      id="ajax2"
+
+      method="PUT"
     ></iron-ajax>
 
   </template>
@@ -101,6 +113,14 @@ Polymer({
     handleResponse:function(res){
       this.set("freelancers",res.detail.response)
     },
+    verify:function(e){
+      let freelancerId=e.target.getAttribute("data-id")
+      let req = this.$.ajax2
+      console.log(e.target.className)
+      req.url ="/freelancer/verify/"+freelancerId
+      e.target.style.backgroundColor="green"
+      req.generateRequest()
+    }
 
 })
 
