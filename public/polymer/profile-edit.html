@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <link rel="import" href="./gallery-display.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
+  <link rel="import" href="./components/iron-ajax/iron-ajax.html">
 
 <dom-module id="profile-edit">
 
@@ -94,8 +95,8 @@
 
   <div id = "sign-up-container">
     <div id="edit-freelancer">
-      <paper-input class="indigo" label="About" value = "I am a bad carpenter"></paper-input>
-      <paper-button class="indigo" id="edit-button">edit<paper-button>
+      <paper-input class="indigo" label="About" value = ""></paper-input>
+      <paper-button class="indigo" on-tap="handleClick" id="editButton">edit<paper-button>
     </div>
 
       <form id="verifyForm">
@@ -113,9 +114,6 @@
             <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
       </form>
   </div>
-
-
-
 
 
   </template>
@@ -139,6 +137,9 @@
         else{
           console.log(false);
         }
+    },
+    handleClick:function(e){
+
     }
 })
   </script>

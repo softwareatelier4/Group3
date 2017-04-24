@@ -404,6 +404,8 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
             if(r.status==201){
                 location.reload();
                 // this.$.handleReviewResponse(r);
+              }else{
+                window.alert("You need to be logged in to comment")
               }
           }
       }

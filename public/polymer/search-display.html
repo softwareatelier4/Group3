@@ -138,6 +138,9 @@ This is the polymer component for the search field.
         /*padding: 2%;*/
         padding-top: 0.6%
       }
+      .green{
+        color:green;
+      }
     </style>
 
     <!-- <h2> Search Results:</h2> -->
@@ -145,16 +148,16 @@ This is the polymer component for the search field.
     <div id="spacer"></div>
     <div id="sliderContainer">
       <span id ="sliderDescription"> Distance </span>
-      <paper-slider id="slider_distance" snaps max="201" value = "5">
-      </paper-slider><span id="distanceLabel">0 km</span>
+      <paper-slider id="slider_distance" snaps max="201" value = "150">
+      </paper-slider><span id="distanceLabel">150 km</span>
       <span id ="sliderDescription"> Time </span>
-      <paper-slider id="slider_time" snaps max="10" value = "2">
+      <paper-slider id="slider_time" snaps max="150" value = "50">
 
-      </paper-slider><span id="timeLabel">2 hours</span>
+      </paper-slider><span id="timeLabel">50 min</span>
       <span id ="sliderDescription"> Rating </span>
-      <paper-slider id="slider_rating" snaps min = "1" snaps max="5" max-markers="5" step = "1" value = "3">
+      <paper-slider id="slider_rating" snaps min = "1" snaps max="5" max-markers="5" step = "1" value = "1">
 
-      </paper-slider><span id="starLabel">3 stars</span>
+      </paper-slider><span id="starLabel">1 star</span>
       <span id ="sliderDescription"> Price </span>
       <paper-slider id="slider_price" snaps min = "1" snaps max="500" value = "50" >
 
@@ -188,6 +191,8 @@ This is the polymer component for the search field.
           <div class= "element-display">Email: <span>{{item.email}}</span></div>
           <div class= "element-display">Job: <span>{{item.job}}</span></div>
           <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
+          <template is="dom-if" if="[[item.verified]]"><div class= "element-display green">Verified</div></template>
+
           <!--<div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>-->
           <p></p>
           <center>
@@ -224,13 +229,13 @@ This is the polymer component for the search field.
           });
         this.$.slider_time.addEventListener('value-change', function() {
           if(slider_time.value == slider_time.max){
-            document.querySelector('#timeLabel').textContent = "10+ hours";
+            document.querySelector('#timeLabel').textContent = slider_time.value +"min";
           }
           else if (slider_time.value == 1){
-              document.querySelector('#timeLabel').textContent = "1 hour";
+              document.querySelector('#timeLabel').textContent = "1 min";
           }
           else{
-            document.querySelector('#timeLabel').textContent = slider_time.value + " hours";
+            document.querySelector('#timeLabel').textContent = slider_time.value + " min";
           }
             that.reFilter();
           });
@@ -320,7 +325,7 @@ This is the polymer component for the search field.
         _filter: function(person){
               slider_distance.value = parseFloat(slider_distance.value);
               return ((this.googleDistance(person.latitude, person.longitude) <= slider_distance.value)
-               && (person.overall <=slider_rating.value)  && (person.price <= slider_price.value) );
+               && (person.overall >=slider_rating.value)  && (person.price <= slider_price.value) && (slider_time.value>= person.time));
             },
         reFilter:function(){
             this.$.searchRepeatDisplay.render();
@@ -331,6 +336,8 @@ This is the polymer component for the search field.
             //   let x = this.searchData[i]
             //   console.log(x.firstName, this.googleDistance(x.latitude,x.longitude))
             // }
+            console.log("xDD")
+            this.getDriveDuration()
             this.$.searchRepeatDisplay.render()
           },
           googleDistance:function(lat1, long1){
@@ -356,6 +363,7 @@ This is the polymer component for the search field.
             if(this.searchData==null){
               return
             }
+            let that = this
             for(let i =0; i<this.searchData.length; i++){
               let p = this.searchData[i]
               let r = new XMLHttpRequest();
@@ -368,8 +376,9 @@ This is the polymer component for the search field.
                   if(r.status==200){
 
                     let o = JSON.parse(r.responseText)
-                    p.time=o.rows[0].elements[0].duration.value/60
+                    that.set(`searchData.${i}.time`,o.rows[0].elements[0].duration.value/60)
                     console.log(p.time)
+                    that.reFilter()
                   }
                 }
               }

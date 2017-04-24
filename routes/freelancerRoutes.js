@@ -39,13 +39,13 @@ router.put("/verify/:id", function(req,res){
 })
 
 router.get('/query', function(req,res){
-  console.log("here")
+
   let words = req.query.words.split(',')
   let location= [req.query.city.toLowerCase()]
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
     words[i]= words[i].toLowerCase()
   }
-  freelancer.find({verified:true},{dateCreated:0,__v:0}).lean().exec(function(err,found){
+  freelancer.find({},{dateCreated:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
