@@ -2,6 +2,7 @@
 <link rel="import" href="./components/iron-form/iron-form.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
 <link rel="import" href="./components/paper-input/paper-input.html">
+<link rel="import" href="./components/paper-dialog/paper-dialog.html">
 
 <dom-module id="sign-up">
 <style>
@@ -60,6 +61,11 @@
             <paper-button id = "create-button" raised on-tap="_submit" >Create Account</paper-button>
         </form>
     </div>
+    <paper-dialog id="dialog">
+      dsadasdsa
+      dsadasdsa
+    </paper-dialog>
+
 
 </template>
 
@@ -76,24 +82,17 @@ Polymer({
         Polymer.dom(event).localTarget.parentElement.submit();
     },
     handleResponse:function(res){
-      console.log("I am coming here");
-      if(res.detail.response != null){
+      if(!(res.detail.response.error)){
           localStorage.secretKey = res.detail.response._id;
           localStorage.username = res.detail.response.userName;
           window.location = "/search"
       }
       else
       {
-          let username = document.getElementsByClassName("underline")[4]
-          let password = document.getElementsByClassName("underline")[5]
-          console.log(username);
-          username.style.backgroundColor = 'red';
-          password.style.backgroundColor = 'red';
-
-          setTimeout(function(){
-              username.style.backgroundColor = '#e6e6e6';
-              password.style.backgroundColor = '#e6e6e6';
-          },500)
+          let dialog = document.getElementById("dialog");
+          dialog.innerHTML = res.detail.response.error;
+          console.log(dialog);
+          dialog.open();
       }
     }
 })

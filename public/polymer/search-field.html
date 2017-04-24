@@ -107,14 +107,16 @@ This is the polymer component for the search field.
     }
     #edit-button{
       position: absolute;
-      margin-left: 62%;
-      visibility: hidden;
+      margin-left: 60%;
     }
 
     #welcome{
         color: white;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
+        margin-left: 50%;
+
+
     }
 
     paper-input{
@@ -217,11 +219,12 @@ This is the polymer component for the search field.
                 <paper-button class="indigo">Sign up</paper-button>
             </a>
         </div>
+        <p id = "welcome">
+        </p>
 
         <div id = "logout">
 
-            <p id = "welcome">
-            </p>
+
             <a id = "logout-button" href = "/">
                 <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
             </a>

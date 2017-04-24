@@ -10,29 +10,27 @@ const user = mongoose.model("User");
 
 
 router.get("/xd", function(req,res){
-  let f;
   user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
-      f = found;
-  })
-  if(f == null){
-    console.log(req.query);
-    let a = new user(req.query);
-    a.save(function(err, saved){
-      if(err){
-        res.json(null).end();
-        console.log("dsaadsdasdas");
+    if(found == null){
+      console.log(req.query);
+      let a = new user(req.query);
+      a.save(function(err, saved){
+        if(err){
+          res.json({'error' : 'Fill all the fields'}).end();
+          console.log("dsaadsdasdas");
+        }
+        else{
+        saved = saved.toObject();
+        delete saved.password;
+        console.log("there");
+        res.status(200).json(saved).end();
       }
-      else{
-      saved = saved.toObject();
-      delete saved.password;
-      console.log("there");
-      res.status(200).json(saved).end();
+      })
     }
-    })
-  }
-  else{
-    res.json(null);
-  }
+    else{
+      res.json({'error' : 'The username already exists'});
+    }
+  })
 });
 
 const admin = mongoose.model("Admin");
