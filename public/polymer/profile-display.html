@@ -402,7 +402,8 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
           if(r.readyState == 4){
             console.log(r.responseText);
             if(r.status==201){
-                this.$.handleReviewResponse(r);
+                location.reload();
+                // this.$.handleReviewResponse(r);
               }
           }
       }
