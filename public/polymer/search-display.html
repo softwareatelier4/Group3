@@ -177,7 +177,10 @@ This is the polymer component for the search field.
         <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
-          <div class= "element-display-right"><span>{{googleDistance(item.latitude, item.longitude)}} away</span></div>
+          <div class= "element-display-right"><span>{{googleDistance(item.latitude, item.longitude)}}km away</span>
+          <div>
+            {{item.time}} min
+          </div></div>
           <div class="element-display"><star-rating rating="{{item.overall}}"></star-rating></div>
           <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
           <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
@@ -365,7 +368,7 @@ This is the polymer component for the search field.
                   if(r.status==200){
 
                     let o = JSON.parse(r.responseText)
-                    p.time=o.rows[0].elements[0].duration.value
+                    p.time=o.rows[0].elements[0].duration.value/60
                     console.log(p.time)
                   }
                 }
