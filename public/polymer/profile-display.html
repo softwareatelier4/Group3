@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <link rel="import" href="./gallery-display.html">
+<link rel="import" href="./components/file-upload/file-upload.html">
 <!--
 This is the polymer component for the search field.
 -->
@@ -60,17 +61,19 @@ This is the polymer component for the search field.
     a:visited {
       color:#192231
     }
-    #anotherContainer{
+    #margin-container{
+      margin-top: 20px;
+    }
+    /*#anotherContainer{
       width: 100%;
-      display: flex;
       align-items: space-between;
       display: -webkit-flex;
       display: flex;
-    }
-    .collumn{
+    }*/
+    /*.collumn{
       padding:2%;
       flex-grow: 1;
-    }
+    }*/
 
     fieldset, label { margin: 0; padding: 0; }
     body{ margin: 20px; }
@@ -95,11 +98,26 @@ This is the polymer component for the search field.
       content: "\f089";
       position: absolute;
     }
-
+    .column-container{
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: stretch;
+    }
+    .row-container{
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: stretch;
+      justify-content:space-around;
+    }
     .rating > label {
       color: #ddd;
     float: right;
     }
+    .revImg{
+      max-width: 30%;
+
+    }
+
 
     /***** CSS Magic to Highlight Stars on Hover *****/
 
@@ -111,7 +129,13 @@ This is the polymer component for the search field.
     .rating > input:checked ~ label:hover,
     .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
     .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
-
+    /*css for uploading image on feedback*/
+    .box__dragndrop,
+    .box__uploading,
+    .box__success,
+    .box__error {
+      display: none;
+    }
 
     /*css for the review displaying*/
     .starRatingContainer{
@@ -126,9 +150,9 @@ This is the polymer component for the search field.
       overflow: auto;
     }
     .reviewRatings{
-
       flex-grow:1;
       padding: 1%;
+      min-width: 20%;
     }
     .reviewContainer{
       display: flex;
@@ -150,61 +174,73 @@ This is the polymer component for the search field.
     .fa-3x{
       color: black;
     }
+
 /*example*/
     </style>
-  <div id="body">
-    <div id="anotherContainer">
-    <div class="collumn">
-      <br>
-      <h1>[[profile.firstName]] [[profile.lastName]]</h1>
-      <h3><star-rating rating= "{{profile.overall}}"></star-rating><br>
-        [[profile.job]] in [[profile.location]]</h3>
-      <div class="freelancer-container">
-        <img src ="../img/profile_pic.png">
-        <div class="desc">Member since: <span>20. March 2017</span></div>
-      </div>
-      <div id="contact-container" style = "width: 300px" >
-        <div class= "desc"><i class="fa fa-envelope" aria-hidden="true"></i>
-           <span>{{profile.email}}</span></div>
-        <p style="font-size:5px"></p>
-        <div class= "desc"><i class="fa fa-phone" aria-hidden="true"></i>
-          <span>{{profile.telephoneNum}}</span></div>
-        <p style="font-size:5px"></p>
-        <div class= "desc"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
-          <span>{{profile.website}}</span></div>
-        <p style="font-size:5px"></p>
-        <div class= "desc"><i class="fa fa-skype" aria-hidden="true"></i>
-          <span>{{profile.skypeAcc}}</span></div>
-        <p></p>
-        <center>
-          <a href = "{{profile.facebook}}">
-            <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
-          </a>
-          <a href = "{{profile.linkedin}}">
-            <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
-          </a>
-          <a href = "{{profile.skypeAcc}}">
-            <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
-          </a>
-          <a href = "{{profile.github}}">
-            <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
-          </a>
-        <paper-button  target="_top">
-          <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
-            Book Now!</a>
-          </paper-button>
-        </center>
-      </div>
 
-    </div>
-    <div class = "collumn">
+  <div id="body">
+    <!-- <div id="anotherContainer"> -->
+    <div class="column-container" id="margin-container">
+    <div class="row-container">
+                    <div class="column-container">
+                        <div>
+                        <h1>[[profile.firstName]] [[profile.lastName]]</h1>
+                        <h3><star-rating rating= "{{profile.overall}}"></star-rating><br>
+                          [[profile.job]] in [[profile.location]]</h3>
+                        </div>
+
+                        <div class="freelancer-container">
+                          <img src ="../img/profile_pic.png">
+                          <div class="desc">Member since: <span>20. March 2017</span></div>
+                        </div>
+
+                        <div id="contact-container" style = "width: 300px">
+                            <div class= "desc"><i class="fa fa-envelope" aria-hidden="true"></i>
+                               <span>{{profile.email}}</span>
+                            </div>
+                          <p style="font-size:5px"></p>
+                            <div class= "desc"><i class="fa fa-phone" aria-hidden="true"></i>
+                              <span>{{profile.telephoneNum}}</span>
+                            </div>
+                          <p style="font-size:5px"></p>
+                          <div class= "desc"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
+                            <span>{{profile.website}}</span></div>
+                          <p style="font-size:5px"></p>
+                          <div class= "desc"><i class="fa fa-skype" aria-hidden="true"></i>
+                            <span>{{profile.skypeAcc}}</span></div>
+                          <p></p>
+                          <center>
+                            <a href = "{{profile.facebook}}">
+                              <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+                            </a>
+                            <a href = "{{profile.linkedin}}">
+                              <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+                            </a>
+                            <a href = "{{profile.skypeAcc}}">
+                              <i class="fa fa-skype fa-3x" aria-hidden="true"></i>
+                            </a>
+                            <a href = "{{profile.github}}">
+                              <i class="fa fa-github-square fa-3x" aria-hidden="true"></i>
+                            </a>
+                          <paper-button  target="_top">
+                            <a href="mailto:{{profile.email}}?Subject=Booking%20JobAdvisor" class = "button" >
+                              Book Now!</a>
+                            </paper-button>
+                          </center>
+                        </div>
+                    </div>
+
+    <div class = "column-container">
+    <div>
       <h2>About</h2>
+    </div>
       <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+    </div>
+    <div>
       <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
     </div>
-
   </div>
-  <div class= "collumn">
+  <div class= "">
     <h2>Rating</h2>
     <div>
       <h3> Overall </h3>
@@ -215,15 +251,23 @@ This is the polymer component for the search field.
       <star-rating rating="{{profile.quality}}"></star-rating> <br>
     </div>
   </div>
+  <div>
   <h2>Comments</h2>
   <div class="reviewRatings">
-  <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
-  <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
-  <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{rQuality}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{rQuality}}"></star-rating></div>
+  </div>
 </div>
 
 
   <div>
+    <div>
+<!-- <file-upload dropText="Or Drop Here" droppable="true" manualUpload="true"
+raised="true" accept="image/*" >Add Photo</file-upload> -->
+<input type="file" id="reviewImg" name="files[]" accept="image/*">Add an image to your review!</input>
+<output id="list"></output>
+    </div>
   <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
   <paper-button on-tap="handlePosting">POST</paper-button>
   </div>
@@ -232,16 +276,20 @@ This is the polymer component for the search field.
     <div>
       <div class="reviewContainer">
 
-      <div class="reviewRatings">
-      <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
-      <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
-      <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
-      </div>
-      <div class="reviewText">
+        <div class="reviewRatings">
+          <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
+          <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
+          <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
+        </div>
 
-        {{item.reviewText}}
+        <div class="reviewText">
+          {{item.reviewText}}<br>
+            <img class="revImg" src=[[item.reviewImg]]></img>
+        </div>
+
+
       </div>
-      </div>
+
       <div class="resp_title">
       <h4>
         Responses
@@ -253,13 +301,16 @@ This is the polymer component for the search field.
         </p>
       </template>
       <div>
-      <div class="replyArea">
-      <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
-      <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
+        <div class="replyArea">
+          <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
+          <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
+        </div>
+      </div>
+        <br/>
       </div>
     </div>
-    <br />
-  </template>
+    </template>
+  </div>
 </div>
 
 
@@ -282,14 +333,14 @@ This is the polymer component for the search field.
   body="{{newReview}}"
   url="/review"
   on-response="handleReviewResponse"
-  debounce-duration="3000">
+  debounce-duration="3000"></iron-ajax>
   <iron-ajax
     id="ajax2"
     handle-as="json"
     content-type="application/json"
     method="PUT"
     on-response="handleReplyResponse"
-    debounce-duration="3000">
+    debounce-duration="3000"></iron-ajax>
 
 
   </template>
@@ -304,9 +355,10 @@ This is the polymer component for the search field.
       ready: function() {
         this.profile =
             {firstName: 'Bob', lastName: 'Palazzi', location: 'Lugano', email: 'username@example.com',
-            job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' }
+            job: 'Plumber', telephoneNum: "0123456789",review:3,dateCreated: '01',description:'description' };
 
-      },
+
+          },
 
       properties: {
         freelancerId: {
@@ -329,23 +381,43 @@ This is the polymer component for the search field.
         this.reviews = res.detail.response;
       },
       handlePosting: function(){
-        let review ={}
-        review.freelancer=this.freelancerId;
-        review.reviewText=this.reviewComment;
-        review.reviewRatingOverall = this.rOverall;
-        review.reviewRatingPrice = this.rPrice;
-        review.reviewRatingQuality = this.rQuality;
-        this.newReview = JSON.stringify(review);
-        this.$.ajax.generateRequest()
+
+
+      var formData = new FormData();
+          formData.append("file", reviewImg.files[0]);
+          formData.append("freelancer", this.freelancerId);
+          formData.append("reviewText", this.reviewComment);
+          formData.append("reviewRatingOverall", this.rOverall);
+          formData.append("reviewRatingPrice", this.rPrice);
+          formData.append("reviewRatingQuality", this.rQuality);
+          formData.append("secretKey",localStorage.secretKey);
+          var r = new XMLHttpRequest();
+      // r.open("POST", "/review/"+this.freelancerId, true);
+      r.open("POST", "/review", true);
+      // r.setRequestHeader("Content-Type", "multipart/form-data");
+      console.log(formData.getAll('secretKey'));
+
+      r.send(formData);
+      r.onreadystatechange=function(){
+          if(r.readyState == 4){
+            console.log(r.responseText);
+            if(r.status==201){
+                location.reload();
+                // this.$.handleReviewResponse(r);
+              }else{
+                window.alert("You need to be logged in to comment")
+              }
+          }
+      }
 
       },
       handleReviewResponse:function(e){
         if(e.detail.status == 200){
+          console.log(e.detail.response);
           this.push('reviews', e.detail.response)
         }else{
-          window.alert("there was a problem with adding your review")
+          window.alert("You need to be logged in to comment")
         }
-
       },
       handleCommentResponse:function(e){
             let reviewId=e.target.getAttribute("data-id")
@@ -385,14 +457,12 @@ This is the polymer component for the search field.
         "August", "September", "October",
         "November", "December"];
 
-  var day = date.getDate();
-  var monthIndex = date.getMonth();
-  var year = date.getFullYear();
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
 
-  return day + ' ' + monthNames[monthIndex] + ' ' + year;
-}
-
-
+        return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    }
 
 
   </script>

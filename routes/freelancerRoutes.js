@@ -19,8 +19,27 @@ const freelancer = mongoose.model("Freelancer");
 const review = mongoose.model("Review")
 const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
-router.get('/query', function(req,res){
+router.get("/unverified", function(req,res){
   console.log("here")
+  freelancer.find({verified:false}).lean().exec(function(err,found){
+    res.json(found);
+  })
+})
+
+router.put("/verify/:id", function(req,res){
+
+  freelancer.update({_id:req.params.id},{verified:true},function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).end()
+    }
+  })
+})
+
+router.get('/query', function(req,res){
+
   let words = req.query.words.split(',')
   let location= [req.query.city.toLowerCase()]
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
@@ -97,6 +116,7 @@ router.get('/', function (req, res){
 
 
 router.get("/:id", function(req,res){
+  console.log("asdf")
   freelancer.find({_id: req.params.id}, function (err, found) {
 
       if (Object.keys(found).length === 0 ) {
@@ -159,6 +179,18 @@ router.post("/", function(req,res){
   })
 });
 
+router.post("/update/:id", function(req,res){
+  console.log(req.body)
+  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).json()
+    }
+  })
+})
+
 router.post("/:id",function(req,res){
   upload(req,res,function(err){
     if(err){
@@ -183,6 +215,8 @@ router.post("/:id",function(req,res){
 
     }
   })
+
+
   // let a = req.body;
   // let form = new formidable.IncomingForm();
   //   form.on('fileBegin', function (name, file){

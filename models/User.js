@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
     email   : { type: String, required: true },
     dateCreated : { type: Date, required: true, default: Date.now },
     location : {type: String},
-    freelancers : { type: [FreelancerSchema], default: []},
+    freelancers : { type: FreelancerSchema},
     profilePicture : {type: String},
   }
 );
