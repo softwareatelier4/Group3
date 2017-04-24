@@ -1,0 +1,128 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+<link rel="import" href="./components/iron-ajax/iron-ajax.html" />
+
+<dom-module id="admin-page">
+
+  <style>
+    :root{
+      --main-color:#494E6B;
+      --main-color-lighter:#5d6389;
+      --second-color:#98878F;
+      --third-color:#985E6D;
+      --fourth-color:#192231;
+    }
+    #top{
+      padding-left: 3%;
+      display: flex;
+      width: 100%;
+      background-color: var(--main-color);
+      height: 6%;
+      min-height: 2.7em;
+    }
+    #logo {
+      color:var(--third-color);
+      padding-top: 2%;
+      background-color: var(--main-color);
+      width: auto;
+      height: 10%;
+      font-size: 2em;
+      font-family: 'Inconsolata', monospace;
+      text-decoration: none;
+
+    }
+    .button {
+      background-color: var(--main-color);
+      border: solid;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      float: right;
+      text-transform: uppercase;
+    }
+    .button:hover{
+      background-color: var(--main-color-lighter);
+    }
+    .freelancer-container{
+      background: rgb(242, 242, 242);
+      width: 100%;
+      flex-grow: 1;
+      padding:1%;
+    }
+    .freelancer-container:nth-child(even) {
+      background: red;
+      background: rgb(230, 230, 230);
+    }
+    .green{
+      background-color: green;
+    }
+  </style>
+
+  <template>
+
+    <div id="top">
+      <div id="logo">
+        <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+      </div>
+    </div>
+
+    <template id="membersRepeat" is="dom-repeat"  items="{{freelancers}}">
+
+      <div  class="freelancer-container">
+        <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
+        <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
+        <div class= "element-display">Email: <span>{{item.email}}</span></div>
+        <br>
+          <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
+            Verify
+          </paper-button>
+
+        <br><br><br>
+       </div>
+    </template>
+
+    <iron-ajax
+      id="ajax"
+      url="/freelancer/unverified"
+      on-response="handleResponse"
+    ></iron-ajax>
+
+    <iron-ajax
+      id="ajax2"
+
+      method="PUT"
+    ></iron-ajax>
+
+  </template>
+
+<script>
+Polymer({
+    is:"admin-page",
+    ready:function(){
+      this.$.ajax.generateRequest()
+    },
+    properties:{
+      freelancers: {
+        type: []
+      },
+    },
+
+    handleResponse:function(res){
+      this.set("freelancers",res.detail.response)
+    },
+    verify:function(e){
+      let freelancerId=e.target.getAttribute("data-id")
+      let req = this.$.ajax2
+      console.log(e.target.className)
+      req.url ="/freelancer/verify/"+freelancerId
+      e.target.style.backgroundColor="green"
+      req.generateRequest()
+    }
+
+})
+
+</script>
+</dom-module>

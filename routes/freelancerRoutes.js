@@ -19,6 +19,25 @@ const freelancer = mongoose.model("Freelancer");
 const review = mongoose.model("Review")
 const textSearchFields = ["firstName","lastName","email","location","street","country","job","description"]
 
+router.get("/unverified", function(req,res){
+  console.log("here")
+  freelancer.find({verified:false}).lean().exec(function(err,found){
+    res.json(found);
+  })
+})
+
+router.put("/verify/:id", function(req,res){
+
+  freelancer.update({_id:req.params.id},{verified:true},function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).end()
+    }
+  })
+})
+
 router.get('/query', function(req,res){
   console.log("here")
   let words = req.query.words.split(',')
@@ -26,7 +45,7 @@ router.get('/query', function(req,res){
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
     words[i]= words[i].toLowerCase()
   }
-  freelancer.find({},{dateCreated:0,__v:0}).lean().exec(function(err,found){
+  freelancer.find({verified:true},{dateCreated:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
@@ -97,6 +116,7 @@ router.get('/', function (req, res){
 
 
 router.get("/:id", function(req,res){
+  console.log("asdf")
   freelancer.find({_id: req.params.id}, function (err, found) {
 
       if (Object.keys(found).length === 0 ) {
@@ -183,6 +203,8 @@ router.post("/:id",function(req,res){
 
     }
   })
+
+
   // let a = req.body;
   // let form = new formidable.IncomingForm();
   //   form.on('fileBegin', function (name, file){

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +15,7 @@
   <link rel="import" href="./components/paper-item/paper-item.html">
   <link rel="import" href="./components/paper-input/paper-input.html">
   <link rel="import" href="./components/iron-ajax/iron-ajax.html">
-    <link rel="import" href="./location-search.html">
+  <link rel="import" href="./location-search.html">
   <script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
@@ -106,11 +105,16 @@ This is the polymer component for the search field.
         margin-left: 80%;
         visibility: hidden;
     }
+    #edit-button{
+      position: absolute;
+      margin-left: 60%;
+    }
 
     #welcome{
         color: white;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
+        margin-left: 50%;
     }
 
     paper-input{
@@ -198,24 +202,32 @@ This is the polymer component for the search field.
           </div>
         </a>
 
+        <div>
+          <a id = "edit-button" href = "/profile-edit">
+            <paper-button class = "indigo">Edit</paper-button>
+          </a>
+        </div>
+
         <div id = "login">
             <a id ="login-button" href = "/login">
                 <paper-button class="indigo">Login</paper-button>
             </a>
 
-            <a id = "signup-button" href = "/">
+            <a id = "signup-button" href = "/sign-up">
                 <paper-button class="indigo">Sign up</paper-button>
             </a>
         </div>
+        <p id = "welcome">
+        </p>
 
         <div id = "logout">
-            <p id = "welcome">
 
-            </p>
+
             <a id = "logout-button" href = "/">
                 <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
             </a>
         </div>
+
 
 
     <div id="spaceMaker"> </div>
@@ -292,6 +304,7 @@ This is the polymer component for the search field.
         {
             document.getElementById("login").style.visibility = "hidden";
             document.getElementById("logout").style.visibility = "visible";
+            document.getElementById("edit-button").style.visibility = "visible";
 
             let welcome = document.getElementById("welcome");
             welcome.innerText = "Welcome, " + localStorage.username;
@@ -300,6 +313,7 @@ This is the polymer component for the search field.
         {
             document.getElementById("login").style.visibility = "visible";
             document.getElementById("logout").style.visibility = "hidden";
+            document.getElementById("edit-button").style.visibility = "hidden";
         }
     }
 

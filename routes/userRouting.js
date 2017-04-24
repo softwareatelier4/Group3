@@ -4,8 +4,36 @@ const router = express.Router();
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird')
 require("../models/User.js");
+require("../models/Admin.js");
 
 const user = mongoose.model("User");
+
+
+router.get("/xd", function(req,res){
+  user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
+    if(found == null){
+      console.log(req.query);
+      let a = new user(req.query);
+      a.save(function(err, saved){
+        if(err){
+          res.json({'error' : 'Fill all the fields'}).end();
+          console.log("dsaadsdasdas");
+        }
+        else{
+        saved = saved.toObject();
+        delete saved.password;
+        console.log("there");
+        res.status(200).json(saved).end();
+      }
+      })
+    }
+    else{
+      res.json({'error' : 'The username already exists'});
+    }
+  })
+});
+
+const admin = mongoose.model("Admin");
 
 
 router.get('/', function (req, res){
@@ -23,6 +51,12 @@ router.get('/', function (req, res){
 
 router.get('/login',function(req,res){
     user.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
+        console.log(found);
+        res.json(found)
+    })
+})
+router.get('/adminlogin',function(req,res){
+    admin.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
         console.log(found);
         res.json(found)
     })
@@ -61,19 +95,6 @@ router.delete("/:id",function(req,res){
   })
 });
 
-router.post("/", function(req,res){
-  let a = new user(req.body);
-  a.save(function(err, saved){
-    if(err){
-      res.status(400).json().end();
-    }
-    else{
-    saved = saved.toObject();
-    delete saved.password;
-    res.json(saved);
-  }
-  })
-});
 
 
 router.put("/:id", function(req,res){
