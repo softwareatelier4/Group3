@@ -10,14 +10,13 @@ var users = {
   name : 'User',
   data : [
     {
-      "_id"          : ObjectId(),
+      "_id"          : sharedId,
       "firstName"    : "Masiar",
       "lastName"     : "Babazadeh",
       "userName"     : "masiar",
       "email"        : "masiar.babazadeh@usi.ch",
       "password"     : "ciao",
       "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
-      "freelancer":sharedId
     },
 
     {
@@ -46,7 +45,7 @@ var freelancers={
   name:"Freelancer",
   data:[
   {
-    "_id":sharedId,
+    "_id":ObjectId(),
     "firstName": "Masiar",
     "lastName":"Babazadeh",
     "email":"peter_s@gmail.com",

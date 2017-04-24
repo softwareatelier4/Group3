@@ -28,7 +28,8 @@ const freelancerSchema = new mongoose.Schema(
     description: {type: String, default: ""},
     pictureGallery : {type: [String], default: []},
     review : {type : [ReviewSchema], default : []},
-    verified: {type : Boolean, required : true, default: false}
+    verified: {type : Boolean, required : true, default: false},
+    ownerId:{type:ObjectId}
   }
 );
 

@@ -179,6 +179,18 @@ router.post("/", function(req,res){
   })
 });
 
+router.post("/update/:id", function(req,res){
+  console.log(req.body)
+  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).json()
+    }
+  })
+})
+
 router.post("/:id",function(req,res){
   upload(req,res,function(err){
     if(err){

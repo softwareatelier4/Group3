@@ -102,11 +102,11 @@
   <div id = "sign-up-container">
     <div id="edit-freelancer">
 
-      <paper-input class="indigo" label="About" value = "I am a bad carpenter"></paper-input>
-      <paper-input class="indigo" label="Location" value = "Milano"></paper-input>
-      <paper-input class="indigo" label="Phone Number" value = "123"></paper-input>
-      <paper-input class="indigo" label="Website" value = "xd.com"></paper-input>
-      <paper-input class="indigo" label="Skype" value = "asfd"></paper-input>
+      <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
+      <paper-input class="indigo" label="Location" id="Location" value = ""></paper-input>
+      <paper-input class="indigo" label="Phone Number" id="Phone Number" value = ""></paper-input>
+      <paper-input class="indigo" label="Website" value = ""></paper-input>
+      <paper-input class="indigo" label="Skype" value = ""></paper-input>
       <paper-input class="indigo" label="Facebook" value = ""></paper-input>
       <paper-input class="indigo" label="Linkedin" value = ""></paper-input>
       <paper-input class="indigo" label="Github" value = ""></paper-input>
@@ -137,6 +137,13 @@
       </form>
   </div>
 
+  <iron-ajax
+  id="ajax"
+  handle-as="json"
+  on-response="someFunction"
+  method="POST"
+  content-type="application/json"></iron-ajax>
+
   </template>
 
 
@@ -160,6 +167,15 @@
         }
     },
     handleClick:function(e){
+      let req = this.$.ajax
+      req.url = "/freelancer/update/"+localStorage.secretKey
+      let o={}
+      o.description=this.$.description.value
+      o.location=this.$.Location.value
+      req.body=JSON.stringify(o)
+      req.generateRequest()
+    },
+    someFunction:function(){
 
     }
 })
