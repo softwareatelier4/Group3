@@ -86,10 +86,18 @@
       background-color: var(--container-color);
       transition: background-color 300ms linear;
   }
+  #edit-button{
+  }
   </style>
   <div id="spacer"></div>
 
+
   <div id = "sign-up-container">
+    <div id="edit-freelancer">
+      <paper-input class="indigo" label="About" value = "I am a bad carpenter"></paper-input>
+      <paper-button class="indigo" id="edit-button">edit<paper-button>
+    </div>
+
       <form id="verifyForm">
             <p>Submit ID</p>
             <input type="file" id="idInput" name="file">
@@ -105,7 +113,7 @@
             <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
       </form>
   </div>
-  
+
 
 
 
