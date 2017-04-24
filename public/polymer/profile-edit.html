@@ -89,15 +89,37 @@
   }
   #edit-button{
   }
+  p{
+    color: black;
+  }
+  input{
+    margin:10px;
+  }
   </style>
   <div id="spacer"></div>
 
 
   <div id = "sign-up-container">
     <div id="edit-freelancer">
-      <paper-input class="indigo" label="About" value = ""></paper-input>
+
+      <paper-input class="indigo" label="About" value = "I am a bad carpenter"></paper-input>
+      <paper-input class="indigo" label="Location" value = "Milano"></paper-input>
+      <paper-input class="indigo" label="Phone Number" value = "123"></paper-input>
+      <paper-input class="indigo" label="Website" value = "xd.com"></paper-input>
+      <paper-input class="indigo" label="Skype" value = "asfd"></paper-input>
+      <paper-input class="indigo" label="Facebook" value = ""></paper-input>
+      <paper-input class="indigo" label="Linkedin" value = ""></paper-input>
+      <paper-input class="indigo" label="Github" value = ""></paper-input>
+      <p>
+        Profile picture
+      </p>
+      <input type="file" id="profile picture" name="file">
+
+
       <paper-button class="indigo" on-tap="handleClick" id="editButton">edit<paper-button>
+
     </div>
+
 
       <form id="verifyForm">
             <p>Submit ID</p>
@@ -114,7 +136,6 @@
             <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
       </form>
   </div>
-
 
   </template>
 
