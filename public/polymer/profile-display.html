@@ -152,6 +152,7 @@ This is the polymer component for the search field.
     .reviewRatings{
       flex-grow:1;
       padding: 1%;
+      min-width: 20%;
     }
     .reviewContainer{
       display: flex;
@@ -264,7 +265,7 @@ This is the polymer component for the search field.
     <div>
 <!-- <file-upload dropText="Or Drop Here" droppable="true" manualUpload="true"
 raised="true" accept="image/*" >Add Photo</file-upload> -->
-<input type="file" id="reviewImg" name="files[]" accept="image/*">
+<input type="file" id="reviewImg" name="files[]" accept="image/*">Add an image to your review!</input>
 <output id="list"></output>
     </div>
   <paper-textarea value="{{reviewComment}}" label="Comment on Your Experience with [[profile.firstName]] [[profile.lastName]]" rows="3" max-rows="5"></paper-textarea>
