@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <link rel="import" href="./gallery-display.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
+  <link rel="import" href="./components/iron-ajax/iron-ajax.html">
 
 <dom-module id="profile-edit">
 
@@ -88,15 +89,37 @@
   }
   #edit-button{
   }
+  p{
+    color: black;
+  }
+  input{
+    margin:10px;
+  }
   </style>
   <div id="spacer"></div>
 
 
   <div id = "sign-up-container">
     <div id="edit-freelancer">
-      <paper-input class="indigo" label="About" value = "I am a bad carpenter"></paper-input>
-      <paper-button class="indigo" id="edit-button">edit<paper-button>
+
+      <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
+      <paper-input class="indigo" label="Location" id="Location" value = ""></paper-input>
+      <paper-input class="indigo" label="Phone Number" id="Phone Number" value = ""></paper-input>
+      <paper-input class="indigo" label="Website" value = ""></paper-input>
+      <paper-input class="indigo" label="Skype" value = ""></paper-input>
+      <paper-input class="indigo" label="Facebook" value = ""></paper-input>
+      <paper-input class="indigo" label="Linkedin" value = ""></paper-input>
+      <paper-input class="indigo" label="Github" value = ""></paper-input>
+      <p>
+        Profile picture
+      </p>
+      <input type="file" id="profile picture" name="file">
+
+
+      <paper-button class="indigo" on-tap="handleClick" id="editButton">edit<paper-button>
+
     </div>
+
 
       <form id="verifyForm">
             <p>Submit ID</p>
@@ -117,9 +140,12 @@
       </paper-dialog>
   </div>
 
-
-
-
+  <iron-ajax
+  id="ajax"
+  handle-as="json"
+  on-response="someFunction"
+  method="POST"
+  content-type="application/json"></iron-ajax>
 
   </template>
 
@@ -151,6 +177,18 @@
           let dialog = document.getElementById("dialog");
           dialog.open();
         }
+    },
+    handleClick:function(e){
+      let req = this.$.ajax
+      req.url = "/freelancer/update/"+localStorage.secretKey
+      let o={}
+      o.description=this.$.description.value
+      o.location=this.$.Location.value
+      req.body=JSON.stringify(o)
+      req.generateRequest()
+    },
+    someFunction:function(){
+
     }
 })
   </script>

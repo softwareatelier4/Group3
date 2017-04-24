@@ -90,13 +90,13 @@ from: 'paolofalcionix@gmail.com',
 })
 
 router.get('/query', function(req,res){
-  console.log("here")
+
   let words = req.query.words.split(',')
   let location= [req.query.city.toLowerCase()]
   for(let i = 0; i<words.length; i++){//set everyting to lowercase
     words[i]= words[i].toLowerCase()
   }
-  freelancer.find({verified:true},{dateCreated:0,__v:0}).lean().exec(function(err,found){
+  freelancer.find({},{dateCreated:0,__v:0}).lean().exec(function(err,found){
     if(err){
       res.status(500).end()
     }else{
@@ -229,6 +229,18 @@ router.post("/", function(req,res){
     }
   })
 });
+
+router.post("/update/:id", function(req,res){
+  console.log(req.body)
+  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).json()
+    }
+  })
+})
 
 router.post("/:id",function(req,res){
   upload(req,res,function(err){

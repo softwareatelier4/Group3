@@ -46,8 +46,8 @@ var freelancers={
   data:[
   {
     "_id":ObjectId(),
-    "firstName": "Peter",
-    "lastName":"Shaw",
+    "firstName": "Masiar",
+    "lastName":"Babazadeh",
     "email":"peter_s@gmail.com",
     "location":"Lugano",
     "latitude": "46.0058",
