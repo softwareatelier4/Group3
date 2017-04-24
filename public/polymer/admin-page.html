@@ -1,5 +1,6 @@
 <link rel="import" href="./components/polymer/polymer.html">
 <link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
+<link rel="import" href="./components/iron-ajax/iron-ajax.html" />
 
 <dom-module id="admin-page">
 
@@ -74,9 +75,9 @@
     </template>
 
     <iron-ajax
-      id=""
-      url="/unverified"
-      on-response="unvResponse"
+      id="ajax"
+      url="/freelancer/unverified"
+      on-response="handleResponse"
     ></iron-ajax>
 
   </template>
@@ -84,6 +85,9 @@
 <script>
 Polymer({
     is:"admin-page",
+    ready:function(){
+      this.$.ajax.generateRequest()
+    },
     properties:{
       freelancers: {
         type: []
@@ -91,7 +95,7 @@ Polymer({
     },
 
     handleResponse:function(res){
-
+      this.set("freelancers",res.detail.response)
     },
 
 })
