@@ -16,6 +16,7 @@
   --second-color:#98878F;
   --third-color:#985E6D;
   --fourth-color:#192231;
+  --container-color:#e6e6e6;
   }
   #button{
     background-color:var(--main-color);
@@ -33,9 +34,7 @@
       background-color: var(--paper-indigo-400);
   }
   #verify-button{
-    position: absolute;
-    margin-top: 40%;
-    margin-left: 60%;
+
   }
   a:link {
       text-decoration: none;
@@ -52,15 +51,62 @@
   a:active {
       text-decoration: none;
   }
+  a{
+    width:inherit;
+  }
+  #spacer {
+    min-height: 6.6em;
+    height:13%;
+    width: 95%;
+  }
 
+  #sign-up-container{
+    background-color: var(--container-color);
+    color: white;
+    padding: 8%;
+    font-size: 18px;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+  }
+
+  #create-button{
+      background-color:var(--main-color);
+      margin-top: 10%;
+      width: 100%;
+
+  }
+
+  .redBackGround{
+      background-color: red;
+       transition: background-color 300ms linear;
+  }
+  .trasparentBackgroundColor{
+      background-color: var(--container-color);
+      transition: background-color 300ms linear;
+  }
   </style>
+  <div id="spacer"></div>
 
-  <div>
-    Attach one File to prove your identity and your cv
-    <a href="mailto:admin@jobadvisor.com?Subject=Verify%20This%20user" id = "verify-button">
-      <paper-button class = "indigo">Get Verified</paper-button>
-    </a>
+  <div id = "sign-up-container">
+      <form id="verifyForm">
+            <p>Submit ID</p>
+            <input type="file" id="idInput" name="file">
+            <p>
+              Submit CV
+            </p>
+            <input type="file" id="cvInput" name="file">
+            <p>
+              Submit something EXTRA
+            </p>
+            <input type="file" id="extraInput" name="file">
+
+            <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
+      </form>
   </div>
+  
+
 
 
 
@@ -70,9 +116,22 @@
   <script>
   Polymer({
     is: 'profile-edit',
-    ready:function(){
-      console.log('asdfasfasdfs')
+    properties:{
+        changeBackground:{
+            type:String,
+            value:""
+        }
+    },
+    _submit:function(){
+        let idInput = document.getElementById("idInput");
+        let cvInput = document.getElementById("cvInput");
+        if(idInput.value && cvInput.value){
+          console.log(true);
+        }
+        else{
+          console.log(false);
+        }
     }
-  });
+})
   </script>
 </dom-module>
