@@ -38,5 +38,7 @@
     "read-chunk": "^2.0.0",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
+  },"devDependencies": {
+        "nightwatch": "^0.8.6"
   }
 }
