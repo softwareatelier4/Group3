@@ -116,6 +116,10 @@ router.get('/query', function(req,res){
 })
 function addAveragesToTheResultAndSend(a,req,res){
   let counter = 0
+  if(a.length==0){
+    res.json([])
+    return
+  }
   a.forEach(function(item){
 
     review.find({freelancer:item._id}).lean().exec(function(err,found){
@@ -133,7 +137,6 @@ function addAveragesToTheResultAndSend(a,req,res){
       item.price = Math.round(price/n)||5
       item.quality = Math.round(quality/n)||5
       if(++counter == a.length){
-        console.log(a)
         res.json(a).end()
       }
     })

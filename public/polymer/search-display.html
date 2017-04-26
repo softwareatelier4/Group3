@@ -180,7 +180,7 @@ This is the polymer component for the search field.
         <!-- <a href="/profile/{{item._id}}"> -->
         <div  class="freelancer-container">
           <img src ="../img/profile_pic.png">
-          <div class= "element-display-right"><span>{{googleDistance(item.latitude, item.longitude)}}km away</span>
+          <div class= "element-display-right"><span>{{item.distance}}km away</span>
           <div>
             {{item.time}} min
           </div></div>
@@ -208,8 +208,7 @@ This is the polymer component for the search field.
           <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
     </div>
     </div>
-  <google-maps-api id="maps" api-key="AIzaSyCC_6UtpJ6q_mXtwAHjRJubR45_KkbStrI" on-api-load="on_api_load"></google-maps-api>
-
+  <google-maps-api id="maps" api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load"></google-maps-api>
   </template>
 
   <script>
@@ -273,6 +272,9 @@ This is the polymer component for the search field.
         },
         directionService:{
           type:Object
+        },googleApiLoaded:{
+          type:Boolean,
+          value:false
         }
 
       },
@@ -324,8 +326,13 @@ This is the polymer component for the search field.
 
         _filter: function(person){
               slider_distance.value = parseFloat(slider_distance.value);
-              return ((this.googleDistance(person.latitude, person.longitude) <= slider_distance.value)
-               && (person.overall >=slider_rating.value)  && (person.price <= slider_price.value) && (slider_time.value>= person.time));
+              if(this.googleApiLoaded &&  !(this.googleDistance(person.latitude, person.longitude) <= slider_distance.value)
+                  && !(slider_time.value>= person.time)){
+
+                return false
+              }
+              //console.log((slider_time.value>= person.time))
+              return ((person.overall >=slider_rating.value)  && (person.price <= slider_price.value));
             },
         reFilter:function(){
             this.$.searchRepeatDisplay.render();
@@ -336,7 +343,6 @@ This is the polymer component for the search field.
             //   let x = this.searchData[i]
             //   console.log(x.firstName, this.googleDistance(x.latitude,x.longitude))
             // }
-            console.log("xDD")
             this.getDriveDuration()
             this.$.searchRepeatDisplay.render()
           },
@@ -349,43 +355,38 @@ This is the polymer component for the search field.
             return Math.round(retVal/10)/100 //to kilometers
           },
           on_api_load:function(){
-            //
-            // this.directionService = new google.maps.DirectionsService();
-            // console.log(this.directionService)
-            // // this.directionService=new google.maps.directionsService();
-            // this.directionsService.route(request, function(response, status) {
-            // if (status == 'OK') {
-            //   directionsDisplay.setDirections(response);
-            //   }
-            //   });
-            // console.log(this.directionService)
+            this.googleApiLoaded=true;
+            this.getDriveDuration()
           },getDriveDuration:function(){
             if(this.searchData==null){
               return
             }
             let that = this
             for(let i =0; i<this.searchData.length; i++){
-              let p = this.searchData[i]
-              let r = new XMLHttpRequest();
-              let url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.currentCoordinates.lat},${this.currentCoordinates.long}&destinations=${p.latitude},${p.longitude}&key=AIzaSyCC_6UtpJ6q_mXtwAHjRJubR45_KkbStrI`
-              r.open("GET", url, true)
-              r.send();
-              r.onreadystatechange=function(){
-                if(r.readyState == 4){
-                  console.log(r.status)
-                  if(r.status==200){
+                let p = this.searchData[i]
+                let service = new google.maps.DistanceMatrixService
+                service.getDistanceMatrix(
+                  {
+                    origins: [new google.maps.LatLng(
+                      this.currentCoordinates.lat, this.currentCoordinates.long)],
+                    destinations: [new google.maps.LatLng(
+                      p.latitude, p.longitude)],
+                    travelMode: 'DRIVING',
+                  }, callback);
+                function callback(response){
+                  console.log(response.rows[0].elements[0].duration.value/60)
+                  that.set(`searchData.${i}.time`,response.rows[0].elements[0].duration.value/60)
+                  that.set(`searchData.${i}.distance`,that.googleDistance(p.latitude, p.longitude))
 
-                    let o = JSON.parse(r.responseText)
-                    that.set(`searchData.${i}.time`,o.rows[0].elements[0].duration.value/60)
-                    console.log(p.time)
-                    that.reFilter()
-                  }
+                  that.reFilter()
                 }
               }
-            }
           },
           _dataChanged:function(){
-            this.getDriveDuration()
+            if(this.googleApiLoaded){
+              this.getDriveDuration()
+            }
+
           }
 
 
