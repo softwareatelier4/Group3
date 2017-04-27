@@ -104,7 +104,7 @@
 
       <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
       <paper-input class="indigo" label="Location" id="Location" value = ""></paper-input>
-      <paper-input class="indigo" label="Phone Number" id="Phone Number" value = ""></paper-input>
+      <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
       <paper-input class="indigo" label="Website" value = ""></paper-input>
       <paper-input class="indigo" label="Skype" value = ""></paper-input>
       <paper-input class="indigo" label="Facebook" value = ""></paper-input>
@@ -113,7 +113,7 @@
       <p>
         Profile picture
       </p>
-      <input type="file" id="profile picture" name="file">
+      <input type="file" id="profilepicture" name="file">
 
 
       <paper-button class="indigo" on-tap="handleClick" id="editButton">edit<paper-button>
@@ -133,7 +133,7 @@
             </p>
             <input type="file" id="extraInput" name="file">
 
-            <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
+            <paper-button  class = "indigo" raised on-tap="_submit" id = "freelancerButton">Become Freelancer</paper-button>
       </form>
       <paper-dialog id="dialog">
         Submit both an ID and CV.

@@ -159,20 +159,31 @@ This is the polymer component for the search field.
       width: 100%;
       /*border-style: outset;*/
       border-left: 1%;
-      /*background: grey;*/
       justify-content:flex-start;
       padding: 0 1%;
+      /*background-color: red;*/
+      background: linear-gradient(to bottom right, #e6e6e6, #f2f2f2);
     }
     .resp_txt{
       padding: 0 2%;
-      border-bottom: thin solid grey;
+      /*border-bottom-style: thin solid grey;*/
+      background: linear-gradient(to bottom right, gray, #f2f2f2);
+      /*background: gray;*/
+      height: 50px;
+      width: 100%;
     }
-
     .resp_title{
       padding-left: 5%;
     }
     .fa-3x{
       color: black;
+    }
+    #rating-container-margin{
+      margin-left: 60px;
+    }
+    #comments-container-margin{
+      margin-left: 60px;
+      margin-top: 50px;
     }
 
 /*example*/
@@ -240,7 +251,7 @@ This is the polymer component for the search field.
       <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
     </div>
   </div>
-  <div class= "">
+  <div class= "" id="rating-container-margin">
     <h2>Rating</h2>
     <div>
       <h3> Overall </h3>
@@ -251,7 +262,7 @@ This is the polymer component for the search field.
       <star-rating rating="{{profile.quality}}"></star-rating> <br>
     </div>
   </div>
-  <div>
+  <div id="comments-container-margin">
   <h2>Comments</h2>
   <div class="reviewRatings">
     <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
@@ -261,7 +272,7 @@ This is the polymer component for the search field.
 </div>
 
 
-  <div>
+  <div id="comments-container-margin">
     <div>
 <!-- <file-upload dropText="Or Drop Here" droppable="true" manualUpload="true"
 raised="true" accept="image/*" >Add Photo</file-upload> -->
@@ -273,7 +284,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
   </div>
 
   <template id="reviewsRepeat" is="dom-repeat"  items="{{reviews}}">
-    <div>
+    <div id="comments-container-margin">
       <div class="reviewContainer">
 
         <div class="reviewRatings">
@@ -297,6 +308,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       <template is="dom-repeat"  items="{{item.replys}}" class="responseText">
         <p class="resp_txt">
+          <br/>
           {{item}}
         </p>
       </template>
