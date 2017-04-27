@@ -11,6 +11,10 @@ module.exports = {
       .assert.visible('#sliderContainer')
       .click('.button')
       .waitForElementVisible('.row-container', 2000)
+      .waitForElementVisible('#search-container', 2000)
+      .waitForElementNotVisible('#sliderDescription', 2000)
+      .click("#logout-button")
+      .assert.urlEquals("http://localhost:4000/search")
       .end()
   }
 }
