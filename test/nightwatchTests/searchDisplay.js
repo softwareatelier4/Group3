@@ -8,6 +8,9 @@ module.exports = {
       .assert.visible('#search-button')
       .assert.visible('.profile-container')
       .assert.visible('.button')
+      .assert.visible('#sliderContainer')
+      .click('.button')
+      .waitForElementVisible('.row-container', 2000)
       .end()
   }
 }
