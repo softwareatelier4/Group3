@@ -178,7 +178,7 @@ This is the polymer component for the search field.
     <div class= "profile-container">
       <template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" filter="_filter" sort="{{_sort(sortVal)}}" >
         <!-- <a href="/profile/{{item._id}}"> -->
-        <div  class="freelancer-container">
+        <div  id ="freelancer" class="freelancer-container">
           <img src ="../img/profile_pic.png">
           <div class= "element-display-right"><span>{{item.distance}}km away</span>
           <div>
