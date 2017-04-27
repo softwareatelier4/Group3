@@ -4,6 +4,8 @@ module.exports = {
         .url("localhost:4000/index.html")
         .useCss()
         .waitForElementVisible('body', 2000)
+        .assert.elementPresent("#welcome")
+        .assert.elementPresent("#logout-button")
         .expect.element("#edit-button").to.be.visible;
         client
         .url("localhost:4000/profile-edit.html")
