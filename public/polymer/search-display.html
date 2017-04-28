@@ -333,7 +333,8 @@ This is the polymer component for the search field.
                 return false
               }
               //console.log((slider_time.value>= person.time))
-              return ((person.overall >=slider_rating.value)  && (person.price <= slider_price.value));
+              //return ((person.overall >=slider_rating.value)  && (person.price <= slider_price.value));
+               return ((person.overall >=slider_rating.value) && (person.price >= slider_price.value));
             },
         reFilter:function(){
             this.$.searchRepeatDisplay.render();
