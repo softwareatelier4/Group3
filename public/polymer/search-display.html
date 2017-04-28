@@ -159,9 +159,9 @@ This is the polymer component for the search field.
 
       </paper-slider><span id="starLabel">1 star</span>
       <span id ="sliderDescription"> Price </span>
-      <paper-slider id="slider_price" snaps min = "1" snaps max="500" value = "50" >
+      <paper-slider id="slider_price" snaps min = "1" snaps max="5" value = "5" >
 
-      </paper-slider><span id="priceLabel">50 &euro;</span>
+      </paper-slider><span id="priceLabel">5 stars</span>
    </div>
 
   <span id="sliderDescription">Sort By:</span>
@@ -248,10 +248,11 @@ This is the polymer component for the search field.
             that.reFilter();
           });
         this.$.slider_price.addEventListener('value-change', function() {
-          if(slider_price.value == slider_price.max){
-            document.querySelector('#priceLabel').textContent = "500+ €";
+          if(slider_price.value == 1){
+
+            document.querySelector('#priceLabel').textContent = "1 star";
           }else{
-            document.querySelector('#priceLabel').textContent = slider_price.value + " €";
+            document.querySelector('#priceLabel').textContent = slider_price.value + " stars";
           }
             that.reFilter();
           });
