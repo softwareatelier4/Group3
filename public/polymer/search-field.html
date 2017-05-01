@@ -114,7 +114,12 @@ This is the polymer component for the search field.
         color: white;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
-        margin-left: 50%;
+        margin-left: 43%;
+    }
+
+    #myprofile{
+      position: absolute;
+      margin-left: 52.5%;
     }
 
     paper-input{
@@ -201,6 +206,11 @@ This is the polymer component for the search field.
               <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
           </div>
         </a>
+        <div>
+          <a id = "myprofile" href = "#">
+            <paper-button class = "indigo">My Profile</paper-button>
+          </a>
+        </div>
 
         <div>
           <a id = "edit-button" href = "/profile-edit">
@@ -304,6 +314,7 @@ This is the polymer component for the search field.
             document.getElementById("login").style.visibility = "hidden";
             document.getElementById("logout").style.visibility = "visible";
             document.getElementById("edit-button").style.visibility = "visible";
+            document.getElementById("myprofile").style.visibility = "visible";
 
             let welcome = document.getElementById("welcome");
             welcome.innerText = "Welcome, " + localStorage.username;
@@ -313,6 +324,7 @@ This is the polymer component for the search field.
             document.getElementById("login").style.visibility = "visible";
             document.getElementById("logout").style.visibility = "hidden";
             document.getElementById("edit-button").style.visibility = "hidden";
+            document.getElementById("myprofile").style.visibility = "hidden";
         }
     }
 

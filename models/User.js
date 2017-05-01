@@ -8,6 +8,7 @@
 * firstName     String             First name of the user. Default: username
 * lastName      String             Last name of the user. Default: username
 * dateCreated   Date               Date the user was created.  Default: Date.now()
+* freelancers   FreelancerSchema   Freelancer profiles claimed by user.
 */
 
 
