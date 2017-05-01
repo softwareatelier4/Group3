@@ -9,20 +9,18 @@ require("../models/Admin.js");
 const user = mongoose.model("User");
 
 
+
 router.get("/xd", function(req,res){
   user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
     if(found == null){
-      console.log(req.query);
       let a = new user(req.query);
       a.save(function(err, saved){
         if(err){
           res.json({'error' : 'Fill all the fields'}).end();
-          console.log("dsaadsdasdas");
         }
         else{
         saved = saved.toObject();
         delete saved.password;
-        console.log("there");
         res.status(200).json(saved).end();
       }
       })
@@ -51,13 +49,11 @@ router.get('/', function (req, res){
 
 router.get('/login',function(req,res){
     user.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
-        console.log(found);
         res.json(found)
     })
 })
 router.get('/adminlogin',function(req,res){
     admin.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
-        console.log(found);
         res.json(found)
     })
 })
@@ -76,6 +72,19 @@ router.get("/:id", function(req,res){
     }
   })
 });
+
+router.get("/my-profile/:id", function(req,res){
+  user.findOne({_id: req.params.id},{password:0}).lean().populate("freelancers").exec(function(err,found){
+    if(err){
+      res.status(404).end()
+    }else{
+
+      res.json(found)
+    }
+  })
+});
+
+
 
 router.delete("/:id",function(req,res){
   user.find({_id: req.params.id},{password:0}, function(err,found){

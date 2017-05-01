@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     email   : { type: String, required: true },
     dateCreated : { type: Date, required: true, default: Date.now },
     location : {type: String},
-    freelancers : { type: FreelancerSchema},
+    freelancers : [{ type: mongoose.Schema.Types.ObjectId, ref:"Freelancer"}],
     profilePicture : {type: String},
   }
 );

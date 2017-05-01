@@ -207,7 +207,7 @@ This is the polymer component for the search field.
           </div>
         </a>
         <div>
-          <a id = "myprofile" href = "#">
+          <a id = "myprofile" href = "/myprofile">
             <paper-button class = "indigo">My Profile</paper-button>
           </a>
         </div>
@@ -318,6 +318,7 @@ This is the polymer component for the search field.
 
             let welcome = document.getElementById("welcome");
             welcome.innerText = "Welcome, " + localStorage.username;
+            console.log(localStorage.secretKey);
         }
         else
         {
