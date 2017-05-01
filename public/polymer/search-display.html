@@ -155,23 +155,23 @@ This is the polymer component for the search field.
 
       </paper-slider><span id="timeLabel">50 min</span>
       <span id ="sliderDescription"> Rating </span>
-      <paper-slider id="slider_rating" snaps min = "1" snaps max="5" max-markers="5" step = "1" value = "1">
+      <paper-slider id="slider_rating" snaps min = "1" snaps max="5" max-markers="5" step = "1" value = "5">
 
-      </paper-slider><span id="starLabel">1 star</span>
+      </paper-slider><span id="starLabel">5 stars</span>
       <span id ="sliderDescription"> Price </span>
       <paper-slider id="slider_price" snaps min = "1" snaps max="5" value = "5" >
 
-      </paper-slider><span id="priceLabel">5 stars;</span>
+      </paper-slider><span id="priceLabel">5 stars</span>
    </div>
 
   <span id="sliderDescription">Sort By:</span>
 
   <select value="{{sortVal::change}}">
-  <option>Choose a value</option>
-  <option value="space_distance">Distance</option>
-  <option value="time">Time</option>
-  <option value="rating">Rating</option>
-  <option value="price">Price</option>
+    <option>Choose a value</option>
+    <option value="space_distance">Distance</option>
+    <option value="time">Time</option>
+    <option value="rating">Rating</option>
+    <option value="price">Price</option>
   </select>
     <!--<paper-slider min="0" max="250" pin value="50" immediateValue = "{{x}}"></paper-slider>-->
 
@@ -239,10 +239,15 @@ This is the polymer component for the search field.
             that.reFilter();
           });
         this.$.slider_rating.addEventListener('value-change', function() {
-          if(slider_rating.value == 1){
-            document.querySelector('#starLabel').textContent = "1 star";
-          }else{
-            document.querySelector('#starLabel').textContent = slider_rating.value + " stars";
+          var true_stars = slider_rating.value;
+          if(true_stars == 5){
+            document.querySelector('#starLabel').textContent = "5 stars";
+          }
+          else if (true_stars == 1) {
+            document.querySelector('#starLabel').textContent = "Any";
+          }
+          else{
+            document.querySelector('#starLabel').textContent = true_stars + "-5 stars";
           }
             that.reFilter();
           });
