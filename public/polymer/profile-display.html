@@ -485,6 +485,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       },
       getData:function(){
+        console.log(this.freelancerId)
         if(this.freelancerId.length>5){
           this.$.getReviewData.generateRequest()
           this.$.getFreelancerData.generateRequest()

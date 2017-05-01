@@ -10,12 +10,13 @@ var users = {
   name : 'User',
   data : [
     {
-      "_id"          : sharedId,
+      "_id"          : ObjectId(),
       "firstName"    : "Masiar",
       "lastName"     : "Babazadeh",
       "userName"     : "masiar",
       "email"        : "masiar.babazadeh@usi.ch",
       "password"     : "ciao",
+      "freelancers":  [sharedId],
       "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
     },
 
@@ -45,7 +46,7 @@ var freelancers={
   name:"Freelancer",
   data:[
   {
-    "_id":ObjectId(),
+    "_id":sharedId,
     "firstName": "Masiar",
     "lastName":"Babazadeh",
     "email":"peter_s@gmail.com",
@@ -57,7 +58,6 @@ var freelancers={
     "description":"i am a bad carpenter",
     "website":"xd.com",
     "skypeAcc":"asfd",
-    "ownerId":sharedId,
     "country":"Switzerland",
     "streetNum":"12",
     "street":"via Buffi",
@@ -175,8 +175,9 @@ var admins = {
 }
 
 var seedData = [];
-seedData.push(users);
 seedData.push(freelancers);
+seedData.push(users);
+
 seedData.push(admins);
 
 module.exports = seedData;
