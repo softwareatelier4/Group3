@@ -9,6 +9,92 @@
 
 <dom-module id="create-freelancer">
   <template>
+  <style>
+  :root{
+  --main-color:#494E6B;
+  --main-color-lighter:#5d6389;
+  --second-color:#98878F;
+  --third-color:#985E6D;
+  --fourth-color:#192231;
+  --container-color:#e6e6e6;
+  }
+  #button{
+    background-color:var(--main-color);
+  }
+  paper-button.indigo {
+      background-color: var(--main-color);
+      color: white;
+      --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+      };
+  }
+
+  paper-button.indigo:hover {
+      background-color: var(--paper-indigo-400);
+  }
+  #verify-button{
+
+  }
+  a:link {
+      text-decoration: none;
+  }
+
+  a:visited {
+      text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: none;
+  }
+
+  a:active {
+      text-decoration: none;
+  }
+  a{
+    width:inherit;
+  }
+  #spacer {
+    min-height: 6.6em;
+    height:13%;
+    width: 95%;
+  }
+
+  #sign-up-container{
+    background-color: var(--container-color);
+    color: white;
+    padding: 8%;
+    font-size: 18px;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+  }
+
+  #create-button{
+      background-color:var(--main-color);
+      margin-top: 10%;
+      width: 100%;
+
+  }
+
+  .redBackGround{
+      background-color: red;
+       transition: background-color 300ms linear;
+  }
+  .trasparentBackgroundColor{
+      background-color: var(--container-color);
+      transition: background-color 300ms linear;
+  }
+  #edit-button{
+  }
+  p{
+    color: black;
+  }
+  input{
+    margin:10px;
+  }
+  </style>
   </template>
   <script>
   Polymer({
