@@ -190,11 +190,12 @@ This is the polymer component for the search field.
          </div>
          </template>
     </div>
-  <iron-ajax
-  id="ajax"
-  handle-as="json"
-  on-response="getProfiles"></iron-ajax>
+
 </div>
+<iron-ajax
+id="ajax"
+handle-as="json"
+on-response="getProfiles"></iron-ajax>
 
 
   </template>
@@ -205,7 +206,9 @@ This is the polymer component for the search field.
 
       is: 'my-profile',
       ready: function() {
-        if(localStorage.secretKey!= undefined){
+        if(localStorage.secretKey!= undefined && localStorage.secretKey!= ""){
+          console.log("lasjblakshfkahs")
+          console.log(localStorage.secretKey)
           this.requestFunction()
         }
 

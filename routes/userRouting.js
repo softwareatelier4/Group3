@@ -60,6 +60,7 @@ router.get('/adminlogin',function(req,res){
 
 router.get("/:id", function(req,res){
   user.find({_id: req.params.id},{password:0}, function (err, found) {
+    console.log(req.params.id)
       if (Object.keys(found).length === 0) {
           res.status(404).end();
       }
