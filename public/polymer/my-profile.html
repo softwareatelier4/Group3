@@ -54,6 +54,8 @@ This is the polymer component for the search field.
 
     .element-display{
       padding-left: 150px;
+      font-family: Didact Gothic;
+
     }
     .element-display-right{
       text-align: right;
@@ -144,8 +146,28 @@ This is the polymer component for the search field.
 
   <div id="flexwrapper">
     <div id="spacer"></div>
+    <h2> Your profile </h2>
     <div class= "profile-container">
-      <template id="myProfileDisplay" is="dom-repeat" items="{{userData.freelancers}}" >
+      <div id ="freelancer" class="freelancer-container">
+        <div class="element-display">First Name: <span>{{userData.firstName}}</span></div>
+        <div class= "element-display">Last Name: <span>{{userData.lastName}}</span></div>
+        <!-- <div class= "element-display">Date Created: <span>{{userData.dateCreated}}</span></div> -->
+        <div class= "element-display">Email: <span>{{userData.email}}</span></div>
+        <p></p>
+        <center>
+          <a href="/profile-edit">
+            <paper-button class = "button">
+               Edit
+            </paper-button>
+          </a>
+       </center>
+      </div>
+
+    </div>
+
+    <h2>Your freelancers' profiles </h2>
+    <div class= "profile-container">
+      <template id="myFreelancersProfilesDisplay" is="dom-repeat" items="{{userData.freelancers}}" >
         <div  id ="freelancer" class="freelancer-container">
           <img src ="../img/profile_pic.png">
           <div class="element-display"><star-rating rating="{{item.overall}}"></star-rating></div>
@@ -167,7 +189,7 @@ This is the polymer component for the search field.
          </center>
          </div>
          </template>
-  </div>
+    </div>
   <iron-ajax
   id="ajax"
   handle-as="json"
