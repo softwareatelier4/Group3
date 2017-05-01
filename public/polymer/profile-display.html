@@ -64,6 +64,9 @@ This is the polymer component for the search field.
     #margin-container{
       margin-top: 20px;
     }
+    .hide{
+      display:none;
+    }
     /*#anotherContainer{
       width: 100%;
       align-items: space-between;
@@ -294,9 +297,12 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         </div>
 
         <div class="reviewText">
-          <br/>
-          {{item.reviewText}}<br>
-            <img class="revImg" src=[[item.reviewImg]]></img>
+          <span id="review-{{index}}" class="[[item.class]]">
+          {{_formatReviewText(item.reviewText)}}</span></br>
+          <template is="dom-if" if="{{_formatReviewImg(item.reviewImg)}}">
+            <img class="revImg" src="[[item.reviewImg]]"></img>
+          </template>
+
         </div>
 
 
@@ -394,8 +400,6 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         this.reviews = res.detail.response;
       },
       handlePosting: function(){
-
-
       var formData = new FormData();
           formData.append("file", reviewImg.files[0]);
           formData.append("freelancer", this.freelancerId);
@@ -424,6 +428,24 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       }
 
       },
+      _formatReviewImg:function(path){
+        console.log("Path: "+path);
+
+        if(path == undefined || path == "undefined"){
+          return false;
+        }
+        else{
+          return true;
+        }
+      },
+      _formatReviewText:function(text){
+        if(text == undefined || text == "undefined"){
+          return "";
+        }  else{
+          return text;
+        }
+      },
+
       handleReviewResponse:function(e){
         if(e.detail.status == 200){
           console.log(e.detail.response);
