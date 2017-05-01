@@ -405,17 +405,18 @@ This is the polymer component for the search field.
         // }else{
         //   // str+=this.location.name//formatted_address
         // }
-        console.log("generateRequest")
+        // console.log("generateRequest")
         this.$.ajax.url=str;
         this.$.ajax.generateRequest()
         this.justSearched=true;
       },
       _submit:function(){
           localStorage.secretKey = ""
+          localStorage.username = ""
           window.location = "/search"
       },
       someFunction:function(res){
-        console.log(res.detail.response)
+        // console.log(res.detail.response)
         this.searchData=res.detail.response;
       },
       _locationChanged:function(){

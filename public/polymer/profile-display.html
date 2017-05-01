@@ -414,12 +414,12 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       // r.open("POST", "/review/"+this.freelancerId, true);
       r.open("POST", "/review", true);
       // r.setRequestHeader("Content-Type", "multipart/form-data");
-      console.log(formData.getAll('secretKey'));
+      // console.log(formData.getAll('secretKey'));
 
       r.send(formData);
       r.onreadystatechange=function(){
           if(r.readyState == 4){
-            console.log(r.responseText);
+            // console.log(r.responseText);
             if(r.status==201){
                 location.reload();
                 // this.$.handleReviewResponse(r);
@@ -431,7 +431,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       },
       _formatReviewImg:function(path){
-        console.log("Path: "+path);
+        // console.log("Path: "+path);
 
         if(path == undefined || path == "undefined"){
           return false;
@@ -450,7 +450,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       handleReviewResponse:function(e){
         if(e.detail.status == 200){
-          console.log(e.detail.response);
+          // console.log(e.detail.response);
           this.push('reviews', e.detail.response)
         }else{
           window.alert("You need to be logged in to comment")

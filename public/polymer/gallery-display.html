@@ -55,48 +55,65 @@ div.gallery img {
     </paper-dialog>
 
 </div>
-
-<form id="pictureForm">
+<template is="dom-if" if="{{isLoggedIn()}}">
+<form id="pictureForm" >
     <input type="file" id="pictureInput" name="file">
-    <input type="submit" name="submit"></input>
+    <input type="submit" name="submit" on-tap="doRequest"></input>
 </form>
+</template>
 
 </template>
 <script>
 Polymer({
+
   is: 'gallery-display',
   ready: function() {
-    let that =this
-    this.$.pictureForm.addEventListener("submit",function(e){
-      e.preventDefault()
-      let imgPath = that.$.pictureInput;
-      var formData = new FormData();
-      formData.append("file", imgPath.files[0]);
-      var r = new XMLHttpRequest();
-      r.open("POST", "/freelancer/"+that.freelancerId, true)
-      // r.setRequestHeader("Content-Type", "multipart/form-data");
-      r.send(formData);
-      r.onreadystatechange=function(){
-        if(r.readyState == 4){
-          if(r.status==201){
+    // console.log(this.$);
+    // console.log(this);
+    // let that =this;
+    // this.$.pictureForm.addEventListener("submit",function(e){
+    //
+    //
+    //
+    // })
+  },
+  doRequest:function(e){
+    e.preventDefault();
+    let that = this;
+    let imgPath = document.getElementById("pictureInput")
+    var formData = new FormData();
+    formData.append("file", imgPath.files[0]);
+    var r = new XMLHttpRequest();
+    r.open("POST", "/freelancer/"+that.freelancerId, true)//that
+    // r.setRequestHeader("Content-Type", "multipart/form-data");
+    r.send(formData);
+    r.onreadystatechange=function(){
+      if(r.readyState == 4){
+        if(r.status==201){
 
-            let o = JSON.parse(r.responseText)
-            that.push('profile.pictureGallery', o.src)
-            that.$.pictureForm.reset()
-          }
+          let o = JSON.parse(r.responseText);
+          that.push('profile.pictureGallery', o.src);
+          document.getElementById("pictureForm").reset();
         }
       }
-    })
+    }
+  // console.log(Polymer.dom(this.parentNode).node.);
   },
-  attached:function(){
-    console.log("here")
+  isLoggedIn:function(){
+    // console.log(localStorage.username);
+    // console.log(localStorage.secretKey);
+    if(localStorage.username == "" || localStorage.secretKey == ""){
+      return false;
+    }else{
+      return true;
+    }
   },
   properties: {
   },
 handleDialog:function(e){
-  console.log(this)
+  // console.log(this)
   let dialog = this.$.asdf
-  console.log(e.target)
+  // console.log(e.target)
   dialog.querySelector("img").src = e.target.src
   dialog.toggle()
 }
