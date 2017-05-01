@@ -294,10 +294,11 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
           <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
           <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
           <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
+          <div>Posted by: [[item.userName]]</div>
         </div>
 
         <div class="reviewText">
-          <span id="review-{{index}}" class="[[item.class]]">
+          <span id="review-{{index}}">
           {{_formatReviewText(item.reviewText)}}</span></br>
           <template is="dom-if" if="{{_formatReviewImg(item.reviewImg)}}">
             <img class="revImg" src="[[item.reviewImg]]"></img>
@@ -403,6 +404,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       var formData = new FormData();
           formData.append("file", reviewImg.files[0]);
           formData.append("freelancer", this.freelancerId);
+          formData.append("userName", localStorage.username);//hardcoded for now
           formData.append("reviewText", this.reviewComment);
           formData.append("reviewRatingOverall", this.rOverall);
           formData.append("reviewRatingPrice", this.rPrice);
@@ -457,7 +459,12 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       handleCommentResponse:function(e){
             let reviewId=e.target.getAttribute("data-id")
 
-            let text=e.target.parentNode.querySelector("paper-textarea").value
+            let text=e.target.parentNode.querySelector("paper-textarea").value;
+            if(text == undefined){
+              window.alert("Your reply is empty!");
+              return;
+            }
+            text = text +"\n\n Reply By: "+localStorage.username;
             let req = this.$.ajax2
             req.url = "/review/respond/"+reviewId
             req.body=JSON.stringify({responseText:text})
@@ -473,7 +480,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
           }
 
         }else{
-          window.alert("there was a problem with adding your reply")
+          window.alert("There was a problem with adding your reply")
         }
 
       },
