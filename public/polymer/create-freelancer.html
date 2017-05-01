@@ -6,50 +6,51 @@
 <link rel="import" href="./gallery-display.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
 <link rel="import" href="./components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./location-selector.html" />
 
 <dom-module id="create-freelancer">
   <template>
   <style>
   :root{
-  --main-color:#494E6B;
-  --main-color-lighter:#5d6389;
-  --second-color:#98878F;
-  --third-color:#985E6D;
-  --fourth-color:#192231;
-  --container-color:#e6e6e6;
+    --main-color:#494E6B;
+    --main-color-lighter:#5d6389;
+    --second-color:#98878F;
+    --third-color:#985E6D;
+    --fourth-color:#192231;
+    --container-color:#e6e6e6;
   }
   #button{
     background-color:var(--main-color);
   }
   paper-button.indigo {
-      background-color: var(--main-color);
-      color: white;
-      --paper-button-raised-keyboard-focus: {
-          background-color: var(--paper-pink-a200) !important;
-          color: white !important;
-      };
+    background-color: var(--main-color);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
   }
 
   paper-button.indigo:hover {
-      background-color: var(--paper-indigo-400);
+    background-color: var(--paper-indigo-400);
   }
   #verify-button{
 
   }
   a:link {
-      text-decoration: none;
+    text-decoration: none;
   }
 
   a:visited {
-      text-decoration: none;
+    text-decoration: none;
   }
 
   a:hover {
-      text-decoration: none;
+    text-decoration: none;
   }
 
   a:active {
-      text-decoration: none;
+    text-decoration: none;
   }
   a{
     width:inherit;
@@ -72,19 +73,19 @@
   }
 
   #create-button{
-      background-color:var(--main-color);
-      margin-top: 10%;
-      width: 100%;
+    background-color:var(--main-color);
+    margin-top: 10%;
+    width: 100%;
 
   }
 
   .redBackGround{
-      background-color: red;
-       transition: background-color 300ms linear;
+    background-color: red;
+    transition: background-color 300ms linear;
   }
   .trasparentBackgroundColor{
-      background-color: var(--container-color);
-      transition: background-color 300ms linear;
+    background-color: var(--container-color);
+    transition: background-color 300ms linear;
   }
   #edit-button{
   }
@@ -95,12 +96,66 @@
     margin:10px;
   }
   </style>
-  </template>
-  <script>
-  Polymer({
-    is: 'create-freelancer',
-    properties:{}
-  })
-  </script>
+  <div id="spacer"></div>
+
+
+  <div id = "sign-up-container">
+    <div id="edit-freelancer">
+      <form id="becomeForm">
+      <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
+      <location-selector></location-selector>
+      <paper-input class="indigo" label="Job" id="Job" value = ""></paper-input>
+      <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
+      <paper-input class="indigo" label="Website" id="Website" value = ""></paper-input>
+      <paper-input class="indigo" label="Skype" id="Skype" value = ""></paper-input>
+      <paper-input class="indigo" label="Facebook" id="Facebook" value = ""></paper-input>
+      <paper-input class="indigo" label="Linkedin" id="Linkedin"value = ""></paper-input>
+      <paper-input class="indigo" label="Github" id="Github" value = ""></paper-input>
+
+      <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
+        </form>
+        <paper-dialog id="dialog">
+          Fill all the fields that are required
+        </paper-dialog>
+      </div>
+
+
+      <!-- <form id="verifyForm">
+      <p>Submit ID</p>
+      <input type="file" id="idInput" name="file">
+      <p>
+      Submit CV
+    </p>
+    <input type="file" id="cvInput" name="file">
+    <p>
+    Submit something EXTRA
+  </p>
+  <input type="file" id="extraInput" name="file">
+
+  <paper-button  class = "indigo" raised on-tap="_submit" id = "freelancerButton">Become Freelancer</paper-button>
+</form> -->
+<!-- <paper-dialog id="dialog">
+  Submit both an ID and CV.
+</paper-dialog> -->
+</div>
+
+<iron-ajax
+id="ajax"
+handle-as="json"
+on-response="someFunction"
+method="POST"
+content-type="application/json"></iron-ajax>
+</template>
+<script>
+Polymer({
+  is: 'create-freelancer',
+  properties:{
+    changeBackground:{
+      type:String,
+      value:""
+    },
+  }
+})
+</script>
 
 </dom-module>

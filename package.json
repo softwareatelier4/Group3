@@ -25,6 +25,7 @@
     "express-formidable": "^1.0.0",
     "file-type": "^4.1.0",
     "formidable": "^1.1.1",
+    "google-maps": "^3.2.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
@@ -38,7 +39,8 @@
     "read-chunk": "^2.0.0",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
-  },"devDependencies": {
-        "nightwatch": "^0.8.6"
+  },
+  "devDependencies": {
+    "nightwatch": "^0.8.6"
   }
 }
