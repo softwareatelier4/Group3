@@ -4,49 +4,74 @@
 <link rel="import" href="./location-search.html">
 <dom-module id="maps-test">
 <style>
+#container{
+    background: white;
+    padding-left: 5%;
+    width: 95%;
+    height: 7%;
+    display: flex;
+    flex-direction: row;
+    min-height: 3.9em;
+  }
   google-map {
     height: 500px;
     width:500px;
   }
+  location-search{
+    width:500px;
+  }
 </style>
 <template>
-  <google-map map={{map}} fit-to-marker api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load">
+  <google-map map={{map}} additional-map-options='{"disableDoubleClickZoom": "true"}' fit-to-marker api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load">
   <google-map-marker id="marker" latitude="{{lat}}" longitude="{{long}}" draggable="true" mouse-events="true" on-google-map-marker-mouseup="f" ></google-map-marker>
 </google-map>
-<location-search place={{place}}></location-search>
-  <p>xD</p>
+<div id="container">
+  <location-search place={{place}}></location-search>
+</div>
+
 </template>
 
 <script>
 Polymer({
   is:"maps-test",
   ready:function(){
-    //drag-events="true" google-map-marker-dragend="f"
   },
   properties:{
-    long:{value:37.78},
-    lat:{value:-122.4},
+    long:{
+      value:0},
+    lat:{value:0},
     map:{},
     place:{
       observer:"g"
+    },
+    apiLoaded:{
+      value:false
     }
   },
   on_api_load:function(){
-    console.log(this.$.marker.position)
-
-    google.maps.event.addListener(this.$.marker,"dragend",function(e){
-        console.log(this.$.marker.position)
+    let that = this
+    this.apiLoaded=true
+    google.maps.event.addListener(this.map,"dblclick",function(e){
+      that.lat = e.latLng.lat();
+      that.long = e.latLng.lng();
+      that.map.setCenter(new google.maps.LatLng(that.lat,that.long))
     })
+    // this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
 
 
   },
-  f:function(){
-    console.log(this.long)
+  f:function(e){
+    // if(this.apiLoaded){
+    this.lat = e.detail.latLng.lat()
+    this.long = e.detail.latLng.lng()
+    this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
+    // }
 
   },
   g:function(){
-    if(this.place.geometry != null){
-      console.log()
+
+    if(this.place.geometry.location.lat() != undefined){
+
       this.lat = this.place.geometry.location.lat()
       this.long = this.place.geometry.location.lng()
       this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
