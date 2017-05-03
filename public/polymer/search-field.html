@@ -262,7 +262,7 @@ This is the polymer component for the search field.
         <div id = "logout">
 
             <a id = "logout-button" href = "/">
-                <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
+                <paper-button class = "indigo" on-tap="logout">Logout</paper-button>
             </a>
         </div>
 
@@ -305,7 +305,7 @@ This is the polymer component for the search field.
   id="ajax"
   handle-as="json"
   on-response="someFunction"></iron-ajax>
-  
+
   </template>
 
 
@@ -416,9 +416,10 @@ This is the polymer component for the search field.
         this.$.ajax.generateRequest()
         this.justSearched=true;
       },
-      _submit:function(){
+      logout:function(){
           localStorage.secretKey = ""
           localStorage.username = ""
+          localStorage.freelancers = ""
           window.location = "/search"
       },
       someFunction:function(res){

@@ -320,7 +320,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
           {{item}}
         </p>
       </template>
-      <template is="dom-if" if="{{isOwner(freelancerId)}}">
+      <template is="dom-if" if="{{_isOwner(freelancerId)}}">
       <div>
         <div class="replyArea">
           <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
@@ -402,9 +402,9 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       handlereview: function(res){
         this.reviews = res.detail.response;
       },
-      isOwner:function(id){
-        console.log(id.toString(),localStorage.secretKey)
-        return id.toString() == localStorage.secretKey
+      _isOwner:function(id){
+        console.log("_isOwner", localStorage.freelancers.indexOf(id))
+        return localStorage.freelancers.indexOf(id)>0
       },
       handlePosting: function(){
       var formData = new FormData();
