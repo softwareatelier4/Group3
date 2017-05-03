@@ -48,11 +48,6 @@ This is the polymer component for the search field.
     }
     #top{
       padding-left: 5%;
-      display: flex;
-      width: 100%;
-      background-color: var(--main-color);
-      height: 6%;
-      min-height: 2.7em;
     }
     #r-container{
       width: 30%;
@@ -74,7 +69,7 @@ This is the polymer component for the search field.
     }
     #logo {
       color:var(--third-color);
-      padding-top: 2%;
+      /*padding-top: 2%;*/
       background-color: var(--main-color);
       width: auto;
       height: 10%;
@@ -84,40 +79,18 @@ This is the polymer component for the search field.
 
     }
     #logocontent{
+      display: flex;
+      flex-wrap: nowrap;
       text-decoration: none;
     }
     #spaceMaker{
       width:20%;
     }
-
-    #login{
-        position: absolute;
-        margin-left: 80%;
-        visibility: hidden;
-    }
-
-    #logout{
-        position: absolute;
-        display:flex;
-        flex-direction: row;
-        margin-left: 80%;
-        visibility: hidden;
-    }
-    #edit-button{
-      position: absolute;
-      margin-left: 60%;
-    }
-
     #welcome{
         color: white;
         font-family: 'Roboto', sans-serif;
         font-size: 14px;
-        margin-left: 43%;
-    }
-
-    #myprofile{
-      position: absolute;
-      margin-left: 52.5%;
+        /*margin-left: 43%;*/
     }
     #logo.search-field{
       color:white;
@@ -137,12 +110,6 @@ This is the polymer component for the search field.
     location-search{
       width: 20%;
     }
-    .fa-handshake-o{
-      /*color: #00b359
-      /*margin-left: 1%;
-      margin-right: 1%;*/
-    }
-
     paper-button.indigo {
         background-color: var(--main-color);
         color: white;
@@ -151,13 +118,11 @@ This is the polymer component for the search field.
             color: white !important;
         };
     }
-
     paper-button.indigo:hover {
         background-color: var(--paper-indigo-400);
     }
-
     paper-button.emergency {
-        min-height: 2.9em;
+        /*min-height: 2.9em;*/
         background-color: red;
         color: white;
         font-family: 'Roboto', sans-serif;
@@ -167,12 +132,9 @@ This is the polymer component for the search field.
             color: white !important;
         };
     }
-
-    paper-button.emergency:hover {
+    /*paper-button.emergency:hover {
         background-color: green;
-    }
-
-
+    }*/
     paper-button.meaningless-button {
       background: white;
       color: black;
@@ -211,64 +173,71 @@ This is the polymer component for the search field.
     a:active {
         text-decoration: none;
     }
-    .container{
-      display flex;
+    .maincontainer{
+      width: 100%;
+      background-color: var(--main-color);
+      display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
+      justify-content: space-around;
+    }
+    .logocontainer{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    .buttoncontainer{
+      flex-grow: 2;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
       align-items: stretch;
     }
 
     </style>
   </head>
 
-  <div id="top">
-        <a id="logocontent" href="/">
-          <div id="logo">
-              <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
-          </div>
+  <div id="top" class="maincontainer">
+    <!--the first of the flexbox -->
+    <div id="logo">
+      <a id="logocontent" class = "logocontainer" href="/">
+        <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
+      </a>
+    </div>
+
+    <div class="buttoncontainer">
+      <div id = "emergency">
+        <a href = "/">
+          <paper-button class = "emergency">EMERGENCY</paper-button>
         </a>
+      </div>
 
-        <div>
-          <a id = "emergency" href = "/">
-            <paper-button class = "emergency">EMERGENCY</paper-button>
-          </a>
-        </div>
+      <p id = "welcome">
+      </p>
 
-        <div>
-          <a id = "myprofile" href = "/myprofile">
+        <div id = "myprofile">
+          <a  href = "/myprofile">
             <paper-button class = "indigo">My Profile</paper-button>
           </a>
         </div>
 
         <div>
-          <a id = "edit-button" href = "/profile-edit">
-            <paper-button class = "indigo">Profile Edit</paper-button>
+          <a id = "edit/login_ref" href = "/profile-edit">
+            <paper-button id = "edit/login-button" class = "indigo"></paper-button>
           </a>
         </div>
 
-        <div id = "login">
-            <a id ="login-button" href = "/login">
-                <paper-button class="indigo">Login</paper-button>
-            </a>
-
-            <a id = "signup-button" href = "/sign-up">
-                <paper-button class="indigo">Sign up</paper-button>
+        <div id = "signup/logout-button">
+            <a id = "signup/logout_ref" href = "/sign-up">
+                <paper-button id="signup/logout_paper" class="indigo" on-tap=""></paper-button>
             </a>
         </div>
-
-        <p id = "welcome">
-        </p>
-
-        <div id = "logout">
-
-            <a id = "logout-button" href = "/">
-                <paper-button class = "indigo" on-tap="logout">Logout</paper-button>
-            </a>
-        </div>
-
-
 
     <div id="spaceMaker"> </div>
+    </div>
   </div>
 
   <div id="search-container">
@@ -316,21 +285,35 @@ This is the polymer component for the search field.
     {
         if (localStorage.secretKey != "")
         {
-            document.getElementById("login").style.visibility = "hidden";
-            document.getElementById("logout").style.visibility = "visible";
-            document.getElementById("edit-button").style.visibility = "visible";
-            document.getElementById("myprofile").style.visibility = "visible";
-
-            let welcome = document.getElementById("welcome");
-            welcome.innerText = "Welcome, " + localStorage.username;
-            console.log(localStorage.secretKey);
+          document.getElementById("myprofile").style.visibility = "visible";
+          var edit = document.getElementById("edit/login-button");
+          Polymer.dom(edit).innerHTML = "Edit Profile";
+          document.getElementById("edit/login_ref").href="/profile-edit";
+          var logout = document.getElementById("signup/logout_paper");
+          Polymer.dom(logout).innerHTML = "Logout";
+          document.getElementById("signup/logout_ref").href="/";
+          logout.addEventListener('tap', function(){
+            localStorage.secretKey = ""
+            localStorage.username = ""
+            window.location = "/search"
+          });
+          let welcome = document.getElementById("welcome");
+          welcome.innerText = "Welcome, " + localStorage.username;
+          console.log(localStorage.secretKey);
         }
         else
         {
-            document.getElementById("login").style.visibility = "visible";
-            document.getElementById("logout").style.visibility = "hidden";
-            document.getElementById("edit-button").style.visibility = "hidden";
-            document.getElementById("myprofile").style.visibility = "hidden";
+          document.getElementById("myprofile").style.visibility = "hidden";
+          var login = document.getElementById("edit/login-button");
+          Polymer.dom(login).innerHTML = "Login";
+          document.getElementById("edit/login_ref").href="/login";
+          var signup = document.getElementById("signup/logout_paper");
+          Polymer.dom(signup).innerHTML = "Sign Up";
+          document.getElementById("signup/logout_ref").href="/sign-up";
+
+          let welcome = document.getElementById("welcome");
+          welcome.innerText = "";
+          console.log(localStorage.secretKey);
         }
     }
 
@@ -416,10 +399,9 @@ This is the polymer component for the search field.
         this.$.ajax.generateRequest()
         this.justSearched=true;
       },
-      logout:function(){
+      _submit:function(){
           localStorage.secretKey = ""
           localStorage.username = ""
-          localStorage.freelancers = ""
           window.location = "/search"
       },
       someFunction:function(res){
