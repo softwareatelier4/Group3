@@ -49,8 +49,6 @@ This is the polymer component for the search field.
     #top{
       padding-left: 5%;
       display: flex;
-      /*-webkit-justify-content: flex-end;
-      justify-content: flex-end;*/
       width: 100%;
       background-color: var(--main-color);
       height: 6%;
@@ -121,7 +119,12 @@ This is the polymer component for the search field.
       position: absolute;
       margin-left: 52.5%;
     }
-
+    #logo.search-field{
+      color:white;
+    }
+    #emergency{
+      color red;
+    }
     paper-input{
       background-color: white;
       height: inherit;
@@ -130,9 +133,6 @@ This is the polymer component for the search field.
       background-color:white;
       height:inherit;
       width: 100%;
-    }
-    #logo.search-field{
-      color:white;
     }
     location-search{
       width: 20%;
@@ -154,6 +154,22 @@ This is the polymer component for the search field.
 
     paper-button.indigo:hover {
         background-color: var(--paper-indigo-400);
+    }
+
+    paper-button.emergency {
+        min-height: 2.9em;
+        background-color: red;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        --paper-button-raised-keyboard-focus: {
+            background-color: yellow !important;
+            color: white !important;
+        };
+    }
+
+    paper-button.emergency:hover {
+        background-color: green;
     }
 
 
@@ -195,7 +211,12 @@ This is the polymer component for the search field.
     a:active {
         text-decoration: none;
     }
-
+    .container{
+      display flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: stretch;
+    }
 
     </style>
   </head>
@@ -206,6 +227,13 @@ This is the polymer component for the search field.
               <i class="fa fa-handshake-o" aria-hidden="true"></i>Job<span>Advisor</span>
           </div>
         </a>
+
+        <div>
+          <a id = "emergency" href = "/">
+            <paper-button class = "emergency">EMERGENCY</paper-button>
+          </a>
+        </div>
+
         <div>
           <a id = "myprofile" href = "/myprofile">
             <paper-button class = "indigo">My Profile</paper-button>
@@ -214,7 +242,7 @@ This is the polymer component for the search field.
 
         <div>
           <a id = "edit-button" href = "/profile-edit">
-            <paper-button class = "indigo">Edit</paper-button>
+            <paper-button class = "indigo">Profile Edit</paper-button>
           </a>
         </div>
 
@@ -227,11 +255,11 @@ This is the polymer component for the search field.
                 <paper-button class="indigo">Sign up</paper-button>
             </a>
         </div>
+
         <p id = "welcome">
         </p>
 
         <div id = "logout">
-
 
             <a id = "logout-button" href = "/">
                 <paper-button class = "indigo" on-tap="_submit">Logout</paper-button>
@@ -241,14 +269,9 @@ This is the polymer component for the search field.
 
 
     <div id="spaceMaker"> </div>
-    <!-- <div id="r-container">
-    <input type="search" id="location-input" placeholder="{{city}}">
-  </div> -->
-</div>
+  </div>
+
   <div id="search-container">
-    <!-- <div id="l-container">
-    <input type="search" id="location-input" placeholder="{{city}}" value = "{{city}}">
-    </div> -->
     <location-search place="{{location}}" value = "{{city}}"></location-search>
 
 
@@ -282,25 +305,7 @@ This is the polymer component for the search field.
   id="ajax"
   handle-as="json"
   on-response="someFunction"></iron-ajax>
-
-  <!-- <script>
-    (function() {
-      var placesAutocomplete = places({
-        container: document.querySelector('#location-input'),
-        type: 'city',
-        aroundLatLngViaIP: true,
-        templates: {
-          value: function(suggestion) {
-            if(suggestion.name==[])
-            {
-              window.alert("Invalid");
-            }
-            return suggestion.name;
-          }
-        }
-      });
-    })();
-  </script> -->
+  
   </template>
 
 
