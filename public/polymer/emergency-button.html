@@ -1,0 +1,191 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/paper-input/paper-input.html">
+<!--<link rel="import" href="../iron-icons/communication-icons.html">-->
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+
+<dom-module id="emergency-button">
+    <style>
+
+        :root{
+            --main-color:#494E6B;
+            --main-color-lighter:#5d6389;
+            --second-color:#98878F;
+            --third-color:#985E6D;
+            --fourth-color:#192231;
+        }
+        :host {
+            display: flex;
+            /*background: rgb(242, 242, 242);*/
+            padding-left: 5%;
+            flex-direction: row;
+            align-items: stretch;
+            max-width: 95%;
+        }
+        .profile-container{
+            width:90%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background-color: white;
+            min-width:22em;
+        }
+        .freelancer-container{
+            background: rgb(242, 242, 242);
+            width: 100%;
+            flex-grow: 1;
+            padding:1%;
+        }
+        .freelancer-container:nth-child(even) {
+            background: red;
+            background: rgb(230, 230, 230);
+        }
+        .element-display{
+            padding-left: 150px;
+        }
+        .element-display-right{
+            text-align: right;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .green{
+            color:green;
+        }
+        .button {
+            background-color: var(--main-color);
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            float: right;
+            text-transform: uppercase;
+        }
+        .button2{
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+        .button:hover{
+            background-color: var(--main-color-lighter);
+        }
+        img {
+            height: 120px;
+            width: 120px;
+            vertical-align: middle;
+            object-fit: cover;
+            float: left;
+            padding-top: 10px;
+        }
+        h2 {
+            font-family: Didact Gothic;
+            margin: 1vh;
+        }
+        img:hover{
+            background-color: rgb(230, 230, 230);
+        }
+        #spacer {
+            min-height: 6.6em;
+            height:13%;
+            width: 95%;
+        }
+        #distanceLabel{
+            padding: 0.6%;
+            min-width: 4em;
+            overflow: scroll;
+        }
+        #timeLabel{
+            padding: 0.6%;
+            min-width: 5em;
+            overflow: scroll;
+        }
+        #starLabel{
+            padding: 0.6%;
+            min-width: 5em;
+            overflow: scroll;
+        }
+        #priceLabel{
+            padding: 0.6%;
+            min-width: 5em;
+            overflow: scroll;
+        }
+        #sliderContainer{
+            width: 80%;
+            min-width: 12em;
+            display: flex;
+            align-items: stretch;
+            height: 2em;
+        }
+        #sliderDescription{
+            /*padding: 2%;*/
+            padding-top: 0.6%
+        }
+        #flexwrapper{
+            flex-grow: 1;
+        }
+
+
+
+    </style>
+    <template>
+        <!--<div id="spacer"></div>-->
+
+        <div class= "profile-container">
+            <!--<template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" >-->
+            <!--<template id="searchRepeatDisplay">-->
+                <!-- <a href="/profile/{{item._id}}"> -->
+                <div  id ="freelancer" class="freelancer-container">
+                    <img src ="../img/profile_pic.png">
+                    <!--<div class= "element-display-right"><span>{{item.distance}}km away</span>-->
+                    <!--<div>-->
+                    <!--{{item.time}} min-->
+                    <!--</div></div>-->
+                    <!--<div class="element-display"><star-rating  rating="{{item.overall}}"></star-rating> {{item.overall}}</div>-->
+                    <!--<div class="element-display">First Name: <span>{{item.firstName}}</span></div>-->
+                    <div class="element-display">First Name: <span>firstName</span></div>
+                    <!--<div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>-->
+                    <div class= "element-display">Last Name: <span>lastName</span></div>
+                    <!--<div class= "element-display">Location: <span>{{item.location}}</span></div>-->
+                    <!--<div class= "element-display">Email: <span>{{item.email}}</span></div>-->
+                    <!--<div class= "element-display">Job: <span>{{item.job}}</span></div>-->
+                    <div class= "element-display">Job: <span>Job</span></div>
+                    <!--<div class= "element-display"><iron-icon icon="communication:phone"></iron-icon>: <span>{{item.telephoneNum}}</span></div>-->
+                    <!--<div class= "element-display"><iron-icon icon="communication:phone"></iron-icon>: <span>1234567890</span></div>-->
+                    <div class= "element-display">Phone: <span>1234567890</span></div>
+                    <!--<template is="dom-if" if="[[item.verified]]"><div class= "element-display green">Verified</div></template>-->
+
+                    <!--<div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>-->
+                    <p></p>
+                    <!--<center>-->
+                        <!--<a href="/profile/{{item._id}}">-->
+                            <!--<paper-button class = "button">-->
+                                <!--Visit profile-->
+                            <!--</paper-button>-->
+                        <!--</a>-->
+                    <!--</center>-->
+                </div>
+            <!--</template>-->
+            <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
+            <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
+        </div>
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is:"emergency-button",
+            ready: function() {
+            }
+
+        })
+    </script>
+
+</dom-module>
