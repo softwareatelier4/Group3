@@ -7,20 +7,20 @@
 #container{
   width:100%;
   }
+  :host { height: 30%; }
   google-map {
-    height: 80%;
+    height: 400px;
     width:100%;
   }
   location-search{
     width:100%;
-    height: auto;
   }
 </style>
 <template>
   <div id="container">
-  <google-map map={{map}} additional-map-options='{"disableDoubleClickZoom": "false"}' fit-to-marker api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load">
+  <!-- <google-map map={{map}} additional-map-options='{"disableDoubleClickZoom": "false"}' fit-to-marker api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load">
   <google-map-marker id="marker" latitude="{{lat}}" longitude="{{long}}" draggable="true" mouse-events="true" on-google-map-marker-mouseup="f" ></google-map-marker>
-</google-map>
+</google-map> -->
 
   <location-search place={{place}} address="{{address}}" label="'Streetname' 'Streetnumber', 'City, 'Country'"></location-search>
 </div>
@@ -43,7 +43,7 @@ Polymer({
       observer:"g",
     },
     address:{
-      observer:"f",
+      // observer:"f",
       notify:true
     },
     apiLoaded:{
@@ -63,13 +63,6 @@ Polymer({
 
   },
   f:function(e){
-    console.log(this.address)
-    // if(this.apiLoaded){
-    // this.lat = e.detail.latLng.lat()
-    // this.long = e.detail.latLng.lng()
-    // this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
-    // }
-
   },
   g:function(){
 
@@ -77,7 +70,7 @@ Polymer({
 
       this.lat = this.place.geometry.location.lat()
       this.long = this.place.geometry.location.lng()
-      this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
+      // this.map.setCenter(new google.maps.LatLng(this.lat,this.long)) //uncoment if you want to use the map
     }
 
   }

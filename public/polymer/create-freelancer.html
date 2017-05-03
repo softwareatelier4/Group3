@@ -103,7 +103,7 @@
     <div id="edit-freelancer">
       <form id="becomeForm">
       <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
-      <location-selector></location-selector>
+      <location-selector id="locSel"></location-selector>
       <paper-input class="indigo" label="Job" id="Job" value = ""></paper-input>
       <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
       <paper-input class="indigo" label="Website" id="Website" value = ""></paper-input>
@@ -154,6 +154,10 @@ Polymer({
       type:String,
       value:""
     },
+  },
+  handleClick:function(){
+    console.log(this.$.locSel.lat)
+    console.log(this.$.locSel.long)
   }
 })
 </script>
