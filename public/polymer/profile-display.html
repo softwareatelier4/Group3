@@ -188,6 +188,14 @@ This is the polymer component for the search field.
       margin-left: 60px;
       margin-top: 50px;
     }
+    #postedBy{
+      font-size: 40px;
+      margin-bottom: 20px;
+      color: black;
+    }
+    #reviewTextStyle{
+      margin-top: 40px;
+    }
 
 /*example*/
     </style>
@@ -291,13 +299,13 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       <div class="reviewContainer">
 
         <div class="reviewRatings">
+          <div id="postedBy">Posted by: [[item.userName]]</div>
           <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
           <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
           <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
-          <div>Posted by: [[item.userName]]</div>
         </div>
 
-        <div class="reviewText">
+        <div class="reviewText" id="reviewTextStyle">
           <span id="review-{{index}}">
           {{_formatReviewText(item.reviewText)}}</span></br>
           <template is="dom-if" if="{{_formatReviewImg(item.reviewImg)}}">
