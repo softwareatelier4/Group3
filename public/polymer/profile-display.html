@@ -411,6 +411,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         this.reviews = res.detail.response;
       },
       _isOwner:function(id){
+        console.log(localStorage.freelancers)
         console.log("_isOwner", localStorage.freelancers.indexOf(id))
         return localStorage.freelancers.indexOf(id)>0
       },

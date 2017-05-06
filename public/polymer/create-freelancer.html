@@ -6,6 +6,7 @@
 <link rel="import" href="./gallery-display.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
 <link rel="import" href="./components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
 <link rel="import" href="./location-selector.html" />
 
 <dom-module id="create-freelancer">
@@ -101,16 +102,17 @@
 
   <div id = "sign-up-container">
     <div id="edit-freelancer">
-      <form id="becomeForm">
-      <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
+      <form is="iron-form" id="becomeForm" action="/freelancer" method="post" enctype="multipart/form-data">
+      <paper-input class="indigo" name="description" label="Description" id="description" value = ""></paper-input>
       <location-selector id="locSel"></location-selector>
-      <paper-input class="indigo" label="Job" id="Job" value = ""></paper-input>
-      <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
-      <paper-input class="indigo" label="Website" id="Website" value = ""></paper-input>
-      <paper-input class="indigo" label="Skype" id="Skype" value = ""></paper-input>
-      <paper-input class="indigo" label="Facebook" id="Facebook" value = ""></paper-input>
-      <paper-input class="indigo" label="Linkedin" id="Linkedin"value = ""></paper-input>
-      <paper-input class="indigo" label="Github" id="Github" value = ""></paper-input>
+      <paper-input class="indigo" name="job" label="Job" id="Job" value = ""></paper-input>
+      <paper-input class="indigo" name="telephoneNum" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
+      <paper-input class="indigo" name="email" label="email" id="email" value = ""></paper-input>
+      <paper-input class="indigo" name="website" label="Website" id="Website" value = ""></paper-input>
+      <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype" value = ""></paper-input>
+      <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = ""></paper-input>
+      <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = ""></paper-input>
+      <paper-input class="indigo" name="github" label="Github" id="Github" value = ""></paper-input>
 
       <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
         </form>
@@ -155,9 +157,37 @@ Polymer({
       value:""
     },
   },
-  handleClick:function(){
-    console.log(this.$.locSel.lat)
-    console.log(this.$.locSel.long)
+  handleClick:function(e){
+
+    e.preventDefault();
+    let that = this;
+    let imgPath = document.getElementById("pictureInput")
+    var formData = new FormData();
+
+    this.querySelectorAll('#becomeForm>paper-input').forEach(function(item){
+      formData.append(item.name, item.value)
+    })
+    formData.append("latitude", this.$.locSel.lat)
+    formData.append("longitude", this.$.locSel.long)
+    formData.append("location", this.$.locSel.address)
+    formData.append("userId", localStorage.secretKey)
+    var r = new XMLHttpRequest();
+    r.open("POST", "/freelancer", true)//that
+    r.send(formData);
+    r.onreadystatechange=function(){
+      if(r.readyState == 4){
+        if(r.status==201){
+          let o = JSON.parse(r.responseText);
+          console.log(o.newId)
+          if(localStorage.freelancers==""){
+            localStorage.freelancers=JSON.stringify([o.newId]) //still need to reload the page, if you want profile to be visible in my profile
+          }else{
+            localStorage.freelancers = JSON.parse(localStorage.freelancers).push(o.newId)
+          }
+
+        }
+      }
+    }
   }
 })
 </script>
