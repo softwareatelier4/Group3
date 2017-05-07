@@ -210,7 +210,7 @@ describe('GET /freelancer', function(){
 
 
   describe('DELETE /freelancer/:freelancerid', function(){
-    after(utils.dropDb)
+    // after(utils.dropDb)
 
 
     it('should delete an existing freelancer', function(done){

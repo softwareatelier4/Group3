@@ -11,8 +11,8 @@ require("../../../models/User.js");
 const User = mongoose.model("User");
 const id = ObjectId();
 describe("Testing Create on userRouting ", function(){
-  before(utils.dropDb)
-  after(utils.dropDb)
+  // before(utils.dropDb)
+  // after(utils.dropDb)
   describe("POST/userRouting",function(){
     it("should add user to db if the data is valid", function(done){
       var newUserData = {
@@ -139,7 +139,7 @@ describe('GET /userRouting', function(){
   })
 
   describe('DELETE /userRouting/:userid', function(){
-    after(utils.dropDb)
+    // after(utils.dropDb)
 
     it('should delete an existing user', function(done){
       request(app)

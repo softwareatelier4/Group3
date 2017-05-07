@@ -321,6 +321,9 @@ This is the polymer component for the search field.
         },
 
         _filter: function(person){
+            if(typeof slider_distance == 'undefined'){
+              return;
+            }
               slider_distance.value = parseFloat(slider_distance.value);
               if(this.googleApiLoaded &&  (!(this.googleDistance(person.latitude, person.longitude) <= slider_distance.value)
                   || !(slider_time.value>= person.time))){
