@@ -230,6 +230,10 @@ Polymer({
           if(!that.edit){
             let o = JSON.parse(r.responseText);
             localStorage.freelancers+=o.newId
+            window.location="/profile/"+o.newId
+          }
+          if(that.edit){
+            window.location="/profile/"+that.freelancerId
           }
 
 

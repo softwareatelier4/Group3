@@ -4,7 +4,10 @@
 <link rel="import" href="./components/paper-input/paper-input.html">
 <link rel="import" href="./components/iron-icons/communication-icons.html">
 <link rel="import" href="./components/iron-icons/social-icons.html">
-
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./components/google-apis/google-maps-api.html">
+<link rel="stylesheet" href="./components/font-awesome/css/font-awesome.min.css">
 <!--<link rel="import" href="../iron-icons/communication-icons.html">-->
 <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Didact+Gothic">
@@ -22,185 +25,155 @@
             display: flex;
             /*background: rgb(242, 242, 242);*/
             padding-left: 5%;
+            padding-right: 5%;
             flex-direction: row;
             align-items: stretch;
-            max-width: 95%;
-        }
-        .profile-container{
-            width:90%;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            max-width: 90%;
             background-color: white;
-            min-width:22em;
+            height: 80vh;
+            max-height: 80%;
         }
-        .emergency-title{
-          font-family: Didact Gothic;
-        }
-        .bell{
-          color : red;
-          display: inline;
-        }
-        .freelancer-container{
-            background: rgb(242, 242, 242);
-            width: 100%;
-            flex-grow: 1;
-            padding:1%;
-        }
-        .freelancer-container:nth-child(even) {
-            background: red;
-            background: rgb(230, 230, 230);
-        }
-        .element-display{
-            padding-left: 150px;
-            font-family: Didact Gothic;
-            font-size: 18px;
-        }
-        .fullname{
-          padding-left: 150px;
-          font-family: Didact Gothic;
-          font-size: 20px;
-          letter-spacing: 1px;
-          font-weight: bold;
-        }
-        .job{
-          padding-left: 150px;
-          font-family: Didact Gothic;
-          font-size: 20px;
-          letter-spacing: 1px;
-           font-style: italic;
-        }
-        .telephone{
-          padding-left: 150px;
-          font-family: Didact Gothic;
-          font-size: 40px;
-          letter-spacing: 1px;
-          font-weight: bold;
-        }
-        .element-display-right{
-            text-align: right;
-            font-weight: bold;
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-        .green{
-            color:green;
-            display: inline;
-            width: 24px;
-            height: 24px;
-        }
-        .button {
-            background-color: var(--main-color);
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            float: right;
-            text-transform: uppercase;
-        }
-        .button2{
-            border: none;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-        }
-        .button:hover{
-            background-color: var(--main-color-lighter);
-        }
-        img {
-            height: 120px;
-            width: 120px;
-            vertical-align: middle;
-            object-fit: cover;
-            float: left;
-            padding-top: 10px;
-        }
-        h2 {
-            font-family: Didact Gothic;
-            margin: 1vh;
-        }
-        img:hover{
-            background-color: rgb(230, 230, 230);
-        }
-        #spacer {
-            min-height: 6.6em;
-            height:13%;
-            width: 95%;
-        }
-        #distanceLabel{
-            padding: 0.6%;
-            min-width: 4em;
-            overflow: scroll;
-        }
-        #timeLabel{
-            padding: 0.6%;
-            min-width: 5em;
-            overflow: scroll;
-        }
-        #starLabel{
-            padding: 0.6%;
-            min-width: 5em;
-            overflow: scroll;
-        }
-        #priceLabel{
-            padding: 0.6%;
-            min-width: 5em;
-            overflow: scroll;
-        }
-        #sliderContainer{
-            width: 80%;
-            min-width: 12em;
-            display: flex;
-            align-items: stretch;
-            height: 2em;
-        }
-        #sliderDescription{
-            /*padding: 2%;*/
-            padding-top: 0.6%
+        h1{
+          color: red;
+
         }
         #flexwrapper{
-            flex-grow: 1;
+          width: 100%;
+          /*background-color:green;*/
         }
-        iron-icon.big {
-          height: 50px;
-          width: 50px;
+        .telephone{
+          font-size: 7vw;
+          color: red;
+          width: 100%;
+          text-align: center;
+          height: 20%;
+          padding-top: 2%;
         }
+        .job{
+          color:grey;
+          text-align: center;
+          width: 100%;
+          font-size: 3vw;
+        }
+        .fullname{
+          text-align: center;
+          width: 100%;
+          font-size: 4vw;
+        }
+        #imgdiv{
+          margin: auto;
+          width: max-content;
+        }
+        #emForm{
+          margin: auto;
+          width: max-content;
+        }
+        paper-button{
+          margin:auto;
+        }
+
+        /*paper-input,paper-button{
+          background-color: white;
+        }*/
+
     </style>
 
     <template>
+      <template is="dom-if" if="{{!toggle}}">
+      <div id="emForm"><h1>What's your emergency?</h1>
+      <paper-input label="Enter Profession" id="emergencySearch"></paper-input>
+      <paper-button on-tap="startSearch">Find Closest</paper-button>
+      </div>
+    </template>
+      <template is="dom-if" if="[[result]]">
      <div id="flexwrapper">
         <!--<div id="spacer"></div>-->
-        <div class = "emergency-title">
-            <h1><div class ="bell"><iron-icon icon=social:notifications-active></iron-icon></div>
-            Emergency </h1>
-        </div>
-        <div class= "profile-container">
-            <!--<template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" >-->
-                <div  id ="freelancer" class="freelancer-container">
-                    <img src ="../img/profile_pic.png">
+                    <div id="imgdiv">
+                    <img src ="../img/profile_pic.png"></img>
+                  </div>
+                    <div class="telephone"><i class="fa fa-phone" aria-hidden="true">
+                    </i>{{result.telephoneNum}}</div>
                     <div class="fullname">
-                        <span>Bob</span>
-                        <span>Andrews</span>
+                        <span>{{result.firstName}}</span>
+                        <span>{{result.lastName}}</span>
+
                     </div>
-                    <div class= "job"><span>Plumber</span></div>
-                    <div class= "telephone"><div class ="green"><iron-icon class="big" icon="communication:phone"></iron-icon></div><span>1234567890</span></div>
-                    <p></p>
-                </div>
-        </div>
+                    <div class= "job"><span>{{result.job}}</span></div>
+
+
+
+
       </div>
 
-    </template>
+      </template>
+
+<google-maps-api id="maps" api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" libraries="places" on-api-load="on_api_load"></google-maps-api>
+<iron-ajax
+id="ajax"
+handle-as="json"
+on-response="handleResponse"></iron-ajax>
+
+
+</template>
 
     <script>
         Polymer({
             is:"emergency-button",
-            ready: function() {
-            }
+            properties:{
+              result:{
+                value:undefined
+              },position:{
+                observer:"positionDefined"
+              },
+              toggle:{
+                value:false
+              },
+            },
+            on_api_load:function(){
+              let that = this
+              navigator.geolocation.getCurrentPosition(function(position) {
+                 let pos = {
+                   lat: position.coords.latitude,
+                   lng: position.coords.longitude
+                 };
 
+                that.position=new google.maps.LatLng(pos.lat, pos.lng)
+               },function(){
+                 window.alert("You need to allow geolocation")
+            })
+            },
+            startSearch:function(){
+              // this.$.ajax.url="/freelancer/emergency?job="+this.$.emergencySearch.value
+              this.$.ajax.url="/freelancer/emergency?job="+document.getElementById("emergencySearch").value;
+              this.$.ajax.generateRequest()
+            },
+            handleResponse(res){
+              if(res.detail.response.length == 0){
+                window.alert("There is no person available to fix your problem.");
+                return;
+              }
+              this.data=res.detail.response
+              this.toggle=true;
+              this.positionDefined()
+            },
+            positionDefined:function(){
+              if(this.position==undefined || this.data == undefined){
+                return
+              }
+              let max = undefined
+              let maxDistance = Infinity
+              let that = this
+              this.data.forEach(function(item){
+
+                let freelancerPos = new google.maps.LatLng(item.latitude, item.longitude)
+                item.distance = google.maps.geometry.spherical.computeDistanceBetween(freelancerPos, that.position)
+                if(item.distance<maxDistance){
+                  maxDistance = item.distance;
+                  max=item;
+                }
+              })
+              this.result = max;
+            }
         })
     </script>
 
