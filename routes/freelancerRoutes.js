@@ -267,13 +267,14 @@ router.post("/", upload2.array('files'),function(req,res){
   // })
 });
 
-router.post("/update/:id", function(req,res){
-  console.log(req.body)
-  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+router.post("/update/:id",upload2.array('files'), function(req,res){
+  console.log(req.params.id)
+  freelancer.update({_id:req.params.id},req.body, function(err,modified){
     if(err){
       console.log(err)
       res.status(400).end()
     }else{
+      console.log(modified)
       res.status(201).json()
     }
   })

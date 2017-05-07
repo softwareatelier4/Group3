@@ -109,16 +109,17 @@
   <div id = "sign-up-container">
     <div id="edit-freelancer">
       <form is="iron-form" id="becomeForm" action="/freelancer" method="post" enctype="multipart/form-data">
-      <paper-input class="indigo" name="description" label="Description" id="description" value = ""></paper-input>
-      <location-selector id="locSel"></location-selector>
-      <paper-input class="indigo" name="job" label="Job" id="Job" value = ""></paper-input>
-      <paper-input class="indigo" name="telephoneNum" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
-      <paper-input class="indigo" name="email" label="email" id="email" value = ""></paper-input>
-      <paper-input class="indigo" name="website" label="Website" id="Website" value = ""></paper-input>
-      <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype" value = ""></paper-input>
-      <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = ""></paper-input>
-      <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = ""></paper-input>
-      <paper-input class="indigo" name="github" label="Github" id="Github" value = ""></paper-input>
+      <paper-input class="indigo" name="description" label="Description" id="description" value = "[[profile.description]]"></paper-input>
+
+      <location-selector id="locSel" lat="[[profile.latitude]]" long="[[profile.longitude]]" value="[[profile.location]]"></location-selector>
+      <paper-input class="indigo" name="job" label="Job" id="Job" value = "[[profile.job]]"></paper-input>
+      <paper-input class="indigo" name="telephoneNum" allowed-pattern="[0-9]" label="Phone Number" id="PhoneNumber" value = "[[profile.telephoneNum]]"></paper-input>
+      <paper-input class="indigo" name="email" label="email" id="email" value = "[[profile.email]]"></paper-input>
+      <paper-input class="indigo" name="website" label="Website" id="Website" value = "[[profile.website]]"></paper-input>
+      <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype" value = "[[profile.skypeAcc]]"></paper-input>
+      <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = "[[profile.facebook]]"></paper-input>
+      <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = "[[profile.linkedin]]"></paper-input>
+      <paper-input class="indigo" name="github" label="Github" id="Github" value = "[[profile.github]]"></paper-input>
       <h3>For verification we need the following files:</h1>
 
       <div class="fileNames">CV:</div><input type="file" id="cvFile"></input>
@@ -158,6 +159,12 @@ handle-as="json"
 on-response="someFunction"
 method="POST"
 content-type="application/json"></iron-ajax>
+
+<iron-ajax
+id="getFreelancerData"
+url="/freelancer/[[freelancerId]]"
+on-response="handleResponse"
+></iron-ajax>
 </template>
 <script>
 Polymer({
@@ -166,16 +173,30 @@ Polymer({
     changeBackground:{
       type:String,
       value:""
-    },
+    },edit:{
+      type:Boolean,
+      default:false
+    },freelancerId:{
+      type:String,
+      observer:"getData"
+    }
+
   },
+  getData:function(){
+    if(this.freelancerId.length>5){
+      this.$.getFreelancerData.generateRequest()
+    }
+  },
+    handleResponse:function(r){
+      this.set("profile",r.detail.response)
+    },
   handleClick:function(e){
 
     e.preventDefault();
-    if(!this.$.idFile.value || !this.$.cvFile.value){
+    if(!this.edit &&(!this.$.idFile.value || !this.$.cvFile.value)){
       window.alert("You need to submit all required files")
       return
     }
-    let that = this;
     let imgPath = document.getElementById("pictureInput")
     var formData = new FormData();
 
@@ -184,7 +205,10 @@ Polymer({
     })
     formData.append("latitude", this.$.locSel.lat)
     formData.append("longitude", this.$.locSel.long)
-    formData.append("location", this.$.locSel.address)
+    if(this.$.locSel.address!= undefined){
+      formData.append("location", this.$.locSel.address)
+    }
+
     formData.append("userId", localStorage.secretKey)
     formData.append("files", this.$.cvFile.files[0])
     formData.append("files", this.$.idFile.files[0])
@@ -192,19 +216,22 @@ Polymer({
       formData.append("files", this.$.optionalFile.files[0])
     }
     var r = new XMLHttpRequest();
-    r.open("POST", "/freelancer", true)//that
+    if(this.edit){
+      r.open("POST", "/freelancer/update/"+this.freelancerId, true)
+    }else{
+      r.open("POST", "/freelancer", true)
+    }
+    let that = this
     r.send(formData);
     r.onreadystatechange=function(){
       if(r.readyState == 4){
         if(r.status==201){
-          let o = JSON.parse(r.responseText);
-          // console.log(o.newId)
-          // if(localStorage.freelancers==""){
-          //   localStorage.freelancers=JSON.stringify([o.newId]) //still need to reload the page, if you want profile to be visible in my profile
-          // }else{
-          //   localStorage.freelancers = JSON.parse(localStorage.freelancers).push(o.newId) //broken
-          // }
-          localStorage.freelancers+=o.newId
+          console.log(this.edit)
+          if(!that.edit){
+            let o = JSON.parse(r.responseText);
+            localStorage.freelancers+=o.newId
+          }
+
 
         }
         else{
