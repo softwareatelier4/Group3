@@ -2,6 +2,9 @@
 <link rel="import" href="./components/iron-form/iron-form.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
 <link rel="import" href="./components/paper-input/paper-input.html">
+<link rel="import" href="./components/iron-icons/communication-icons.html">
+<link rel="import" href="./components/iron-icons/social-icons.html">
+
 <!--<link rel="import" href="../iron-icons/communication-icons.html">-->
 <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Didact+Gothic">
@@ -32,6 +35,13 @@
             background-color: white;
             min-width:22em;
         }
+        .emergency-title{
+          font-family: Didact Gothic;
+        }
+        .bell{
+          color : red;
+          display: inline;
+        }
         .freelancer-container{
             background: rgb(242, 242, 242);
             width: 100%;
@@ -44,6 +54,29 @@
         }
         .element-display{
             padding-left: 150px;
+            font-family: Didact Gothic;
+            font-size: 18px;
+        }
+        .fullname{
+          padding-left: 150px;
+          font-family: Didact Gothic;
+          font-size: 20px;
+          letter-spacing: 1px;
+          font-weight: bold;
+        }
+        .job{
+          padding-left: 150px;
+          font-family: Didact Gothic;
+          font-size: 20px;
+          letter-spacing: 1px;
+           font-style: italic;
+        }
+        .telephone{
+          padding-left: 150px;
+          font-family: Didact Gothic;
+          font-size: 40px;
+          letter-spacing: 1px;
+          font-weight: bold;
         }
         .element-display-right{
             text-align: right;
@@ -53,6 +86,9 @@
         }
         .green{
             color:green;
+            display: inline;
+            width: 24px;
+            height: 24px;
         }
         .button {
             background-color: var(--main-color);
@@ -130,52 +166,34 @@
         #flexwrapper{
             flex-grow: 1;
         }
-
+        iron-icon.big {
+          height: 50px;
+          width: 50px;
+        }
 
 
     </style>
     <template>
+     <div id="flexwrapper">
         <!--<div id="spacer"></div>-->
-
+        <div class = "emergency-title">
+            <h1><div class ="bell"><iron-icon icon=social:notifications-active></iron-icon></div>
+            Emergency </h1>
+        </div>
         <div class= "profile-container">
             <!--<template id="searchRepeatDisplay" is="dom-repeat" items="{{searchData}}" >-->
-            <!--<template id="searchRepeatDisplay">-->
-                <!-- <a href="/profile/{{item._id}}"> -->
                 <div  id ="freelancer" class="freelancer-container">
                     <img src ="../img/profile_pic.png">
-                    <!--<div class= "element-display-right"><span>{{item.distance}}km away</span>-->
-                    <!--<div>-->
-                    <!--{{item.time}} min-->
-                    <!--</div></div>-->
-                    <!--<div class="element-display"><star-rating  rating="{{item.overall}}"></star-rating> {{item.overall}}</div>-->
-                    <!--<div class="element-display">First Name: <span>{{item.firstName}}</span></div>-->
-                    <div class="element-display">First Name: <span>firstName</span></div>
-                    <!--<div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>-->
-                    <div class= "element-display">Last Name: <span>lastName</span></div>
-                    <!--<div class= "element-display">Location: <span>{{item.location}}</span></div>-->
-                    <!--<div class= "element-display">Email: <span>{{item.email}}</span></div>-->
-                    <!--<div class= "element-display">Job: <span>{{item.job}}</span></div>-->
-                    <div class= "element-display">Job: <span>Job</span></div>
-                    <!--<div class= "element-display"><iron-icon icon="communication:phone"></iron-icon>: <span>{{item.telephoneNum}}</span></div>-->
-                    <!--<div class= "element-display"><iron-icon icon="communication:phone"></iron-icon>: <span>1234567890</span></div>-->
-                    <div class= "element-display">Phone: <span>1234567890</span></div>
-                    <!--<template is="dom-if" if="[[item.verified]]"><div class= "element-display green">Verified</div></template>-->
-
-                    <!--<div class= "element-display">Distance: <span>{{distance(item.latitude, item.longitude)}}</span></div>-->
+                    <div class="fullname">
+                        <span>Bob</span>
+                        <span>Andrews</span>
+                    </div>
+                    <div class= "job"><span>Plumber</span></div>
+                    <div class= "telephone"><div class ="green"><iron-icon class="big" icon="communication:phone"></iron-icon></div><span>1234567890</span></div>
                     <p></p>
-                    <!--<center>-->
-                        <!--<a href="/profile/{{item._id}}">-->
-                            <!--<paper-button class = "button">-->
-                                <!--Visit profile-->
-                            <!--</paper-button>-->
-                        <!--</a>-->
-                    <!--</center>-->
                 </div>
-            <!--</template>-->
-            <!-- <div class= "element-display">Review: <span>{{item.Review}}</span></div> -->
-            <!-- <div class= "element-display">Member since: <span>{{item.CreationDate}}</span></div> -->
         </div>
-
+</div>
 
     </template>
 
