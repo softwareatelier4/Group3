@@ -223,8 +223,9 @@ router.delete("/:id",function(req,res){
   })
 });
 
-router.post("/", upload2.array(),function(req,res){
+router.post("/", upload2.array('files'),function(req,res){
   let a = new freelancer(req.body);
+  console.log(req.files)
   //get the user data for the name and firstname
   // console.log(req.body)
   user.findById(req.body.userId).lean().exec( function(er, found){
@@ -232,8 +233,15 @@ router.post("/", upload2.array(),function(req,res){
     a.firstName=found.firstName
     a.lastName= found.lastName
     a.verified=false
+    let p="/files/"
+    a.cv =p+ req.files[0].filename
+    a.identification=p+ req.files[1].filename
+    if(req.files.length ==3){
+      a.optionalFile= p+req.files[2].filename
+    }
     a.save(function(err,saved){
       if(err){
+        console.log(err)
         res.status(400).end();
       }else{
         console.log(saved._id)

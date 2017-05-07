@@ -64,7 +64,7 @@
 
   #sign-up-container{
     background-color: var(--container-color);
-    color: white;
+    color: var(--second-color);
     padding: 8%;
     font-size: 18px;
     margin-top: 2%;
@@ -96,6 +96,12 @@
   input{
     margin:10px;
   }
+  h3{
+    color: black;
+  }
+  .fileNames{
+    color:var(--second-color);
+  }
   </style>
   <div id="spacer"></div>
 
@@ -113,7 +119,12 @@
       <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = ""></paper-input>
       <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = ""></paper-input>
       <paper-input class="indigo" name="github" label="Github" id="Github" value = ""></paper-input>
+      <h3>For verification we need the following files:</h1>
 
+      <div class="fileNames">CV:</div><input type="file" id="cvFile"></input>
+      <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
+      <h3>Optional:</h1>
+      <input type="file" id="optionalFile"></input>
       <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
         </form>
         <paper-dialog id="dialog">
@@ -160,6 +171,10 @@ Polymer({
   handleClick:function(e){
 
     e.preventDefault();
+    if(!this.$.idFile.value || !this.$.cvFile.value){
+      window.alert("You need to submit all required files")
+      return
+    }
     let that = this;
     let imgPath = document.getElementById("pictureInput")
     var formData = new FormData();
@@ -171,6 +186,11 @@ Polymer({
     formData.append("longitude", this.$.locSel.long)
     formData.append("location", this.$.locSel.address)
     formData.append("userId", localStorage.secretKey)
+    formData.append("files", this.$.cvFile.files[0])
+    formData.append("files", this.$.idFile.files[0])
+    if(this.$.optionalFile.value){
+      formData.append("files", this.$.optionalFile.files[0])
+    }
     var r = new XMLHttpRequest();
     r.open("POST", "/freelancer", true)//that
     r.send(formData);
@@ -178,13 +198,16 @@ Polymer({
       if(r.readyState == 4){
         if(r.status==201){
           let o = JSON.parse(r.responseText);
-          console.log(o.newId)
-          if(localStorage.freelancers==""){
-            localStorage.freelancers=JSON.stringify([o.newId]) //still need to reload the page, if you want profile to be visible in my profile
-          }else{
-            localStorage.freelancers = JSON.parse(localStorage.freelancers).push(o.newId)
-          }
+          // console.log(o.newId)
+          // if(localStorage.freelancers==""){
+          //   localStorage.freelancers=JSON.stringify([o.newId]) //still need to reload the page, if you want profile to be visible in my profile
+          // }else{
+          //   localStorage.freelancers = JSON.parse(localStorage.freelancers).push(o.newId) //broken
+          // }
 
+        }
+        else{
+          window.alert("there was a problem with creating your new freelnacer profile")
         }
       }
     }
