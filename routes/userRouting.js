@@ -54,7 +54,16 @@ router.get('/login',function(req,res){
 })
 router.get('/adminlogin',function(req,res){
     admin.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
-        res.json(found)
+      console.log("entered");
+        if(found == null){
+          res.status(404).json(found);
+          res.end();
+        }
+        else{
+          console.log("entered");
+          res.status(200).json(found);
+          res.end();
+        }
     })
 })
 
