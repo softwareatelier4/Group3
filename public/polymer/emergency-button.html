@@ -4,7 +4,9 @@
 <link rel="import" href="./components/paper-input/paper-input.html">
 <link rel="import" href="./components/iron-icons/communication-icons.html">
 <link rel="import" href="./components/iron-icons/social-icons.html">
-
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./components/google-apis/google-maps-api.html">
 <!--<link rel="import" href="../iron-icons/communication-icons.html">-->
 <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Didact+Gothic">
@@ -173,7 +175,13 @@
 
 
     </style>
+
     <template>
+      <div>
+      <paper-input id="emergencySearch"></paper-input>
+      <paper-button on-tap="startSearch">HELP</paper-button>
+      </div>
+      <template is="dom-if" if="[[result]]">
      <div id="flexwrapper">
         <!--<div id="spacer"></div>-->
         <div class = "emergency-title">
@@ -185,24 +193,76 @@
                 <div  id ="freelancer" class="freelancer-container">
                     <img src ="../img/profile_pic.png">
                     <div class="fullname">
-                        <span>Bob</span>
-                        <span>Andrews</span>
+                        <span>{{result.firstName}}</span>
+                        <span>{{result.lastName}}</span>
                     </div>
-                    <div class= "job"><span>Plumber</span></div>
-                    <div class= "telephone"><div class ="green"><iron-icon class="big" icon="communication:phone"></iron-icon></div><span>1234567890</span></div>
+                    <div class= "job"><span>{{result.job}}</span></div>
+                    <div class= "telephone"><div class ="green"><iron-icon class="big" icon="communication:phone"></iron-icon></div><span>{{result.telephoneNum}}</span></div>
                     <p></p>
                 </div>
         </div>
+      </template>
 </div>
+<google-maps-api id="maps" api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" libraries="places" on-api-load="on_api_load"></google-maps-api>
+<iron-ajax
+id="ajax"
+handle-as="json"
+on-response="handleResponse"></iron-ajax>
 
-    </template>
+</template>
 
     <script>
         Polymer({
             is:"emergency-button",
-            ready: function() {
-            }
+            properties:{
+              result:{
+                value:undefined
+              },position:{
+                observer:"positionDefined"
+              }
+            },
+            on_api_load:function(){
+              let that = this
+              navigator.geolocation.getCurrentPosition(function(position) {
+                 let pos = {
+                   lat: position.coords.latitude,
+                   lng: position.coords.longitude
+                 };
 
+                that.position=new google.maps.LatLng(pos.lat, pos.lng)
+               },function(){
+                 window.alert("You need to allow geolocation")
+            })
+            },
+            startSearch:function(){
+              this.$.ajax.url="/freelancer/emergency?job="+this.$.emergencySearch.value
+              this.$.ajax.generateRequest()
+            },
+            handleResponse(res){
+              if(res.detail.response.length == 0){
+                window.alert("There is no person available to fix your problem.")
+              }
+              this.data=res.detail.response
+              this.positionDefined()
+            },
+            positionDefined:function(){
+              if(this.position==undefined || this.data == undefined){
+                return
+              }
+              let max = undefined
+              let maxDistance = Infinity
+              let that = this
+              this.data.forEach(function(item){
+
+                let freelancerPos = new google.maps.LatLng(item.latitude, item.longitude)
+                item.distance = google.maps.geometry.spherical.computeDistanceBetween(freelancerPos, that.position)
+                if(item.distance<maxDistance){
+                  maxDistance = item.distance
+                  max=item
+                }
+              })
+              this.result = max;
+            }
         })
     </script>
 
