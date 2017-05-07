@@ -81,8 +81,7 @@ This is the polymer component for the search field.
     pattern="/:freelancer_id"
     data="{{subRouteData}}"></app-route>
 
-
-    <search-field search-data={{searchData}} current-coordinates="{{currentCoordinates}}" just-searched={{justSearched}}></search-field>
+    <search-field search-data={{searchData}}  current-coordinates="{{currentCoordinates}}" just-searched={{justSearched}}></search-field>
     <iron-pages attr-for-selected="name" selected="[[page]]" fallback-selection="search">
       <form name="search">
           <div class = "input-fields">
@@ -103,6 +102,7 @@ This is the polymer component for the search field.
       <create-freelancer name="create-freelancer"> </create-freelancer>
       <create-freelancer freelancer-id="{{freelancerId}}" edit="true" name="edit"> </create-freelancer>
       <sign-up name="sign-up"></sign-up>
+    </div>
     </iron-pages>
 
 <!-- [[prop1]] -->

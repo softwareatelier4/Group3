@@ -209,9 +209,9 @@ This is the polymer component for the search field.
     </div>
 
     <div class="buttoncontainer">
-      <div id = "emergency">
-        <a href = "/">
-          <paper-button class = "emergency">EMERGENCY</paper-button>
+      <div on-click="gotoEm" id = "emergency">
+        <a href = "/emergency.html">
+          <paper-button  class= "emergency">EMERGENCY</paper-button>
         </a>
       </div>
 
@@ -415,6 +415,9 @@ This is the polymer component for the search field.
 
         }
 
+      },
+      gotoEm:function(){
+        window.location = "/emergency.html";
       }
 
 
