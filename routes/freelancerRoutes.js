@@ -13,14 +13,7 @@ var upload2 = multer({dest:'./public/files'});
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
-var mailer = require('nodemailer');
-var transporter = mailer.createTransport({
-service: 'Gmail',
-auth: {
-    user: 'paolofalcionix@gmail.com',
-    pass: 'BirbaLea2014'
-}
-});
+
 //
 //
 const user = mongoose.model("User");
