@@ -124,8 +124,7 @@
 
       <div class="fileNames">CV:</div><input type="file" id="cvFile"></input>
       <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
-      <h3>Optional:</h1>
-      <input type="file" id="optionalFile"></input>
+      <div class="fileNames">Optional:</div><input type="file" id="optionalFile"></input>
       <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
         </form>
         <paper-dialog id="dialog">
@@ -197,7 +196,6 @@ Polymer({
       window.alert("You need to submit all required files")
       return
     }
-    let imgPath = document.getElementById("pictureInput")
     var formData = new FormData();
 
     this.querySelectorAll('#becomeForm>paper-input').forEach(function(item){
