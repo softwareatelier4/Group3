@@ -9,7 +9,7 @@ const readChunk = require('read-chunk');
 const fileType = require('file-type');
 const multer = require("multer")
 var upload = multer({ dest: './public/img/' }).single("file")
-var upload2 = multer();
+var upload2 = multer({dest:'./public/files'});
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
@@ -46,6 +46,8 @@ router.put("/verify/:id", function(req,res){
     }
   })
 })
+
+
 
 router.post("/smtp", function(req,res){
 //   mailer.SMTP = {
@@ -221,25 +223,58 @@ router.delete("/:id",function(req,res){
   })
 });
 
-router.post("/", function(req,res){
+router.post("/", upload2.array('files'),function(req,res){
   let a = new freelancer(req.body);
-  a.save(function(err, saved){
-    if(err){
-      res.status(400).json().end();
+  console.log(req.files)
+  //get the user data for the name and firstname
+  // console.log(req.body)
+  user.findById(req.body.userId).lean().exec( function(er, found){
+    // console.log(found)
+    a.firstName=found.firstName
+    a.lastName= found.lastName
+    a.verified=false
+    let p="/files/"
+    a.cv =p+ req.files[0].filename
+    a.identification=p+ req.files[1].filename
+    if(req.files.length ==3){
+      a.optionalFile= p+req.files[2].filename
     }
-    else{
-      res.status(201).end()
-    }
+    a.save(function(err,saved){
+      if(err){
+        console.log(err)
+        res.status(400).end();
+      }else{
+        console.log(saved._id)
+        user.update({_id:req.body.userId},{$push:{freelancers:saved._id}},function(err){
+          if(err){
+            res.status(400).end()
+          }else{
+            console.log(req.body.userId)
+            res.status(201).json({newId:saved._id})
+          }
+        })
+      }
+    })
   })
+
+  // a.save(function(err, saved){
+  //   if(err){
+  //     res.status(400).json().end();
+  //   }
+  //   else{
+  //     res.status(201).end()
+  //   }
+  // })
 });
 
-router.post("/update/:id", function(req,res){
-  console.log(req.body)
-  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+router.post("/update/:id",upload2.array('files'), function(req,res){
+  console.log(req.params.id)
+  freelancer.update({_id:req.params.id},req.body, function(err,modified){
     if(err){
       console.log(err)
       res.status(400).end()
     }else{
+      console.log(modified)
       res.status(201).json()
     }
   })

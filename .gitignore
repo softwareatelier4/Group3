@@ -9,3 +9,4 @@ coverage/
 jenkins-test-results.xml
 .idea/*
 public/img/*
+public/files

@@ -6,6 +6,7 @@
 <link rel="import" href="./gallery-display.html">
 <link rel="import" href="./components/paper-button/paper-button.html">
 <link rel="import" href="./components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
 <link rel="import" href="./location-selector.html" />
 
 <dom-module id="create-freelancer">
@@ -63,7 +64,7 @@
 
   #sign-up-container{
     background-color: var(--container-color);
-    color: white;
+    color: var(--second-color);
     padding: 8%;
     font-size: 18px;
     margin-top: 2%;
@@ -95,23 +96,36 @@
   input{
     margin:10px;
   }
+  h3{
+    color: black;
+  }
+  .fileNames{
+    color:var(--second-color);
+  }
   </style>
   <div id="spacer"></div>
 
 
   <div id = "sign-up-container">
     <div id="edit-freelancer">
-      <form id="becomeForm">
-      <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
-      <location-selector id="locSel"></location-selector>
-      <paper-input class="indigo" label="Job" id="Job" value = ""></paper-input>
-      <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
-      <paper-input class="indigo" label="Website" id="Website" value = ""></paper-input>
-      <paper-input class="indigo" label="Skype" id="Skype" value = ""></paper-input>
-      <paper-input class="indigo" label="Facebook" id="Facebook" value = ""></paper-input>
-      <paper-input class="indigo" label="Linkedin" id="Linkedin"value = ""></paper-input>
-      <paper-input class="indigo" label="Github" id="Github" value = ""></paper-input>
+      <form is="iron-form" id="becomeForm" action="/freelancer" method="post" enctype="multipart/form-data">
+      <paper-input class="indigo" name="description" label="Description" id="description" value = "[[profile.description]]"></paper-input>
 
+      <location-selector id="locSel" lat="[[profile.latitude]]" long="[[profile.longitude]]" value="[[profile.location]]"></location-selector>
+      <paper-input class="indigo" name="job" label="Job" id="Job" value = "[[profile.job]]"></paper-input>
+      <paper-input class="indigo" name="telephoneNum" allowed-pattern="[0-9]" label="Phone Number" id="PhoneNumber" value = "[[profile.telephoneNum]]"></paper-input>
+      <paper-input class="indigo" name="email" label="email" id="email" value = "[[profile.email]]"></paper-input>
+      <paper-input class="indigo" name="website" label="Website" id="Website" value = "[[profile.website]]"></paper-input>
+      <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype" value = "[[profile.skypeAcc]]"></paper-input>
+      <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = "[[profile.facebook]]"></paper-input>
+      <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = "[[profile.linkedin]]"></paper-input>
+      <paper-input class="indigo" name="github" label="Github" id="Github" value = "[[profile.github]]"></paper-input>
+      <h3>For verification we need the following files:</h1>
+
+      <div class="fileNames">CV:</div><input type="file" id="cvFile"></input>
+      <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
+      <h3>Optional:</h1>
+      <input type="file" id="optionalFile"></input>
       <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
         </form>
         <paper-dialog id="dialog">
@@ -145,6 +159,12 @@ handle-as="json"
 on-response="someFunction"
 method="POST"
 content-type="application/json"></iron-ajax>
+
+<iron-ajax
+id="getFreelancerData"
+url="/freelancer/[[freelancerId]]"
+on-response="handleResponse"
+></iron-ajax>
 </template>
 <script>
 Polymer({
@@ -153,11 +173,72 @@ Polymer({
     changeBackground:{
       type:String,
       value:""
-    },
+    },edit:{
+      type:Boolean,
+      default:false
+    },freelancerId:{
+      type:String,
+      observer:"getData"
+    }
+
   },
-  handleClick:function(){
-    console.log(this.$.locSel.lat)
-    console.log(this.$.locSel.long)
+  getData:function(){
+    if(this.freelancerId.length>5){
+      this.$.getFreelancerData.generateRequest()
+    }
+  },
+    handleResponse:function(r){
+      this.set("profile",r.detail.response)
+    },
+  handleClick:function(e){
+
+    e.preventDefault();
+    if(!this.edit &&(!this.$.idFile.value || !this.$.cvFile.value)){
+      window.alert("You need to submit all required files")
+      return
+    }
+    let imgPath = document.getElementById("pictureInput")
+    var formData = new FormData();
+
+    this.querySelectorAll('#becomeForm>paper-input').forEach(function(item){
+      formData.append(item.name, item.value)
+    })
+    formData.append("latitude", this.$.locSel.lat)
+    formData.append("longitude", this.$.locSel.long)
+    if(this.$.locSel.address!= undefined){
+      formData.append("location", this.$.locSel.address)
+    }
+
+    formData.append("userId", localStorage.secretKey)
+    formData.append("files", this.$.cvFile.files[0])
+    formData.append("files", this.$.idFile.files[0])
+    if(this.$.optionalFile.value){
+      formData.append("files", this.$.optionalFile.files[0])
+    }
+    var r = new XMLHttpRequest();
+    if(this.edit){
+      r.open("POST", "/freelancer/update/"+this.freelancerId, true)
+    }else{
+      r.open("POST", "/freelancer", true)
+    }
+    let that = this
+    r.send(formData);
+    r.onreadystatechange=function(){
+      if(r.readyState == 4){
+        if(r.status==201){
+          console.log(this.edit)
+          if(!that.edit){
+            let o = JSON.parse(r.responseText);
+            localStorage.freelancers+=o.newId
+          }
+
+
+        }
+        else{
+          window.alert("there was a problem with creating your new freelnacer profile")
+        }
+      }
+    }
   }
 })
 </script>

@@ -10,7 +10,7 @@ public class emergency_select extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_select);
-
+    System.out.println("xd");
     // Example of a call to a native method
     TextView tv = (TextView) findViewById(R.id.sample_text);
 //    tv.setText(stringFromJNI());

@@ -75,6 +75,9 @@
         <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
         <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
         <div class= "element-display">Email: <span>{{item.email}}</span></div>
+        <div class= "element-display"><a href="{{item.cv}}">CV</a></div>
+        <div class= "element-display"><a href="{{item.identification}}">Identification</a></div>
+        <div class= "element-display"><a href="{{item.optionalFile}}">Optional File</a></div>
         <br>
           <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
             Verify

@@ -85,7 +85,7 @@ This is the polymer component for the search field.
       text-decoration: none;
       display: inline-block;
       font-size: 16px;
-      float: right;
+      /*float: right;*/
       text-transform: uppercase;
     }
 
@@ -165,7 +165,10 @@ This is the polymer component for the search field.
 
     </div>
 
-    <h2>Your freelancers' profiles </h2>
+    <h2>Your freelancers' profiles   <a href="/create-freelancer">
+        <paper-button class="button ">+</paper-button>
+      </a></h2>
+
     <div class= "profile-container">
       <template id="myFreelancersProfilesDisplay" is="dom-repeat" items="{{userData.freelancers}}" >
         <div  id ="freelancer" class="freelancer-container">
@@ -179,11 +182,15 @@ This is the polymer component for the search field.
           <div class= "element-display">Tel: <span>{{item.telephoneNum}}</span></div>
           <template is="dom-if" if="[[item.verified]]"><div class= "element-display green">Verified</div></template>
 
-          <p></p>
           <center>
             <a href="/profile/{{item._id}}">
               <paper-button class = "button">
                  Visit profile
+              </paper-button>
+            </a>
+            <a href="/edit/{{item._id}}">
+              <paper-button class = "button">
+                 Edit  profile
               </paper-button>
             </a>
          </center>
