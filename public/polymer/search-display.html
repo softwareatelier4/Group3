@@ -281,7 +281,6 @@ This is the polymer component for the search field.
 
         _sort : function(val){
           var that = this;
-          // console.log(val);
           switch(val){
             case 'space_distance':
               return function (a, b) {
@@ -372,7 +371,6 @@ This is the polymer component for the search field.
                     travelMode: 'DRIVING',
                   }, callback);
                 function callback(response){
-                  console.log(response.rows[0].elements[0].duration)
                   that.set(`searchData.${i}.time`,response.rows[0].elements[0].duration.value/60)
                   that.set(`searchData.${i}.timeText`,response.rows[0].elements[0].duration.text)
                   that.set(`searchData.${i}.distance`,that.googleDistance(p.latitude, p.longitude))

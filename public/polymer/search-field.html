@@ -210,9 +210,9 @@ This is the polymer component for the search field.
 
     <div class="buttoncontainer">
       <div id = "emergency">
-        <a href = "/">
-          <paper-button class = "emergency">EMERGENCY</paper-button>
-        </a>
+
+          <paper-button class = "emergency" on-tap="goToEmergency">EMERGENCY</paper-button>
+
       </div>
 
       <p id = "welcome">
@@ -415,6 +415,9 @@ This is the polymer component for the search field.
 
         }
 
+      },
+      goToEmergency:function(){
+        window.location="/emergency.html"
       }
 
 
