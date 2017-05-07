@@ -47,48 +47,19 @@ router.put("/verify/:id", function(req,res){
   })
 })
 
-
-
-router.post("/smtp", function(req,res){
-//   mailer.SMTP = {
-//     host: 'gmail.com',
-//     port: 587,
-//     use_authentication: true,
-//     user: 'paolofalcionix@gmail.com',
-//     pass: 'BirbaLea2014'
-// };
-// upload2.array("file",3);
-// upload2(req,res,function(err){
-//   console.log("enter error");
-//   if(err){
-//
-//     console.log(err)
-//     res.status(400).end()
-//   }else{
-//     if(req.file== undefined){
-//       res.status(400).end()
-//       return;
-//     }
-//     let href = "/img/"+req.file.filename
-//     freelancer.update({_id:req.params.id}, {$push:{pictureGallery:href}}, function(err,modified){
-//       if(err){
-//         console.log(err)
-//         res.status(400).end()
-//       }else{
-//         res.status(201).json({src:href})
-//       }
-//
-//     })
-//
-//   }
-// })
-transporter.sendMail({
-from: 'paolofalcionix@gmail.com',
-  to: 'ilijagjorgjiev03@gmail.com',
-  subject: 'Become Freelancer!',
-  text: 'Become Freelancer!',
-  attachments: [{filename: "/Users/ilijagjorgjiev/Desktop/damiano.jpg"}]
-});
+router.get("/emergency", function(req,res){
+  if(req.query.job==undefined){
+    res.status(400).end()
+    return
+  }
+  let job = req.query.job
+  freelancer.find({job:{ "$regex": job, "$options": "i" },available:true}).lean().exec(function(err, found){
+    if(err){
+      res.status(400).end()
+    }else{
+      res.json(found)
+    }
+  })
 })
 
 router.get('/query', function(req,res){
@@ -172,7 +143,6 @@ router.get('/', function (req, res){
 
 
 router.get("/:id", function(req,res){
-  console.log("asdf")
   freelancer.find({_id: req.params.id}, function (err, found) {
 
       if (Object.keys(found).length === 0 ) {
@@ -256,15 +226,6 @@ router.post("/", upload2.array('files'),function(req,res){
       }
     })
   })
-
-  // a.save(function(err, saved){
-  //   if(err){
-  //     res.status(400).json().end();
-  //   }
-  //   else{
-  //     res.status(201).end()
-  //   }
-  // })
 });
 
 router.post("/update/:id",upload2.array('files'), function(req,res){
@@ -304,42 +265,7 @@ router.post("/:id",function(req,res){
 
     }
   })
-
-
-  // let a = req.body;
-  // let form = new formidable.IncomingForm();
-  //   form.on('fileBegin', function (name, file){
-  //       file.path = __dirname + '/public/img' + file.name;
-  //   });
-  //
-  //   form.on('file', function (name, file){
-  //       console.log('Uploaded ' + file.name);
-  //   });
-		// form.parse(req, (err,fields,files)=>{
-		// 	if(err){
-    //     console.log(a)
-    //     res.status(400).end();
-    //     return;
-    //   }
-		// 	fs.rename(files.file.path,"../public/img/"+files.file.name,(err)=>{
-		// 		console.log(err);
-		// 		return;
-		// 	})
-
-
-  // let form = new formidable.IncomingForm();
-  //
-  // form.parse(req.body, function(err, fields, files) {
-  //   //let fileName = files.file.name;
-  //   console.log(fields);
-  // });
-  // freelancer.update({_id:req.params.id}, a, function(err,modified){
-  //   if(err){
-  //     res.sendStatus(400);
-  //   }
-  //   else{
-  //     res.sendStatus(204);
-  //   }
-  // })
 });
+
+
 module.exports = router;

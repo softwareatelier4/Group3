@@ -32,7 +32,8 @@ const freelancerSchema = new mongoose.Schema(
     ownerId:{type:ObjectId},//verification information
     cv:{type:String},
     identification:{type:String},
-    optionalFile:{type:String}
+    optionalFile:{type:String},
+    available:{type:Boolean, required:true,default:false} //for emergency
 
   }
 );
