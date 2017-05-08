@@ -5,5 +5,5 @@ npm run test
 npm start &
 PID=$!
 sleep 2
-./nightwatch
+xvfb-run -a -e /dev/stdout --  ./nightwatch
 kill $PID
