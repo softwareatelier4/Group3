@@ -49,7 +49,15 @@ router.get('/', function (req, res){
 
 router.get('/login',function(req,res){
     user.findOne({userName:req.query.userName,password:req.query.password}).lean().exec(function(err,found){
-        res.json(found)
+      if(found == null){
+        res.status(404).json(found);
+        res.end();
+      }
+      else{
+        console.log("entered");
+        res.status(200).json(found);
+        res.end();
+      }
     })
 })
 router.get('/adminlogin',function(req,res){

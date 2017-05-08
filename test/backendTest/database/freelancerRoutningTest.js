@@ -41,6 +41,33 @@ describe("freelancer db test POST",function(){
       done();
     })
   })
+
+  it("should add a picture to pictureGallery for specific freelancer",function(done){
+    request(app)
+    .post("/freelancer/" + id)
+    .set("content-type", "application/json")
+    .send({})
+    .expect(200)
+    .end(function(err,res){
+      done();
+    })
+
+  })
+  it("should add a picture to pictureGallery for specific freelancer",function(done){
+    request(app)
+    .post("/freelancer/" + id)
+    .set("content-type", "application/json")
+    .send({})
+    .expect(400)
+    .end(function(err,res){
+      if(err){
+        done(err);
+      }
+      else{
+        done();
+      }
+    })
+  });
   it("should not add freelancer to db if the data is invalid", function(done){
     var freelancerData = {
       "firstName" : "Seth",
@@ -70,6 +97,21 @@ describe("freelancer db test POST",function(){
           done()
         }
       })
+    })
+  })
+})
+describe("Test full text search", function(){
+  it("shouldn't find stuff", function(done){
+    request(app)
+    .get("/freelancer/query")
+    .send()
+    .expect(500)
+    .end(function(err,res){
+      if(err){
+        done(err)
+      }else{
+        done()
+      }
     })
   })
 })
@@ -117,7 +159,7 @@ describe('GET /freelancer', function(){
 
     it('should list all the freelancers with correct data', function(done){
       request(app)
-        .get('/userRo')
+        .get('/freelancer')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res){
