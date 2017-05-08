@@ -34,11 +34,12 @@ This is the polymer component for the search field.
       font-family: Didact Gothic;
     }
     #body{
-      width: 85.5%;
+
       background-color:#f2f2f2;
-      padding-left:5%;
-      padding-top: 5%;
-      padding-right: 9.5%;
+      margin-left:5%;
+      padding-top: 7em;
+      width: 85.5%;
+      /*margin-right: %;*/
     }
     #contact-container{
       background-color:  #e6e6e6;
@@ -67,16 +68,6 @@ This is the polymer component for the search field.
     .hide{
       display:none;
     }
-    /*#anotherContainer{
-      width: 100%;
-      align-items: space-between;
-      display: -webkit-flex;
-      display: flex;
-    }*/
-    /*.collumn{
-      padding:2%;
-      flex-grow: 1;
-    }*/
 
     fieldset, label { margin: 0; padding: 0; }
     body{ margin: 20px; }
@@ -111,6 +102,12 @@ This is the polymer component for the search field.
       flex-flow: row nowrap;
       align-items: stretch;
       justify-content:space-around;
+    }
+    .leftsep{
+      padding: 2%;
+    }
+    .septop{
+      border-top: 1px solid black;
     }
     .rating > label {
       color: #ddd;
@@ -182,7 +179,7 @@ This is the polymer component for the search field.
       color: black;
     }
     #rating-container-margin{
-      margin-left: 60px;
+      padding-left: 2%;
     }
     #comments-container-margin{
       margin-left: 60px;
@@ -195,6 +192,26 @@ This is the polymer component for the search field.
     }
     #reviewTextStyle{
       margin-top: 40px;
+    }
+    #profileDescription{
+      overflow: scroll;
+      width:300px;
+    }
+    #rate-box{
+      display: flex;
+      flex-direction: column;
+      /*background-color: black;*/
+    }
+    #rate-box h3{
+      flex-grow: 1;
+    }
+    #rate-box > :first-child{
+      font-size: 2em;
+    }
+    #rate-box-detail{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
     }
 
 /*example*/
@@ -252,25 +269,31 @@ This is the polymer component for the search field.
                         </div>
                     </div>
 
-    <div class = "column-container">
+    <div class = "column-container leftsep">
     <div>
       <h2>About</h2>
     </div>
-      <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+      <div id="profileDescription" > [[profile.description]] </div>
+
+      <div>
+        <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
+      </div>
+
     </div>
-    <div>
-      <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
-    </div>
+
+
   </div>
-  <div class= "" id="rating-container-margin">
+
+
+  <div class="septop" id="rating-container-margin">
     <h2>Rating</h2>
-    <div>
-      <h3> Overall </h3>
-      <star-rating rating= "{{profile.overall}}"></star-rating> <br>
-      <h3> Price </h3>
-      <star-rating rating="{{profile.price}}"></star-rating> <br>
-      <h3> Quality </h3>
-      <star-rating rating="{{profile.quality}}"></star-rating> <br>
+    <div id="rate-box">
+      <h3> <star-rating rating= "{{profile.overall}}"></star-rating><br>Overall</h3>
+      <div id="rate-box-detail">
+      <h3><star-rating rating="{{profile.price}}"></star-rating>  <br>Price</h3>
+      <h3> <star-rating rating="{{profile.quality}}"></star-rating> <br>Quality</h3>
+    </div>
+
     </div>
   </div>
 
@@ -346,7 +369,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
   <template is="dom-if" if="{{_notClaimed(profile)}}">
     <!-- profile claiming -->
   <div>
-    If this profile is rating you <paper-button on-tap="_startClaiming">Claim</paper-button> it
+    <p>Is this your profile?</p> <paper-button on-tap="_startClaiming">Claim</paper-button> it
   </div>
   </template>
   <template is="dom-if" if="{{inClaimingProcess}}">
@@ -533,7 +556,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       },
       _notClaimed:function(p){
-        return !this.profile.verified
+        return !this.profile.verified && (localStorage.username != "");
       },
       _startClaiming:function(e){
         this.inClaimingProcess=true
