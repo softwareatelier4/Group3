@@ -1,4 +1,5 @@
 public/polymer/components
+test/nightwatch-reports/*
 .DS_Store
 node_modules/
 bower_components
@@ -8,3 +9,4 @@ coverage/
 jenkins-test-results.xml
 .idea/*
 public/img/*
+public/files

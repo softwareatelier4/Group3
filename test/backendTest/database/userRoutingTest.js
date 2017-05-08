@@ -10,9 +10,19 @@ require("../../../models/User.js");
 
 const User = mongoose.model("User");
 const id = ObjectId();
+
+let user1 = {
+  "_id"          : ObjectId(),
+  "firstName"    : "Masiar",
+  "lastName"     : "Babazadeh",
+  "userName"     : "masiar",
+  "email"        : "masiar.babazadeh@usi.ch",
+  "password"     : "ciao",
+  "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
+};
 describe("Testing Create on userRouting ", function(){
-  before(utils.dropDb)
-  after(utils.dropDb)
+  // before(utils.dropDb)
+  // after(utils.dropDb)
   describe("POST/userRouting",function(){
     it("should add user to db if the data is valid", function(done){
       var newUserData = {
@@ -106,7 +116,7 @@ describe('GET /userRouting', function(){
     }
       it('should add user if userdata is valid', function(done){
         request(app)
-          .get('/userRouting/xD')
+          .get('/userRouting/xd')
           .set('Accept', 'application/json')
           .send(newUserData)
           .expect('Content-Type', /json/, 'it should respond with json' )
@@ -139,7 +149,7 @@ describe('GET /userRouting', function(){
   })
 
   describe('DELETE /userRouting/:userid', function(){
-    after(utils.dropDb)
+    // after(utils.dropDb)
 
     it('should delete an existing user', function(done){
       request(app)
@@ -173,5 +183,58 @@ describe('GET /userRouting', function(){
         .expect(404, done);
     });
   });
+  describe('login', function(){
+    it("should check if the guy login is succesful", function(done){
+      request(app)
+      .get("/userRouting/login")
+      .query(user1)
+      .expect(200)
+      .end(function(err, res){
+        if(err){
+          done(err);
+        }
+        else{
+          done(err);
+        }
+      })
+    })
+    it("should check if the login is unsuccesful", function(done){
+      request(app)
+      .get("/userRouting/login")
+      .query({})
+      .expect(404)
+      .end(function(err, res){
+        if(err){
+          done(err);
+        }
+        else{
+          done(err);
+        }
+      })
+    })
+  })
+  describe('my-profile', function(){
+    it("should check if the profile exists succesfully", function(done){
+      request(app)
+      .get("/userRouting/my-profile/" + id)
+      .expect(200)
+      .end(function(err, res){
+        done();
+      })
+    })
+    it("should check if the profile exists unsuccesfully", function(done){
+      request(app)
+      .get("/userRouting/my-profile/" + "fdafdafsa")
+      .expect(404)
+      .end(function(err, res){
+        if(err){
+          done(err);
+        }
+        else{
+          done(err);
+        }
+      })
+    })
+  })
 
 })

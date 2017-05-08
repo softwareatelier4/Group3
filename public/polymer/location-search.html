@@ -4,8 +4,8 @@
 
 <dom-module id="location-search">
   <template>
-    <google-maps-api id="maps" api-key="AIzaSyCC_6UtpJ6q_mXtwAHjRJubR45_KkbStrI" libraries="places" on-api-load="on_api_load"></google-maps-api>
-    <paper-input id="input" class="input" label="Location" type="text" value="{{value}}" />
+    <google-maps-api id="maps" api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" libraries="places" on-api-load="on_api_load"></google-maps-api>
+    <paper-input id="input" class="input" label="{{label}}" type="text" value="{{value}}" />
   </template>
   <script>
   Polymer({
@@ -17,9 +17,16 @@
       },
       place: {
         type: Object,
-        value: function () { return {}; },
-        notify: true
+        value: function () { return {geometry:{location:{lat:function(){}, lng:function(){}}}}; },
+        notify: true,
       },
+      label:{
+        value:"Location"
+      },
+      address:{
+        type:String,
+        notify: true
+      }
     },
     on_api_load: function () {
       let that = this
@@ -29,7 +36,12 @@
              lat: position.coords.latitude,
              lng: position.coords.longitude
            };
-           console.log(pos)
+
+           that.place={geometry:{location:{
+             lat:function(){return pos.lat;},
+             lng:function(){return pos.lng}
+           }}}
+
            let defaultBounds=new google.maps.LatLngBounds(
              new google.maps.LatLng(pos.lat, pos.lng),
              new google.maps.LatLng(pos.lat, pos.lng))
@@ -54,7 +66,9 @@
       if (!this.place.address_components) {
         return;
       }
-      this.value = this.place.formatted_address;
+
+      this.address = this.place.formatted_address;
+      console.log(this.address)
     }
   })
   </script>

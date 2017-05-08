@@ -4,18 +4,19 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 let sharedId= ObjectId()
-
+let sharedId2 = ObjectId()
 
 var users = {
   name : 'User',
   data : [
     {
-      "_id"          : sharedId,
+      "_id"          : ObjectId(),
       "firstName"    : "Masiar",
       "lastName"     : "Babazadeh",
       "userName"     : "masiar",
       "email"        : "masiar.babazadeh@usi.ch",
       "password"     : "ciao",
+      "freelancers":  [sharedId,sharedId2],
       "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
     },
 
@@ -45,7 +46,7 @@ var freelancers={
   name:"Freelancer",
   data:[
   {
-    "_id":ObjectId(),
+    "_id":sharedId,
     "firstName": "Masiar",
     "lastName":"Babazadeh",
     "email":"peter_s@gmail.com",
@@ -57,12 +58,32 @@ var freelancers={
     "description":"i am a bad carpenter",
     "website":"xd.com",
     "skypeAcc":"asfd",
-    "ownerId":sharedId,
     "country":"Switzerland",
     "streetNum":"12",
     "street":"via Buffi",
     "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
     "verified" : "false",
+    "available":"true"
+},
+{
+  "_id":sharedId2,
+  "firstName": "Masiar",
+  "lastName":"Babazadeh",
+  "email":"peter_s@gmail.com",
+  "location":"Lugano",
+  "latitude": "46.0058",
+  "longitude": "8.9475",
+  "job":"Janitor",
+  "telephoneNum":"123",
+  "description":"i am also a janitor",
+  "website":"xd.com",
+  "skypeAcc":"asfd",
+  "country":"Switzerland",
+  "streetNum":"12",
+  "street":"via Buffi",
+  "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
+  "verified" : "false",
+  "available":"true"
 },
 {
   "_id":ObjectId(),
@@ -82,6 +103,7 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
+  "available":"true"
 },
 {
   "_id":ObjectId(),
@@ -101,6 +123,7 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
+  "available":"true"
 },
 {
   "_id":ObjectId(),
@@ -121,6 +144,7 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "verified" : "false",
+  "available":"true"
 },
 {
   "_id":ObjectId(),
@@ -175,8 +199,9 @@ var admins = {
 }
 
 var seedData = [];
-seedData.push(users);
 seedData.push(freelancers);
+seedData.push(users);
+
 seedData.push(admins);
 
 module.exports = seedData;

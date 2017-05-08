@@ -9,9 +9,11 @@ const readChunk = require('read-chunk');
 const fileType = require('file-type');
 const multer = require("multer")
 var upload = multer({ dest: './public/img/' }).single("file")
+var upload2 = multer({dest:'./public/files'});
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
+
 //
 //
 const user = mongoose.model("User");
@@ -34,6 +36,44 @@ router.put("/verify/:id", function(req,res){
       res.status(400).end()
     }else{
       res.status(201).end()
+    }
+  })
+})
+router.post("/claim/:id",upload2.array('files'),function(req,res){
+
+  let p="/files/"
+  let o ={}
+  o.cv =p+ req.files[0].filename
+  o.identification=p+ req.files[1].filename
+  if(req.files.length ==3){
+    o.optionalFile= p+req.files[2].filename
+  }
+  freelancer.update({_id:req.params.id},o,function(err,modified){
+    if(err){
+      res.status(400).end()
+    }else{
+      user.update({_id:req.body.userId}, {$push:{freelancers:req.params.id}}, function(err, modified){
+        if(err){
+          res.status(400).end()
+        }else{
+          res.status(201).end()
+        }
+      })
+    }
+  })
+})
+
+router.get("/emergency", function(req,res){
+  if(req.query.job==undefined){
+    res.status(400).end()
+    return
+  }
+  let job = req.query.job
+  freelancer.find({job:{ "$regex": job, "$options": "i" },available:true}).lean().exec(function(err, found){
+    if(err){
+      res.status(400).end()
+    }else{
+      res.json(found)
     }
   })
 })
@@ -65,6 +105,10 @@ router.get('/query', function(req,res){
 })
 function addAveragesToTheResultAndSend(a,req,res){
   let counter = 0
+  if(a.length==0){
+    res.json([])
+    return
+  }
   a.forEach(function(item){
 
     review.find({freelancer:item._id}).lean().exec(function(err,found){
@@ -82,7 +126,6 @@ function addAveragesToTheResultAndSend(a,req,res){
       item.price = Math.round(price/n)||5
       item.quality = Math.round(quality/n)||5
       if(++counter == a.length){
-        console.log(a)
         res.json(a).end()
       }
     })
@@ -116,7 +159,6 @@ router.get('/', function (req, res){
 
 
 router.get("/:id", function(req,res){
-  console.log("asdf")
   freelancer.find({_id: req.params.id}, function (err, found) {
 
       if (Object.keys(found).length === 0 ) {
@@ -167,25 +209,50 @@ router.delete("/:id",function(req,res){
   })
 });
 
-router.post("/", function(req,res){
+router.post("/", upload2.array('files'),function(req,res){
   let a = new freelancer(req.body);
-  a.save(function(err, saved){
-    if(err){
-      res.status(400).json().end();
+  //get the user data for the name and firstname
+  console.log(req.body)
+  user.findById(req.body.userId).lean().exec( function(err, found){
+    if(found == null){
+      res.status(400).end()
     }
-    else{
-      res.status(201).end()
+    console.log(found)
+    a.firstName=found.firstName
+    a.lastName= found.lastName
+    a.verified=false
+    let p="/files/"
+    a.cv =p+ req.files[0].filename
+    a.identification=p+ req.files[1].filename
+    if(req.files.length ==3){
+      a.optionalFile= p+req.files[2].filename
     }
+    a.save(function(err,saved){
+      if(err){
+        res.status(400).end();
+      }else{
+        console.log(saved._id)
+        user.update({_id:req.body.userId},{$push:{freelancers:saved._id}},function(err){
+          if(err){
+            res.status(400).end()
+          }else{
+            console.log(req.body.userId)
+            res.status(201).json({newId:saved._id})
+          }
+        })
+      }
+    })
   })
 });
 
-router.post("/update/:id", function(req,res){
-  console.log(req.body)
-  freelancer.update({ownerId:req.params.id},{$set: {description:req.body.description, location:req.body.location}}, function(err,modified){
+router.post("/update/:id",upload2.array('files'), function(req,res){
+  console.log(req.params.id)
+  freelancer.update({_id:req.params.id},req.body, function(err,modified){
     if(err){
       console.log(err)
       res.status(400).end()
     }else{
+      console.log(modified)
       res.status(201).json()
     }
   })
@@ -215,42 +282,7 @@ router.post("/:id",function(req,res){
 
     }
   })
-
-
-  // let a = req.body;
-  // let form = new formidable.IncomingForm();
-  //   form.on('fileBegin', function (name, file){
-  //       file.path = __dirname + '/public/img' + file.name;
-  //   });
-  //
-  //   form.on('file', function (name, file){
-  //       console.log('Uploaded ' + file.name);
-  //   });
-		// form.parse(req, (err,fields,files)=>{
-		// 	if(err){
-    //     console.log(a)
-    //     res.status(400).end();
-    //     return;
-    //   }
-		// 	fs.rename(files.file.path,"../public/img/"+files.file.name,(err)=>{
-		// 		console.log(err);
-		// 		return;
-		// 	})
-
-
-  // let form = new formidable.IncomingForm();
-  //
-  // form.parse(req.body, function(err, fields, files) {
-  //   //let fileName = files.file.name;
-  //   console.log(fields);
-  // });
-  // freelancer.update({_id:req.params.id}, a, function(err,modified){
-  //   if(err){
-  //     res.sendStatus(400);
-  //   }
-  //   else{
-  //     res.sendStatus(204);
-  //   }
-  // })
 });
+
+
 module.exports = router;

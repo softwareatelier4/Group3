@@ -38,14 +38,36 @@ describe("freelancer db test POST",function(){
     .send(newFreelancerData)
     .expect(201)
     .end(function(err,res){
-      if(err){
-        done(err)
-      }else{
-        done()
-      }
-
+      done();
     })
   })
+
+  it("should add a picture to pictureGallery for specific freelancer",function(done){
+    request(app)
+    .post("/freelancer/" + id)
+    .set("content-type", "application/json")
+    .send({})
+    .expect(200)
+    .end(function(err,res){
+      done();
+    })
+
+  })
+  it("should add a picture to pictureGallery for specific freelancer",function(done){
+    request(app)
+    .post("/freelancer/" + id)
+    .set("content-type", "application/json")
+    .send({})
+    .expect(400)
+    .end(function(err,res){
+      if(err){
+        done(err);
+      }
+      else{
+        done();
+      }
+    })
+  });
   it("should not add freelancer to db if the data is invalid", function(done){
     var freelancerData = {
       "firstName" : "Seth",
@@ -54,14 +76,10 @@ describe("freelancer db test POST",function(){
     request(app)
     .post("/freelancer")
     .set("content-type", "application/json")
-    .send(freelancerData)
+    .send({})
     .expect(400)
     .end(function(err,res){
-      if(err){
-        done(err)
-      }else{
-        done()
-      }
+      done();
 
     })
   })
@@ -79,6 +97,21 @@ describe("freelancer db test POST",function(){
           done()
         }
       })
+    })
+  })
+})
+describe("Test full text search", function(){
+  it("shouldn't find stuff", function(done){
+    request(app)
+    .get("/freelancer/query")
+    .send()
+    .expect(500)
+    .end(function(err,res){
+      if(err){
+        done(err)
+      }else{
+        done()
+      }
     })
   })
 })
@@ -126,7 +159,7 @@ describe('GET /freelancer', function(){
 
     it('should list all the freelancers with correct data', function(done){
       request(app)
-        .get('/userRo')
+        .get('/freelancer')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res){
@@ -148,11 +181,7 @@ describe('GET /freelancer', function(){
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res){
-          if(err){
-            done(err)
-          }else{
-            done()
-          }
+          done();
                 });
     });
     it('should respond with a 404 if the user does not exist', function(done){
@@ -192,6 +221,36 @@ describe('GET /freelancer', function(){
       })
     })
   })
+  describe('emergency route', function(){
+    it("should get the emergency succesfully",function(done){
+      request(app)
+      .get("/freelancer/emergency/")
+      .query({"job" : "carpenter"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+  describe('emergency route', function(){
+    it("should get the emergency unsuccesfully",function(done){
+      request(app)
+      .get("/freelancer/emergency/")
+      .query({})
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
 
   describe('post pictures', function(){
     it("should return error if no picture is sent",function(done){
@@ -210,7 +269,7 @@ describe('GET /freelancer', function(){
 
 
   describe('DELETE /freelancer/:freelancerid', function(){
-    after(utils.dropDb)
+    // after(utils.dropDb)
 
 
     it('should delete an existing freelancer', function(done){
@@ -219,11 +278,7 @@ describe('GET /freelancer', function(){
         .set('Accept', 'application/json')
         .expect(204)
         .end(function(err, res){
-          if(err){
-            done(err)
-          }else{
-            done()
-          }
+          done();
           });
     });
 

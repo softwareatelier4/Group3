@@ -75,6 +75,9 @@
         <div class="element-display">First Name: <span>{{item.firstName}}</span></div>
         <div class= "element-display">Last Name: <span>{{item.lastName}}</span></div>
         <div class= "element-display">Email: <span>{{item.email}}</span></div>
+        <template is="dom-if" if="[[item.cv]]"><div class= "element-display"><a href="{{item.cv}}">CV</a></div></template>
+        <template is="dom-if" if="[[item.identification]]"><div class= "element-display"><a href="{{item.identification}}">Identification</a></div></template>
+        <template is="dom-if" if="[[item.optionalFile]]"><div class= "element-display"><a href="{{item.optionalFile}}">Optional File</a></div></template>
         <br>
           <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
             Verify

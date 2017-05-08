@@ -34,11 +34,12 @@ This is the polymer component for the search field.
       font-family: Didact Gothic;
     }
     #body{
-      width: 85.5%;
+
       background-color:#f2f2f2;
-      padding-left:5%;
-      padding-top: 5%;
-      padding-right: 9.5%;
+      margin-left:5%;
+      padding-top: 7em;
+      width: 85.5%;
+      /*margin-right: %;*/
     }
     #contact-container{
       background-color:  #e6e6e6;
@@ -64,16 +65,9 @@ This is the polymer component for the search field.
     #margin-container{
       margin-top: 20px;
     }
-    /*#anotherContainer{
-      width: 100%;
-      align-items: space-between;
-      display: -webkit-flex;
-      display: flex;
-    }*/
-    /*.collumn{
-      padding:2%;
-      flex-grow: 1;
-    }*/
+    .hide{
+      display:none;
+    }
 
     fieldset, label { margin: 0; padding: 0; }
     body{ margin: 20px; }
@@ -108,6 +102,12 @@ This is the polymer component for the search field.
       flex-flow: row nowrap;
       align-items: stretch;
       justify-content:space-around;
+    }
+    .leftsep{
+      padding: 2%;
+    }
+    .septop{
+      border-top: 1px solid black;
     }
     .rating > label {
       color: #ddd;
@@ -159,20 +159,59 @@ This is the polymer component for the search field.
       width: 100%;
       /*border-style: outset;*/
       border-left: 1%;
-      /*background: grey;*/
       justify-content:flex-start;
       padding: 0 1%;
+      /*background-color: red;*/
+      background: linear-gradient(to bottom right, #e6e6e6, #f2f2f2);
     }
     .resp_txt{
       padding: 0 2%;
-      border-bottom: thin solid grey;
+      /*border-bottom-style: thin solid grey;*/
+      background: linear-gradient(to bottom right, gray, #f2f2f2);
+      /*background: gray;*/
+      height: 50px;
+      width: 100%;
     }
-
     .resp_title{
       padding-left: 5%;
     }
     .fa-3x{
       color: black;
+    }
+    #rating-container-margin{
+      padding-left: 2%;
+    }
+    #comments-container-margin{
+      margin-left: 60px;
+      margin-top: 50px;
+    }
+    #postedBy{
+      font-size: 40px;
+      margin-bottom: 20px;
+      color: black;
+    }
+    #reviewTextStyle{
+      margin-top: 40px;
+    }
+    #profileDescription{
+      overflow: scroll;
+      width:300px;
+    }
+    #rate-box{
+      display: flex;
+      flex-direction: column;
+      /*background-color: black;*/
+    }
+    #rate-box h3{
+      flex-grow: 1;
+    }
+    #rate-box > :first-child{
+      font-size: 2em;
+    }
+    #rate-box-detail{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
     }
 
 /*example*/
@@ -230,38 +269,46 @@ This is the polymer component for the search field.
                         </div>
                     </div>
 
-    <div class = "column-container">
+    <div class = "column-container leftsep">
     <div>
       <h2>About</h2>
     </div>
-      <div style="overflow: scroll; width:300px;"> [[profile.description]] </div>
+      <div id="profileDescription" > [[profile.description]] </div>
+
+      <div>
+        <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
+      </div>
+
     </div>
-    <div>
-      <gallery-display freelancer-id="[[freelancerId]]" profile="[[profile]]"></gallery-display>
-    </div>
+
+
   </div>
-  <div class= "">
+
+
+  <div class="septop" id="rating-container-margin">
     <h2>Rating</h2>
-    <div>
-      <h3> Overall </h3>
-      <star-rating rating= "{{profile.overall}}"></star-rating> <br>
-      <h3> Price </h3>
-      <star-rating rating="{{profile.price}}"></star-rating> <br>
-      <h3> Quality </h3>
-      <star-rating rating="{{profile.quality}}"></star-rating> <br>
+    <div id="rate-box">
+      <h3> <star-rating rating= "{{profile.overall}}"></star-rating><br>Overall</h3>
+      <div id="rate-box-detail">
+      <h3><star-rating rating="{{profile.price}}"></star-rating>  <br>Price</h3>
+      <h3> <star-rating rating="{{profile.quality}}"></star-rating> <br>Quality</h3>
+    </div>
+
     </div>
   </div>
-  <div>
+
+
+  <div id="comments-container-margin">
   <h2>Comments</h2>
   <div class="reviewRatings">
-    <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{rOverall}}"></star-rating></div>
-    <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{rPrice}}"></star-rating></div>
-    <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{rQuality}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Overall: </b><star-rating editable rating="{{rOverall}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Price: </b><star-rating editable rating="{{rPrice}}"></star-rating></div>
+    <div class="starRatingContainer"><b>Quality: </b><star-rating editable rating="{{rQuality}}"></star-rating></div>
   </div>
 </div>
 
 
-  <div>
+  <div id="comments-container-margin">
     <div>
 <!-- <file-upload dropText="Or Drop Here" droppable="true" manualUpload="true"
 raised="true" accept="image/*" >Add Photo</file-upload> -->
@@ -273,18 +320,23 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
   </div>
 
   <template id="reviewsRepeat" is="dom-repeat"  items="{{reviews}}">
-    <div>
+    <div id="comments-container-margin">
       <div class="reviewContainer">
 
         <div class="reviewRatings">
+          <div id="postedBy">Posted by: [[item.userName]]</div>
           <div class="starRatingContainer"><b>Overall: </b><star-rating rating="{{item.reviewRatingOverall}}"></star-rating></div>
           <div class="starRatingContainer"><b>Price: </b><star-rating rating="{{item.reviewRatingPrice}}"></star-rating></div>
           <div class="starRatingContainer"><b>Quality: </b><star-rating rating="{{item.reviewRatingQuality}}"></star-rating></div>
         </div>
 
-        <div class="reviewText">
-          {{item.reviewText}}<br>
-            <img class="revImg" src=[[item.reviewImg]]></img>
+        <div class="reviewText" id="reviewTextStyle">
+          <span id="review-{{index}}">
+          {{_formatReviewText(item.reviewText)}}</span></br>
+          <template is="dom-if" if="{{_formatReviewImg(item.reviewImg)}}">
+            <img class="revImg" src="[[item.reviewImg]]"></img>
+          </template>
+
         </div>
 
 
@@ -297,23 +349,47 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
 
       <template is="dom-repeat"  items="{{item.replys}}" class="responseText">
         <p class="resp_txt">
+          <br/>
           {{item}}
         </p>
       </template>
+      <template is="dom-if" if="{{_isOwner(freelancerId)}}">
       <div>
         <div class="replyArea">
           <paper-textarea  label="Respond to this Comment" rows="2" max-rows="5"></paper-textarea>
           <paper-button data-id$={{item._id}} on-tap="handleCommentResponse">reply</paper-button>
         </div>
       </div>
+      </template>
         <br/>
       </div>
     </div>
     </template>
   </div>
+  <template is="dom-if" if="{{_notClaimed(profile)}}">
+    <!-- profile claiming -->
+  <div>
+    <p>Is this your profile?</p> <paper-button on-tap="_startClaiming">Claim</paper-button> it
+  </div>
+  </template>
+  <template is="dom-if" if="{{inClaimingProcess}}">
+    <div>
+      Prove you are the owner, by submitting your CV and identification (requierd) and some extra file(optional).
+      <form is="iron-form" id="becomeForm" action="/freelancer/claim/[[freelancerId]]" method="post" enctype="multipart/form-data">
+        <div class="fileNames">CV:</div><input type="file" id="cvFile" value={{cvFile}}></input>
+        <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
+        <div class="fileNames">Optional:</div><input type="file" id="optionalFile"></input>
+        <paper-button on-tap="_submitClaimRequest">Claim</paper-button>
+      </form>
+    </div>
+  </template>
 </div>
 
-
+<iron-ajax
+  id="startClaimRequest"
+  url="/freelancer/claim/[[freelancerId]]"
+  on-response="handleResponse"
+></iron-ajax>
 <iron-ajax
   id="getFreelancerData"
   url="/freelancer/[[freelancerId]]"
@@ -371,7 +447,10 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         profile:{value:{overall:1,price:1,quality:1}},
         rOverall:{value:1},
         rPrice:{value:1},
-        rQuality:{value:1}
+        rQuality:{value:1},
+        inClaimingProcess:{
+          value:false
+        },cvFile:{}
       },
       handleResponse:function(res){
         this.profile.displayDate = formatDate(new Date(res.detail.response.dateCreated));
@@ -380,12 +459,16 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       handlereview: function(res){
         this.reviews = res.detail.response;
       },
+      _isOwner:function(id){
+        console.log(localStorage.freelancers)
+        console.log("_isOwner", localStorage.freelancers.indexOf(id))
+        return localStorage.freelancers.indexOf(id)>0
+      },
       handlePosting: function(){
-
-
       var formData = new FormData();
           formData.append("file", reviewImg.files[0]);
           formData.append("freelancer", this.freelancerId);
+          formData.append("userName", localStorage.username);//hardcoded for now
           formData.append("reviewText", this.reviewComment);
           formData.append("reviewRatingOverall", this.rOverall);
           formData.append("reviewRatingPrice", this.rPrice);
@@ -395,12 +478,12 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       // r.open("POST", "/review/"+this.freelancerId, true);
       r.open("POST", "/review", true);
       // r.setRequestHeader("Content-Type", "multipart/form-data");
-      console.log(formData.getAll('secretKey'));
+      // console.log(formData.getAll('secretKey'));
 
       r.send(formData);
       r.onreadystatechange=function(){
           if(r.readyState == 4){
-            console.log(r.responseText);
+            // console.log(r.responseText);
             if(r.status==201){
                 location.reload();
                 // this.$.handleReviewResponse(r);
@@ -411,9 +494,27 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       }
 
       },
+      _formatReviewImg:function(path){
+        // console.log("Path: "+path);
+
+        if(path == undefined || path == "undefined"){
+          return false;
+        }
+        else{
+          return true;
+        }
+      },
+      _formatReviewText:function(text){
+        if(text == undefined || text == "undefined"){
+          return "";
+        }  else{
+          return text;
+        }
+      },
+
       handleReviewResponse:function(e){
         if(e.detail.status == 200){
-          console.log(e.detail.response);
+          // console.log(e.detail.response);
           this.push('reviews', e.detail.response)
         }else{
           window.alert("You need to be logged in to comment")
@@ -422,7 +523,12 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
       handleCommentResponse:function(e){
             let reviewId=e.target.getAttribute("data-id")
 
-            let text=e.target.parentNode.querySelector("paper-textarea").value
+            let text=e.target.parentNode.querySelector("paper-textarea").value;
+            if(text == undefined){
+              window.alert("Your reply is empty!");
+              return;
+            }
+            text = text +"\n\n Reply By: "+localStorage.username;
             let req = this.$.ajax2
             req.url = "/review/respond/"+reviewId
             req.body=JSON.stringify({responseText:text})
@@ -438,7 +544,7 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
           }
 
         }else{
-          window.alert("there was a problem with adding your reply")
+          window.alert("There was a problem with adding your reply")
         }
 
       },
@@ -446,6 +552,45 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         if(this.freelancerId.length>5){
           this.$.getReviewData.generateRequest()
           this.$.getFreelancerData.generateRequest()
+        }
+
+      },
+      _notClaimed:function(p){
+        return !this.profile.verified && (localStorage.username != "");
+      },
+      _startClaiming:function(e){
+        this.inClaimingProcess=true
+      },
+      _submitClaimRequest:function(e){
+        e.preventDefault();
+        if(localStorage.secretKey==undefined){
+          window.alert("you need to be logged in to claim a profile")
+          return
+        }
+        let cvFile = this.querySelector("#cvFile")
+        let idFile = this.querySelector("#idFile")
+        let optionalFile = this.querySelector("#optionalFile")
+        if(!idFile.value || !cvFile.value){
+          window.alert("You need to submit all required files")
+          return
+        }
+        let formData = new FormData();
+        formData.append("files",cvFile.files[0])
+        formData.append("files", idFile.files[0])
+        if(optionalFile.value){
+          formData.append("files", optionalFile.files[0])
+        }
+        formData.append("userId", localStorage.secretKey)
+        let r = new XMLHttpRequest();
+        let that = this
+        r.open("POST", "/freelancer/claim/"+this.freelancerId, true)
+        r.send(formData);
+        r.onreadystatechange=function(){
+          if(r.readyState == 4){
+            if(r.status==201){
+              console.log("nice")
+            }
+          }
         }
 
       }

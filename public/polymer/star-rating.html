@@ -44,16 +44,36 @@ This is the polymer component for the search field.
       },
 
       properties: {
-        rating : {Number,
+        rating : {
+        type:Number,
         value:1,
-        notify:true}
+        notify:true,
+        observer:"f"
+      },
+      editable:{
+         type:Boolean,
+         value:false
+      }
+      },
+      f:function(){
+        if(this.rating == undefined){
+          this.rating = 1
+        }
+        this.set("stars", new Array(Math.round(this.rating)%6));
+        this.set("emptyStars", new Array(5-Math.round(this.rating)%6));
       },
       starFull:function(e){
+        if(! this.editable){
+          return;
+        }
         this.set("stars",new Array(e.target.dataVal+1));
         this.set("emptyStars",new Array(4-e.target.dataVal));
         this.rating=e.target.dataVal+1;
       },
       starEmpty:function(e){
+        if(! this.editable){
+          return;
+        }
         this.set("stars",new Array(e.target.dataVal+1+this.stars.length));
         this.set("emptyStars",new Array(5-this.stars.length));
         this.rating=this.stars.length;

@@ -16,6 +16,7 @@ const ReviewSchema = new mongoose.Schema(
     reviewRatingQuality : {type: Number, min: 1, max : 5, required: true},
     replys:{type:[String],required:false},
     dateCreated : { type: Date, required: true, default: Date.now },
+    userName:{type:String,required:true}
   })
 
 

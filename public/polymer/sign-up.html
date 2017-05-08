@@ -85,6 +85,7 @@ Polymer({
       if(!(res.detail.response.error)){
           localStorage.secretKey = res.detail.response._id;
           localStorage.username = res.detail.response.userName;
+          localStorage.freelancers = res.detail.response.freelancers
           window.location = "/search"
       }
       else

@@ -1,0 +1,81 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<!-- <link rel="import" href="./components/google-apis/google-maps-api.html"> -->
+<link rel="import" href="./components/google-map/google-map.html">
+<link rel="import" href="./location-search.html">
+<dom-module id="location-selector">
+<style>
+#container{
+  width:100%;
+  }
+  :host { height: 30%; }
+  google-map {
+    height: 400px;
+    width:100%;
+  }
+  location-search{
+    width:100%;
+  }
+</style>
+<template>
+  <div id="container">
+  <!-- <google-map map={{map}} additional-map-options='{"disableDoubleClickZoom": "false"}' fit-to-marker api-key="AIzaSyC-H_Y4bhZTwrirdR0s-nMHI3y6pPoiGd4" on-api-load="on_api_load">
+  <google-map-marker id="marker" latitude="{{lat}}" longitude="{{long}}" draggable="true" mouse-events="true" on-google-map-marker-mouseup="f" ></google-map-marker>
+</google-map> -->
+
+  <location-search place={{place}} address="{{address}}" label="'Streetname' 'Streetnumber', 'City, 'Country'"></location-search>
+</div>
+
+</template>
+
+<script>
+Polymer({
+  is:"location-selector",
+  ready:function(){
+  },
+  properties:{
+    long:{
+      value:0,
+      notify:true
+    },
+    lat:{value:0,notify:true},
+    map:{},
+    place:{
+      observer:"g",
+    },
+    address:{
+      // observer:"f",
+      notify:true
+    },
+    apiLoaded:{
+      value:false
+    }
+  },
+  on_api_load:function(){
+    let that = this
+    this.apiLoaded=true
+    // google.maps.event.addListener(this.map,"dblclick",function(e){
+    //   that.lat = e.latLng.lat();
+    //   that.long = e.latLng.lng();
+    //   that.map.setCenter(new google.maps.LatLng(that.lat,that.long))
+    // })
+    // this.map.setCenter(new google.maps.LatLng(this.lat,this.long))
+
+
+  },
+  f:function(e){
+  },
+  g:function(){
+
+    if(this.place.geometry.location.lat() != undefined){
+
+      this.lat = this.place.geometry.location.lat()
+      this.long = this.place.geometry.location.lng()
+      // this.map.setCenter(new google.maps.LatLng(this.lat,this.long)) //uncoment if you want to use the map
+    }
+
+  }
+})
+
+
+</script>
+</dom-module>

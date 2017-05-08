@@ -8,6 +8,7 @@
 * firstName     String             First name of the user. Default: username
 * lastName      String             Last name of the user. Default: username
 * dateCreated   Date               Date the user was created.  Default: Date.now()
+* freelancers   FreelancerSchema   Freelancer profiles claimed by user.
 */
 
 
@@ -28,7 +29,7 @@ const userSchema = new mongoose.Schema(
     email   : { type: String, required: true },
     dateCreated : { type: Date, required: true, default: Date.now },
     location : {type: String},
-    freelancers : { type: FreelancerSchema},
+    freelancers : [{ type: mongoose.Schema.Types.ObjectId, ref:"Freelancer"}],
     profilePicture : {type: String},
   }
 );

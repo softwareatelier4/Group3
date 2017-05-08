@@ -104,7 +104,7 @@
 
       <paper-input class="indigo" label="About" id="description" value = ""></paper-input>
       <paper-input class="indigo" label="Location" id="Location" value = ""></paper-input>
-      <paper-input class="indigo" label="Phone Number" id="Phone Number" value = ""></paper-input>
+      <paper-input class="indigo" label="Phone Number" id="PhoneNumber" value = ""></paper-input>
       <paper-input class="indigo" label="Website" value = ""></paper-input>
       <paper-input class="indigo" label="Skype" value = ""></paper-input>
       <paper-input class="indigo" label="Facebook" value = ""></paper-input>
@@ -113,7 +113,7 @@
       <p>
         Profile picture
       </p>
-      <input type="file" id="profile picture" name="file">
+      <input type="file" id="profilepicture" name="file">
 
 
       <paper-button class="indigo" on-tap="handleClick" id="editButton">edit<paper-button>
@@ -133,8 +133,11 @@
             </p>
             <input type="file" id="extraInput" name="file">
 
-            <paper-button  class = "indigo" raised on-tap="_submit">Become Freelancer</paper-button>
+            <paper-button  class = "indigo" raised on-tap="_submit" id = "freelancerButton">Become Freelancer</paper-button>
       </form>
+      <paper-dialog id="dialog">
+        Submit both an ID and CV.
+      </paper-dialog>
   </div>
 
   <iron-ajax
@@ -159,11 +162,20 @@
     _submit:function(){
         let idInput = document.getElementById("idInput");
         let cvInput = document.getElementById("cvInput");
+        let extraInput = document.getElementById("extraInput");
+        console.log(idInput.files[0]);
         if(idInput.value && cvInput.value){
-          console.log(true);
+          var formData = new FormData();
+          formData.append("file", idInput.files[0]);
+          formData.append("file", cvInput.files[0]);
+          if(extraInput.value) formData.append("file", extraInput.files[0]);
+          var r = new XMLHttpRequest();
+           r.open("POST", "/freelancer/smtp", true)
+           r.send(formData);
         }
         else{
-          console.log(false);
+          let dialog = document.getElementById("dialog");
+          dialog.open();
         }
     },
     handleClick:function(e){
