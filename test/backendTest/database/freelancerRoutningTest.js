@@ -35,7 +35,7 @@ describe("freelancer db test POST",function(){
     request(app)
     .post("/freelancer")
     .set("content-type", "application/json")
-    .send({})
+    .send(newFreelancerData)
     .expect(201)
     .end(function(err,res){
       done();

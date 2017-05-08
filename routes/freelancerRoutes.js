@@ -212,9 +212,12 @@ router.delete("/:id",function(req,res){
 router.post("/", upload2.array('files'),function(req,res){
   let a = new freelancer(req.body);
   //get the user data for the name and firstname
-  // console.log(req.body)
-  user.findById(req.body.userId).lean().exec( function(er, found){
-    // console.log(found)
+  console.log(req.body)
+  user.findById(req.body.userId).lean().exec( function(err, found){
+    if(found == null){
+      res.status(400).end()
+    }
+    console.log(found)
     a.firstName=found.firstName
     a.lastName= found.lastName
     a.verified=false
@@ -226,7 +229,6 @@ router.post("/", upload2.array('files'),function(req,res){
     }
     a.save(function(err,saved){
       if(err){
-        console.log(err)
         res.status(400).end();
       }else{
         console.log(saved._id)
