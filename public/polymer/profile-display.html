@@ -273,6 +273,8 @@ This is the polymer component for the search field.
       <star-rating rating="{{profile.quality}}"></star-rating> <br>
     </div>
   </div>
+
+
   <div id="comments-container-margin">
   <h2>Comments</h2>
   <div class="reviewRatings">
@@ -341,9 +343,30 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
     </div>
     </template>
   </div>
+  <template is="dom-if" if="{{_notClaimed(profile)}}">
+    <!-- profile claiming -->
+  <div>
+    If this profile is rating you <paper-button on-tap="_startClaiming">Claim</paper-button> it
+  </div>
+  </template>
+  <template is="dom-if" if="{{inClaimingProcess}}">
+    <div>
+      Prove you are the owner, by submitting your CV and identification (requierd) and some extra file(optional).
+      <form is="iron-form" id="becomeForm" action="/freelancer/claim/[[freelancerId]]" method="post" enctype="multipart/form-data">
+        <div class="fileNames">CV:</div><input type="file" id="cvFile" value={{cvFile}}></input>
+        <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
+        <div class="fileNames">Optional:</div><input type="file" id="optionalFile"></input>
+        <paper-button on-tap="_submitClaimRequest">Claim</paper-button>
+      </form>
+    </div>
+  </template>
 </div>
 
-
+<iron-ajax
+  id="startClaimRequest"
+  url="/freelancer/claim/[[freelancerId]]"
+  on-response="handleResponse"
+></iron-ajax>
 <iron-ajax
   id="getFreelancerData"
   url="/freelancer/[[freelancerId]]"
@@ -401,7 +424,10 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         profile:{value:{overall:1,price:1,quality:1}},
         rOverall:{value:1},
         rPrice:{value:1},
-        rQuality:{value:1}
+        rQuality:{value:1},
+        inClaimingProcess:{
+          value:false
+        },cvFile:{}
       },
       handleResponse:function(res){
         this.profile.displayDate = formatDate(new Date(res.detail.response.dateCreated));
@@ -503,6 +529,45 @@ raised="true" accept="image/*" >Add Photo</file-upload> -->
         if(this.freelancerId.length>5){
           this.$.getReviewData.generateRequest()
           this.$.getFreelancerData.generateRequest()
+        }
+
+      },
+      _notClaimed:function(p){
+        return !this.profile.verified
+      },
+      _startClaiming:function(e){
+        this.inClaimingProcess=true
+      },
+      _submitClaimRequest:function(e){
+        e.preventDefault();
+        if(localStorage.secretKey==undefined){
+          window.alert("you need to be logged in to claim a profile")
+          return
+        }
+        let cvFile = this.querySelector("#cvFile")
+        let idFile = this.querySelector("#idFile")
+        let optionalFile = this.querySelector("#optionalFile")
+        if(!idFile.value || !cvFile.value){
+          window.alert("You need to submit all required files")
+          return
+        }
+        let formData = new FormData();
+        formData.append("files",cvFile.files[0])
+        formData.append("files", idFile.files[0])
+        if(optionalFile.value){
+          formData.append("files", optionalFile.files[0])
+        }
+        formData.append("userId", localStorage.secretKey)
+        let r = new XMLHttpRequest();
+        let that = this
+        r.open("POST", "/freelancer/claim/"+this.freelancerId, true)
+        r.send(formData);
+        r.onreadystatechange=function(){
+          if(r.readyState == 4){
+            if(r.status==201){
+              console.log("nice")
+            }
+          }
         }
 
       }

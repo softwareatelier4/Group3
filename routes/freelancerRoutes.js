@@ -13,14 +13,7 @@ var upload2 = multer({dest:'./public/files'});
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
-var mailer = require('nodemailer');
-var transporter = mailer.createTransport({
-service: 'Gmail',
-auth: {
-    user: 'paolofalcionix@gmail.com',
-    pass: 'BirbaLea2014'
-}
-});
+
 //
 //
 const user = mongoose.model("User");
@@ -43,6 +36,29 @@ router.put("/verify/:id", function(req,res){
       res.status(400).end()
     }else{
       res.status(201).end()
+    }
+  })
+})
+router.post("/claim/:id",upload2.array('files'),function(req,res){
+
+  let p="/files/"
+  let o ={}
+  o.cv =p+ req.files[0].filename
+  o.identification=p+ req.files[1].filename
+  if(req.files.length ==3){
+    o.optionalFile= p+req.files[2].filename
+  }
+  freelancer.update({_id:req.params.id},o,function(err,modified){
+    if(err){
+      res.status(400).end()
+    }else{
+      user.update({_id:req.body.userId}, {$push:{freelancers:req.params.id}}, function(err, modified){
+        if(err){
+          res.status(400).end()
+        }else{
+          res.status(201).end()
+        }
+      })
     }
   })
 })
@@ -195,7 +211,6 @@ router.delete("/:id",function(req,res){
 
 router.post("/", upload2.array('files'),function(req,res){
   let a = new freelancer(req.body);
-  console.log(req.files)
   //get the user data for the name and firstname
   // console.log(req.body)
   user.findById(req.body.userId).lean().exec( function(er, found){
