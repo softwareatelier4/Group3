@@ -35,15 +35,10 @@ describe("freelancer db test POST",function(){
     request(app)
     .post("/freelancer")
     .set("content-type", "application/json")
-    .send(newFreelancerData)
+    .send({})
     .expect(201)
     .end(function(err,res){
-      if(err){
-        done(err)
-      }else{
-        done()
-      }
-
+      done();
     })
   })
   it("should not add freelancer to db if the data is invalid", function(done){
@@ -54,14 +49,10 @@ describe("freelancer db test POST",function(){
     request(app)
     .post("/freelancer")
     .set("content-type", "application/json")
-    .send(freelancerData)
+    .send({})
     .expect(400)
     .end(function(err,res){
-      if(err){
-        done(err)
-      }else{
-        done()
-      }
+      done();
 
     })
   })
@@ -148,11 +139,7 @@ describe('GET /freelancer', function(){
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res){
-          if(err){
-            done(err)
-          }else{
-            done()
-          }
+          done();
                 });
     });
     it('should respond with a 404 if the user does not exist', function(done){
@@ -192,6 +179,36 @@ describe('GET /freelancer', function(){
       })
     })
   })
+  describe('emergency route', function(){
+    it("should get the emergency succesfully",function(done){
+      request(app)
+      .get("/freelancer/emergency/")
+      .query({"job" : "carpenter"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+  describe('emergency route', function(){
+    it("should get the emergency unsuccesfully",function(done){
+      request(app)
+      .get("/freelancer/emergency/")
+      .query({})
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
 
   describe('post pictures', function(){
     it("should return error if no picture is sent",function(done){
@@ -219,11 +236,7 @@ describe('GET /freelancer', function(){
         .set('Accept', 'application/json')
         .expect(204)
         .end(function(err, res){
-          if(err){
-            done(err)
-          }else{
-            done()
-          }
+          done();
           });
     });
 
