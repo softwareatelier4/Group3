@@ -183,7 +183,7 @@ describe('GET /userRouting', function(){
         .expect(404, done);
     });
   });
-  describe('DELETE /userRouting/:userid', function(){
+  describe('login', function(){
     it("should check if the guy login is succesful", function(done){
       request(app)
       .get("/userRouting/login")
@@ -202,6 +202,29 @@ describe('GET /userRouting', function(){
       request(app)
       .get("/userRouting/login")
       .query({})
+      .expect(404)
+      .end(function(err, res){
+        if(err){
+          done(err);
+        }
+        else{
+          done(err);
+        }
+      })
+    })
+  })
+  describe('my-profile', function(){
+    it("should check if the profile exists succesfully", function(done){
+      request(app)
+      .get("/userRouting/my-profile/" + id)
+      .expect(200)
+      .end(function(err, res){
+        done();
+      })
+    })
+    it("should check if the profile exists unsuccesfully", function(done){
+      request(app)
+      .get("/userRouting/my-profile/" + "fdafdafsa")
       .expect(404)
       .end(function(err, res){
         if(err){

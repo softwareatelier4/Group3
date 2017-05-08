@@ -93,12 +93,13 @@ router.get("/:id", function(req,res){
 
 router.get("/my-profile/:id", function(req,res){
   user.findOne({_id: req.params.id},{password:0}).lean().populate("freelancers").exec(function(err,found){
-    if(err){
-      res.status(404).end()
-    }else{
+      if(found == null){
+        res.status(404).json(found)
+      }
+      else{
+        res.status(200).json(found)
+      }
 
-      res.json(found)
-    }
   })
 });
 
