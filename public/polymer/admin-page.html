@@ -59,6 +59,14 @@
     .green{
       background-color: green;
     }
+    .buttoncontainer{
+      flex-grow: 2;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      align-items: stretch;
+    }
   </style>
 
   <template>
@@ -78,18 +86,18 @@
         <template is="dom-if" if="[[item.cv]]"><div class= "element-display"><a href="{{item.cv}}">CV</a></div></template>
         <template is="dom-if" if="[[item.identification]]"><div class= "element-display"><a href="{{item.identification}}">Identification</a></div></template>
         <template is="dom-if" if="[[item.optionalFile]]"><div class= "element-display"><a href="{{item.optionalFile}}">Optional File</a></div></template>
-        <br>
-          <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
+        <div class="buttoncontainer">
+          <paper-button id="verifybut" data-id$={{item._id}} class = "button" on-tap="verify">
             Verify
           </paper-button>
-          <paper-button data-id$={{item._id}} class = "button" on-tap="deny">
+          <paper-button id="denybut" data-id$={{item._id}} class = "button" on-tap="deny">
             Deny
           </paper-button>
-          <paper-button data-id$={{item._id}} class = "button" on-tap="delete">
+          <paper-button id="delbut" data-id$={{item._id}} class = "button" on-tap="delete">
             Delete
           </paper-button>
+        </div>
 
-        <br><br><br>
        </div>
     </template>
 
@@ -123,16 +131,33 @@ Polymer({
       this.set("freelancers",res.detail.response)
     },
     verify:function(e){
-      let freelancerId=e.target.getAttribute("data-id")
-      let req = this.$.ajax2
-      console.log(e.target.className)
-      req.url ="/freelancer/verify/"+freelancerId
-      e.target.style.backgroundColor="green"
-      req.generateRequest()
-    }
-    deny:function(e){
+      let freelancerId=e.target.getAttribute("data-id");
+      let req = this.$.ajax2;
+      let deny = document.getElementById("denybut");
+      let del = document.getElementById("delbut");
+      req.url ="/freelancer/verify/"+freelancerId;
+      deny.style.backgroundColor = "#494E6B";
+      del.style.backgroundColor = "#494E6B";
+      e.target.style.backgroundColor="green";
 
+      req.generateRequest();
     }
+    // deny:function(e){
+    //   let freelancerId = e.target.getAttribute("data-id");
+    //   let verify = document.getElementById("verifybut");
+    //   let del = document.getElementById("delbut");
+    //   verify.style.backgroundColor = "#494E6B";
+    //   del.style.backgroundColor = "#494E6B";
+    //   e.target.style.backgroundColor= "red";
+    // },
+    // delete:function(e){
+    //   let freelancerId = e.target.getAttribute("data-id");
+    //   let verify = document.getElementById("verifybut");
+    //   let deny = document.getElementById("denybut");
+    //   verify.style.backgroundColor = "#494E6B";
+    //   deny.style.backgroundColor = "#494E6B";
+    //   e.target.style.backgroundColor = "blue";
+    // }
 
 })
 
