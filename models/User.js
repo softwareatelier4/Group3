@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
     location : {type: String},
     freelancers : [{ type: mongoose.Schema.Types.ObjectId, ref:"Freelancer"}],
     profilePicture : {type: String},
+    emailVerification : {type: Boolean, default : false}
   }
 );
 

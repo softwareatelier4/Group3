@@ -18,6 +18,7 @@ var users = {
       "password"     : "ciao",
       "freelancers":  [sharedId,sharedId2],
       "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
+      "emailVerification" : "true",
     },
 
     {
@@ -28,6 +29,7 @@ var users = {
       "email"        : "sapolsky@stanford.edu",
       "password"     : "baboon",
       "dateCreated"  : "Sat Sep 27 2014 10:26:46 GMT+0200 (CEST)",
+      "emailVerification" : "true",
     },
 
     {
@@ -38,6 +40,7 @@ var users = {
       "email"        : "vasileios.triglianos@usi.ch",
       "password"     : "ciao",
       "dateCreated"  : "Sat Sep 27 2014 10:28:21 GMT+0200 (CEST)",
+      "emailVerification" : "true",
     }
   ]
 }
@@ -63,7 +66,8 @@ var freelancers={
     "street":"via Buffi",
     "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
     "verified" : "false",
-    "available":"true"
+    "available":"true",
+    "emailVerification" : "true",
 },
 {
   "_id":sharedId2,
@@ -83,7 +87,8 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
-  "available":"true"
+  "available":"true",
+  "emailVerification" : "true",
 },
 {
   "_id":ObjectId(),
@@ -103,7 +108,8 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
-  "available":"true"
+  "available":"true",
+  "emailVerification" : "true",
 },
 {
   "_id":ObjectId(),
@@ -123,7 +129,8 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
-  "available":"true"
+  "available":"true",
+  "emailVerification" : "true",
 },
 {
   "_id":ObjectId(),
@@ -144,7 +151,8 @@ var freelancers={
   "streetNum":"12",
   "street":"via Buffi",
   "verified" : "false",
-  "available":"true"
+  "available":"true",
+  "emailVerification" : "true",
 },
 {
   "_id":ObjectId(),
@@ -164,6 +172,7 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "false",
+  "emailVerification" : "true",
 },
 {
   "_id":ObjectId(),
@@ -183,6 +192,7 @@ var freelancers={
   "street":"via Buffi",
   "facebook" :"https:\/\/www.facebook.com/gianmarco.palazzi19",
   "verified" : "true",
+  "emailVerification" : "true",
 }
 ]
 }

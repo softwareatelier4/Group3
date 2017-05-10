@@ -33,7 +33,8 @@ const freelancerSchema = new mongoose.Schema(
     cv:{type:String},
     identification:{type:String},
     optionalFile:{type:String},
-    available:{type:Boolean, required:true,default:false} //for emergency
+    available:{type:Boolean, required:true,default:false}, //for emergency
+    emailVerification : {type: Boolean, default : false},
 
   }
 );
