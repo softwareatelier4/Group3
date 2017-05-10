@@ -82,6 +82,12 @@
           <paper-button data-id$={{item._id}} class = "button" on-tap="verify">
             Verify
           </paper-button>
+          <paper-button data-id$={{item._id}} class = "button" on-tap="deny">
+            Deny
+          </paper-button>
+          <paper-button data-id$={{item._id}} class = "button" on-tap="delete">
+            Delete
+          </paper-button>
 
         <br><br><br>
        </div>
@@ -123,6 +129,9 @@ Polymer({
       req.url ="/freelancer/verify/"+freelancerId
       e.target.style.backgroundColor="green"
       req.generateRequest()
+    }
+    deny:function(e){
+
     }
 
 })
