@@ -77,6 +77,16 @@ Polymer({
       r.open("PUT", "/userRouting/verify-email", true)
       r.setRequestHeader("Content-Type", "application/json");
       r.send(JSON.stringify(object));
+      r.onreadystatechange=function(){
+        if(r.readyState == 4){
+          if(r.status==201){
+
+          }else{
+            window.alert("You are not logged in. Please log in and click the validation link again")
+            window.location="/search"
+          }
+        }
+      }
     },
     _routeChanged:function(r){
       if(this.route.path=="/verify-email"){
