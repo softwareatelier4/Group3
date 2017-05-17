@@ -52,7 +52,7 @@
   <div id="spacer"></div>
 
   <div id = "verify-email-container">
-      <form is="iron-form" method="get" action="/userRouting/verify-email/" on-iron-form-response="handleResponse">
+      <form is="iron-form" method="get" action="/userRouting/verify-email" on-iron-form-response="handleResponse">
           <paper-button id = "verify-button" raised on-tap="_submit" >Verify Your Email</paper-button>
       </form>
   </div>
@@ -71,12 +71,14 @@ Polymer({
         }
     },
     _submit : function(e){
-      let form = Polymer.dom(event).localTarget.parentElement;
-      var input = document.createElement("input");
-      input.type = "text";
-      input.name = localStorage.secretKey;
-      form.appendChild(input);
-      Polymer.dom(event).localTarget.parentElement.submit();
+      e.preventDefault();
+      let object = {
+        "id" : localStorage.secretKey,
+      }
+      var r = new XMLHttpRequest();
+      r.open("POST", "/userRouting/verify-email", true)
+      r.setRequestHeader("Content-Type", "application/json");
+      r.send(JSON.stringify(object));
     }
 })
 </script>
