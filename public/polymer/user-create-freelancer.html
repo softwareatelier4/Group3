@@ -9,7 +9,7 @@
 <link rel="import" href="./components/iron-form/iron-form.html">
 <link rel="import" href="./location-selector.html" />
 
-<dom-module id="create-freelancer">
+<dom-module id="user-create-freelancer">
     <template>
         <style>
             :root{
@@ -90,66 +90,84 @@
             }
             #edit-button{
             }
-            p{
+
+            p
+            {
                 color: black;
             }
-            input{
+
+            input
+            {
                 margin:10px;
             }
-            h3{
+
+            h3
+            {
                 color: black;
             }
-            .fileNames{
+
+            .fileNames
+            {
                 color:var(--second-color);
             }
+
         </style>
+
+
         <div id="spacer"></div>
 
-
         <div id = "sign-up-container">
-            <div id="edit-freelancer">
-                <form is="iron-form" id="becomeForm" action="/freelancer" method="post" enctype="multipart/form-data">
-                    <paper-input class="indigo" name="description" label="Description" id="description" value = "[[profile.description]]"></paper-input>
+            <div id="create-freelancer">
+                <form is="iron-form" id="newFreelancerForm" action="/freelancer" method="post" enctype="multipart/form-data">
 
-                    <location-selector id="locSel" lat="[[profile.latitude]]" long="[[profile.longitude]]" value="[[profile.location]]"></location-selector>
-                    <paper-input class="indigo" name="job" label="Job" id="Job" value = "[[profile.job]]"></paper-input>
-                    <paper-input class="indigo" name="telephoneNum" allowed-pattern="[0-9]" label="Phone Number" id="PhoneNumber" value = "[[profile.telephoneNum]]"></paper-input>
-                    <paper-input class="indigo" name="email" label="email" id="email" value = "[[profile.email]]"></paper-input>
-                    <paper-input class="indigo" name="website" label="Website" id="Website" value = "[[profile.website]]"></paper-input>
-                    <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype" value = "[[profile.skypeAcc]]"></paper-input>
-                    <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook" value = "[[profile.facebook]]"></paper-input>
-                    <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"value = "[[profile.linkedin]]"></paper-input>
-                    <paper-input class="indigo" name="github" label="Github" id="Github" value = "[[profile.github]]"></paper-input>
-                    <h3>For verification we need the following files:</h1>
+                    <paper-input class="indigo" name="firstName" label="First Name" id="firstName"
+                                 value = "[[profile.firstName]]" on-tap="fixTextColorFirstName"></paper-input>
 
-                        <div class="fileNames">CV:</div><input type="file" id="cvFile"></input>
-                        <div class="fileNames">Identification:</div><input type="file" id="idFile"></input>
-                        <div class="fileNames">Optional:</div><input type="file" id="optionalFile"></input>
-                        <paper-button class="indigo" on-tap="handleClick" id="createFreelancer">Become Freelancer<paper-button>
+                    <paper-input class="indigo" name="lastName" label="Last Name" id="lastName"
+                                 value = "[[profile.lastName]]" on-tap="fixTextColorLastName"></paper-input>
+
+                    <paper-input class="indigo" name="description" label="Description" id="description"
+                                 value = "[[profile.description]]"></paper-input>
+
+                    <location-selector id="locSel" lat="[[profile.latitude]]" long="[[profile.longitude]]"
+                                       value="[[profile.location]]" on-tap="fixTextColorLocation"></location-selector>
+
+                    <paper-input class="indigo" name="job" label="Job" id="Job"
+                                 value = "[[profile.job]]" on-tap="fixTextColorJob"></paper-input>
+
+                    <paper-input class="indigo" name="telephoneNum" allowed-pattern="[0-9]" label="Phone Number"
+                                 id="PhoneNumber" value = "[[profile.telephoneNum]]" on-tap="fixTextColorPhone"></paper-input>
+
+                    <paper-input class="indigo" name="email" label="email" id="emailForm"
+                                 value = "[[profile.email]]" on-tap="fixTextColorEmail"></paper-input>
+
+                    <paper-input class="indigo" name="website" label="Website" id="Website"
+                                 value = "[[profile.website]]"></paper-input>
+
+                    <paper-input class="indigo" name="skypeAcc" label="Skype" id="Skype"
+                                 value = "[[profile.skypeAcc]]"></paper-input>
+
+                    <paper-input class="indigo" name="facebook" label="Facebook" id="Facebook"
+                                 value = "[[profile.facebook]]"></paper-input>
+
+                    <paper-input class="indigo" name="linkedin" label="Linkedin" id="Linkedin"
+                                 value = "[[profile.linkedin]]"></paper-input>
+
+                    <paper-input class="indigo" name="github" label="Github" id="Github"
+                                 value = "[[profile.github]]"></paper-input>
+
+                    <br>
+                    <br>
+
+                    <paper-button class="indigo" on-tap="handleClick" id="newFreelancerForm">Create Freelancer<paper-button>
                 </form>
                 <paper-dialog id="dialog">
                     Fill all the fields that are required
                 </paper-dialog>
+
             </div>
 
 
-            <!-- <form id="verifyForm">
-            <p>Submit ID</p>
-            <input type="file" id="idInput" name="file">
-            <p>
-            Submit CV
-          </p>
-          <input type="file" id="cvInput" name="file">
-          <p>
-          Submit something EXTRA
-        </p>
-        <input type="file" id="extraInput" name="file">
-
-        <paper-button  class = "indigo" raised on-tap="_submit" id = "freelancerButton">Become Freelancer</paper-button>
-      </form> -->
-            <!-- <paper-dialog id="dialog">
-              Submit both an ID and CV.
-            </paper-dialog> -->
         </div>
 
         <iron-ajax
@@ -164,10 +182,17 @@
                 url="/freelancer/[[freelancerId]]"
                 on-response="handleResponse"
         ></iron-ajax>
+
+
     </template>
+
+
+
     <script>
+
         Polymer({
-            is: 'create-freelancer',
+
+            is: 'user-create-freelancer',
             properties:{
                 changeBackground:{
                     type:String,
@@ -178,71 +203,177 @@
                 },freelancerId:{
                     type:String,
                     observer:"getData"
-                }
+                },
+
 
             },
-            getData:function(){
+
+
+            getData:function()
+            {
                 if(this.freelancerId.length>5){
                     this.$.getFreelancerData.generateRequest()
                 }
             },
-            handleResponse:function(r){
+
+            handleResponse:function(r)
+            {
                 this.set("profile",r.detail.response)
             },
-            handleClick:function(e){
+
+
+            handleClick:function(e)
+            {
+
+//                <!--Required:
+//                <!--first name-->
+//                <!--last name-->
+//                <!--email-->
+//                <!--location -->
+//                <!--phone-->
+//                <!--job-->
 
                 e.preventDefault();
-                if(!this.edit &&(!this.$.idFile.value || !this.$.cvFile.value)){
-                    window.alert("You need to submit all required files")
+
+                // Checking required fields
+
+                let inputs = this.querySelectorAll('#newFreelancerForm>paper-input');
+
+                let requiredInfos = false;
+
+
+                if (!document.getElementById("firstName").value)
+                {
+                    document.getElementById("paper-input-label-17").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+                if (!document.getElementById("lastName").value)
+                {
+                    document.getElementById("paper-input-label-18").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+                if (!document.getElementById("emailForm").value)
+                {
+                    document.getElementById("paper-input-label-23").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+                if (!inputs[4].value)
+                {
+                    // phone
+                    document.getElementById("paper-input-label-22").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+                if (!inputs[3].value)
+                {
+                    // job
+                    document.getElementById("paper-input-label-21").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+                if ((this.$.locSel.long == 0) && (this.$.locSel.lat == 0))
+                {
+                    // job
+                    document.getElementById("paper-input-label-20").style.color = "#FF0000";
+                    requiredInfos = true;
+                }
+
+
+                if (requiredInfos)
+                {
+                    window.alert("please provide all the required info");
+                    requiredInfos = false;
                     return
                 }
+
+
+
                 var formData = new FormData();
 
-                this.querySelectorAll('#becomeForm>paper-input').forEach(function(item){
+                this.querySelectorAll('#newFreelancerForm>paper-input').forEach(function(item)
+                {
                     formData.append(item.name, item.value)
-                })
-                formData.append("latitude", this.$.locSel.lat)
-                formData.append("longitude", this.$.locSel.long)
-                if(this.$.locSel.address!= undefined){
+                });
+
+                formData.append("latitude", this.$.locSel.lat);
+                formData.append("longitude", this.$.locSel.long);
+
+                if(this.$.locSel.address!= undefined)
+                {
                     formData.append("location", this.$.locSel.address)
                 }
 
-                formData.append("userId", localStorage.secretKey)
-                formData.append("files", this.$.cvFile.files[0])
-                formData.append("files", this.$.idFile.files[0])
-                if(this.$.optionalFile.value){
-                    formData.append("files", this.$.optionalFile.files[0])
-                }
+
+
                 var r = new XMLHttpRequest();
-                if(this.edit){
-                    r.open("POST", "/freelancer/update/"+this.freelancerId, true)
-                }else{
-                    r.open("POST", "/freelancer", true)
-                }
-                let that = this
+
+                r.open("POST", "/freelancer/userCreatesFreelancer", true);
+
+
+                let that = this;
+
                 r.send(formData);
-                r.onreadystatechange=function(){
-                    if(r.readyState == 4){
-                        if(r.status==201){
+
+                r.onreadystatechange=function()
+                {
+                    if(r.readyState == 4)
+                    {
+
+                        if(r.status==201)
+                        {
                             console.log(this.edit)
-                            if(!that.edit){
-                                let o = JSON.parse(r.responseText);
-                                localStorage.freelancers+=o.newId
-                                window.location="/profile/"+o.newId
-                            }
-                            if(that.edit){
-                                window.location="/profile/"+that.freelancerId
-                            }
-
-
+                            let o = JSON.parse(r.responseText);
+                            window.location="/profile/"+o.newId
                         }
-                        else{
-                            window.alert("there was a problem with creating your new freelnacer profile")
+
+                        else
+                        {
+                            window.alert("there was a problem with creating a new freelancer profile")
+                            console.log(r.status);
                         }
                     }
                 }
-            }
-        })
+            },
+
+            // first name
+            fixTextColorFirstName: function () {
+                document.getElementById("paper-input-label-17").style.color = "";
+            },
+
+            // last name
+            fixTextColorLastName: function () {
+                document.getElementById("paper-input-label-18").style.color = "";
+            },
+
+            // location
+            fixTextColorLocation: function () {
+                document.getElementById("paper-input-label-20").style.color = "";
+            },
+
+            // job
+            fixTextColorJob: function () {
+              document.getElementById("paper-input-label-21").style.color = "";
+            },
+
+            // phone
+            fixTextColorPhone: function () {
+                document.getElementById("paper-input-label-22").style.color = "";
+            },
+
+            //email
+            fixTextColorEmail: function () {
+                document.getElementById("paper-input-label-23").style.color = "";
+            },
+
+        });
+
+
     </script>
 
 </dom-module>
+
+
+
