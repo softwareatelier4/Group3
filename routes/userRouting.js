@@ -161,6 +161,10 @@ router.get('/', function (req, res){
     })
   });
 
+  router.get("/verify-email", function(req,res){
+    console.log(req.query);
+  })
+
 
 
 
