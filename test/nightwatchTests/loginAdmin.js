@@ -9,6 +9,8 @@ module.exports = {
       .setValue('input[name=password]', 'admin')
       .click('#login-button')
       .waitForElementVisible('#logo',2000)
+      .assert.visible('.element-display')
+      .assert.visible('.button')
       .end()
   }
 }
