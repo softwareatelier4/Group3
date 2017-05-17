@@ -287,34 +287,35 @@ This is the polymer component for the search field.
         if (localStorage.secretKey != "")
         {
           document.getElementById("myprofile").style.visibility = "visible";
-          var edit = document.getElementById("edit/login-button");
+          let edit = document.getElementById("edit/login-button");
           Polymer.dom(edit).innerHTML = "Edit Profile";
           document.getElementById("edit/login_ref").href="/profile-edit";
-          var logout = document.getElementById("signup/logout_paper");
+          let logout = document.getElementById("signup/logout_paper");
           Polymer.dom(logout).innerHTML = "Logout";
           document.getElementById("signup/logout_ref").href="/";
+
           logout.addEventListener('tap', function(){
-            localStorage.secretKey = ""
-            localStorage.username = ""
-            window.location = "/search"
+            localStorage.secretKey = "";
+            localStorage.username = "";
+            localStorage.freelancers="";
+            window.location = "/search";
           });
+
           let welcome = document.getElementById("welcome");
           welcome.innerText = "Welcome, " + localStorage.username;
-          console.log(localStorage.secretKey);
         }
         else
         {
           document.getElementById("myprofile").style.visibility = "hidden";
-          var login = document.getElementById("edit/login-button");
+          let login = document.getElementById("edit/login-button");
           Polymer.dom(login).innerHTML = "Login";
           document.getElementById("edit/login_ref").href="/login";
-          var signup = document.getElementById("signup/logout_paper");
+          let signup = document.getElementById("signup/logout_paper");
           Polymer.dom(signup).innerHTML = "Sign Up";
           document.getElementById("signup/logout_ref").href="/sign-up";
 
           let welcome = document.getElementById("welcome");
           welcome.innerText = "";
-          console.log(localStorage.secretKey);
         }
     }
 
@@ -378,7 +379,6 @@ This is the polymer component for the search field.
 
         let str= "/freelancer/query?words=";
         let words = this.name.split(' ');
-        // let location = document.getElementById('location-input').value;
 
         words.forEach(function(item){
           if(item!== ""){
@@ -388,23 +388,17 @@ This is the polymer component for the search field.
         if(this.professions[this.profession].name !="Any"){
           str += this.professions[this.profession].name + ",";
         }
-        // str += location;
         str+="&city="
-        // if(this.location.formatted_address == undefined){
-        //   window.alert("invalid address")
-        // }else{
-        //   // str+=this.location.name//formatted_address
-        // }
-        // console.log("generateRequest")
         this.$.ajax.url=str;
         this.$.ajax.generateRequest()
         this.justSearched=true;
       },
-      _submit:function(){
-          localStorage.secretKey = ""
-          localStorage.username = ""
-          window.location = "/search"
-      },
+      // _submit:function(){
+      //     localStorage.secretKey = ""
+      //     localStorage.username = ""
+      //     localStorage.freelancers = ""
+      //     window.location = "/search"
+      // },
       someFunction:function(res){
         // console.log(res.detail.response)
         this.searchData=res.detail.response;
