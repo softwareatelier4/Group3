@@ -18,6 +18,22 @@ var transport = nodemailer.createTransport(smtpTransport({
 const user = mongoose.model("User");
 
 
+//for android app login
+router.post('/login',function(req,res){
+  console.log(req.body.userName);
+  user.findOne({userName:req.body.userName,password:req.body.password}).lean().exec(function(err,found){
+    if(found == null){
+      res.status(404).json(found);
+      res.end();
+    }
+    else{
+      console.log("entered");
+      res.status(200).json(found);
+      res.end();
+    }
+  })
+})
+
 
 router.get("/xd", function(req,res){
   user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
