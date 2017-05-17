@@ -1,0 +1,98 @@
+<link rel="import" href="./components/polymer/polymer.html">
+<link rel="import" href="./components/iron-form/iron-form.html">
+<link rel="import" href="./components/paper-button/paper-button.html">
+<link rel="import" href="./components/paper-input/paper-input.html">
+<link rel="import" href="./components/paper-dialog/paper-dialog.html">
+
+<dom-module id="verify-email">
+
+<style>
+
+:root{
+    --main-color:#494E6B;
+    --container-color:#e6e6e6;
+}
+
+#spacer {
+  min-height: 6.6em;
+  height:13%;
+  width: 95%;
+}
+
+#verify-email-container{
+  background-color: var(--container-color);
+  color: white;
+  padding: 8%;
+  font-size: 18px;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+#verify-button{
+    background-color:var(--main-color);
+    margin-top: 10%;
+    width: 100%;
+
+}
+
+.redBackGround{
+    background-color: red;
+     transition: background-color 300ms linear;
+}
+.trasparentBackgroundColor{
+    background-color: var(--container-color);
+    transition: background-color 300ms linear;
+}
+
+
+</style>
+<template>
+  <div id="spacer"></div>
+
+  <div id = "verify-email-container">
+      <h1>Your EMAIL has been verified.</h1>
+  </div>
+</template>
+<script>
+Polymer({
+    is:"verify-email",
+    properties:{
+        changeBackground:{
+            type:String,
+            value:""
+        },
+        route:{
+        }
+    },
+    observers:[
+      "_routeChanged(route)"
+    ],
+    _submit : function(){
+      let object = {
+        "id" : localStorage.secretKey,
+      }
+      var r = new XMLHttpRequest();
+      r.open("PUT", "/userRouting/verify-email", true)
+      r.setRequestHeader("Content-Type", "application/json");
+      r.send(JSON.stringify(object));
+      r.onreadystatechange=function(){
+        if(r.readyState == 4){
+          if(r.status==201){
+
+          }else{
+            window.alert("You are not logged in. Please log in and click the validation link again")
+            window.location="/search"
+          }
+        }
+      }
+    },
+    _routeChanged:function(r){
+      if(this.route.path=="/verify-email"){
+        this._submit();
+      }
+    }
+})
+</script>
+</dom-module>

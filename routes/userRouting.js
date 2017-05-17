@@ -18,6 +18,22 @@ var transport = nodemailer.createTransport(smtpTransport({
 const user = mongoose.model("User");
 
 
+//for android app login
+router.post('/login',function(req,res){
+  console.log(req.body.userName);
+  user.findOne({userName:req.body.userName,password:req.body.password}).lean().exec(function(err,found){
+    if(found == null){
+      res.status(404).json(found);
+      res.end();
+    }
+    else{
+      console.log("entered");
+      res.status(200).json(found);
+      res.end();
+    }
+  })
+})
+
 
 router.get("/xd", function(req,res){
   user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
@@ -28,11 +44,12 @@ router.get("/xd", function(req,res){
           res.json({'error' : 'Fill all the fields'}).end();
         }
         else{
+          //var htmlToSend = '<head></head><body><input type="button" onclick="window.location="localhost:4000/verify-email"></button></body>'
           var mail = {
             from: "paolofalcionix@gmail.com",
             to: req.query.email,
             subject: "Verify your email",
-            text: "Please verify your email!",
+            text: "Click on this link to verify your email: http://localhost:4000/verify-email",
           }
           transport.sendMail(mail, function(error, response){
             if(error){
@@ -53,6 +70,24 @@ router.get("/xd", function(req,res){
       res.json({'error' : 'The username already exists'});
     }
   })
+});
+
+router.put("/verify-email", function(req,res){
+  user.update({_id:req.body.id},{emailVerification:true},function(err,modified){
+    if(err){
+      console.log(err)
+      res.status(400).end()
+    }else{
+      res.status(201).end()
+    }
+  })
+  // let id = req.body.id;
+  //   user.update({_id : id}, {$set : {"emailVerification" : true}});
+  //   user.find({_id : id}, function(err,found){
+  //     console.log(found);
+  //     })
+
+  // res.sendStatus(200);
 });
 
 const admin = mongoose.model("Admin");
@@ -160,6 +195,7 @@ router.get('/', function (req, res){
       }
     })
   });
+
 
 
 
