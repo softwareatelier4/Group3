@@ -55,6 +55,14 @@ router.get("/xd", function(req,res){
   })
 });
 
+router.post("/verify-email", function(req,res){
+  let id = req.body.id;
+  user.find({_id: id},function(err,found){
+    found.emailVerification = true;
+  })
+  res.sendStatus(200);
+});
+
 const admin = mongoose.model("Admin");
 
 
@@ -161,9 +169,6 @@ router.get('/', function (req, res){
     })
   });
 
-  router.get("/verify-email", function(req,res){
-    console.log(req.query);
-  })
 
 
 
