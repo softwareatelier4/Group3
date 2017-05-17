@@ -52,14 +52,8 @@
   <div id="spacer"></div>
 
   <div id = "verify-email-container">
-      <form is="iron-form" method="get" action="/userRouting/verify-email" on-iron-form-response="handleResponse">
-          <paper-button id = "verify-button" raised on-tap="_submit" >Verify Your Email</paper-button>
-      </form>
+      <h1>Your EMAIL has been verified.</h1>
   </div>
-  <paper-dialog id="dialog">
-    dsadasdsa
-    dsadasdsa
-  </paper-dialog>
 </template>
 <script>
 Polymer({
@@ -68,17 +62,26 @@ Polymer({
         changeBackground:{
             type:String,
             value:""
+        },
+        route:{
         }
     },
-    _submit : function(e){
-      e.preventDefault();
+    observers:[
+      "_routeChanged(route)"
+    ],
+    _submit : function(){
       let object = {
         "id" : localStorage.secretKey,
       }
       var r = new XMLHttpRequest();
-      r.open("POST", "/userRouting/verify-email", true)
+      r.open("PUT", "/userRouting/verify-email", true)
       r.setRequestHeader("Content-Type", "application/json");
       r.send(JSON.stringify(object));
+    },
+    _routeChanged:function(r){
+      if(this.route.path=="/verify-email"){
+        this._submit();
+      }
     }
 })
 </script>
