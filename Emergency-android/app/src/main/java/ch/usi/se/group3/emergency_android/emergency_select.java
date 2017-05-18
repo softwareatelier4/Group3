@@ -26,10 +26,12 @@ public class emergency_select extends AppCompatActivity {
 
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
+        EditText ip = (EditText) findViewById(R.id.editIP);
         System.out.println(username.getText());
         System.out.println(password.getText());
         JSONObject o = new JSONObject("{'userName':'"+ username.getText()+"','password':'"+  password.getText()+"'}");
-        String url ="http://10.62.160.52:4000/userRouting/login?userName=hakjsdfhlaks";
+        String url ="http://"+ip.getText()+":4000/userRouting/login?userName=hakjsdfhlaks";
+        System.out.println(url);
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,
                 o,
                 new Response.Listener<JSONObject>() {
