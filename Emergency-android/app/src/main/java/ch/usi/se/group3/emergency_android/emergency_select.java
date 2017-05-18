@@ -1,9 +1,11 @@
 package ch.usi.se.group3.emergency_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,24 +29,27 @@ public class emergency_select extends AppCompatActivity {
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
         EditText ip = (EditText) findViewById(R.id.editIP);
-        System.out.println(username.getText());
-        System.out.println(password.getText());
+//        System.out.println(username.getText());
+//        System.out.println(password.getText());
         JSONObject o = new JSONObject("{'userName':'"+ username.getText()+"','password':'"+  password.getText()+"'}");
         String url ="http://"+ip.getText()+":4000/userRouting/login?userName=hakjsdfhlaks";
-        System.out.println(url);
+//        System.out.println(url);
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,
                 o,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                            System.out.println(response);
+                        Intent nextScreen = new Intent(getApplicationContext(), freelancer_list.class);
+                        //TODO: Response can be added to intent in order to save it
+                        startActivity(nextScreen);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Context context = getApplicationContext();
-                        CharSequence text = "fuck off!";
+                        CharSequence text = "Wrong IP/Credentials!";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
@@ -76,7 +81,7 @@ public class emergency_select extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_select);
 
-    System.out.println("xd");
+//    System.out.println("xd");
     // Example of a call to a native method
 //    TextView tv = (TextView) findViewById(R.id.sample_text);
 //    tv.setText(stringFromJNI());
