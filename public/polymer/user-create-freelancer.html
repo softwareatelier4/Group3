@@ -29,6 +29,7 @@
                 --paper-button-raised-keyboard-focus: {
                     background-color: var(--paper-pink-a200) !important;
                     color: white !important;
+
                 };
             }
 
@@ -244,50 +245,111 @@
 
                 if (!document.getElementById("firstName").value)
                 {
-                    document.getElementById("paper-input-label-17").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-17");
+
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
+
                 }
 
                 if (!document.getElementById("lastName").value)
                 {
-                    document.getElementById("paper-input-label-18").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-18");
+
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
                 }
 
                 if (!document.getElementById("emailForm").value)
                 {
-                    document.getElementById("paper-input-label-23").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-23");
+
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
                 }
 
                 if (!inputs[4].value)
                 {
                     // phone
-                    document.getElementById("paper-input-label-22").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-22");
+
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
                 }
 
                 if (!inputs[3].value)
                 {
                     // job
-                    document.getElementById("paper-input-label-21").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-21");
+
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
                 }
 
                 if ((this.$.locSel.long == 0) && (this.$.locSel.lat == 0))
                 {
                     // job
-                    document.getElementById("paper-input-label-20").style.color = "#FF0000";
+                    let label = document.getElementById("paper-input-label-20");
+//                    console.log(label);
+                    if(!label.childNodes[1]) {
+                        let span = document.createElement("span");
+                        let text = document.createTextNode(" * REQUIRED *");
+                        span.append(text);
+                        span.style.color = "#FF0000";
+                        span.style.float = "right";
+                        label.append(span);
+                    }
+
                     requiredInfos = true;
                 }
 
-                console.log("latitude = ", this.$.locSel.lat,
-                "\n longitude = ", this.$.locSel.long);
+//                console.log("latitude = ", this.$.locSel.lat,
+//                "\n longitude = ", this.$.locSel.long);
 
 
                 if (requiredInfos)
                 {
-                    window.alert("please provide all the required info");
+//                    window.alert("please provide all the required info");
                     requiredInfos = false;
                     return
                 }
@@ -338,32 +400,50 @@
 
             // first name
             fixTextColorFirstName: function () {
-                document.getElementById("paper-input-label-17").style.color = "";
+                let label = document.getElementById("paper-input-label-17");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
             // last name
             fixTextColorLastName: function () {
-                document.getElementById("paper-input-label-18").style.color = "";
+                let label = document.getElementById("paper-input-label-18");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
             // location
             fixTextColorLocation: function () {
-                document.getElementById("paper-input-label-20").style.color = "";
+                let label = document.getElementById("paper-input-label-20");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
             // job
             fixTextColorJob: function () {
-              document.getElementById("paper-input-label-21").style.color = "";
+                let label = document.getElementById("paper-input-label-21");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
             // phone
             fixTextColorPhone: function () {
-                document.getElementById("paper-input-label-22").style.color = "";
+                let label = document.getElementById("paper-input-label-22");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
             //email
             fixTextColorEmail: function () {
-                document.getElementById("paper-input-label-23").style.color = "";
+                let label = document.getElementById("paper-input-label-23");
+                let span = label.childNodes[1];
+                if (span)
+                    label.removeChild(span);
             },
 
         });
