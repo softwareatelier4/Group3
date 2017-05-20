@@ -26,6 +26,7 @@ import org.json.JSONObject;
 public class emergency_select extends AppCompatActivity {
     public void exampleFunction(View view) throws JSONException {
 
+
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
         EditText ip = (EditText) findViewById(R.id.editIP);
@@ -33,7 +34,7 @@ public class emergency_select extends AppCompatActivity {
 //        System.out.println(password.getText());
         JSONObject o = new JSONObject("{'userName':'"+ username.getText()+"','password':'"+  password.getText()+"'}");
         String url ="http://"+ip.getText()+":4000/userRouting/login?userName=hakjsdfhlaks";
-//        System.out.println(url);
+//        System.out.println(url)
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,
                 o,
                 new Response.Listener<JSONObject>() {
@@ -49,10 +50,13 @@ public class emergency_select extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Context context = getApplicationContext();
-                        CharSequence text = "Wrong IP/Credentials!";
+                        CharSequence text = "Wrong IP or Credentials!";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        Intent nextScreen = new Intent(getApplicationContext(), freelancer_list.class);
+                        //TODO: Response can be added to intent in order to save it
+                        startActivity(nextScreen);
                         System.out.println(error);
                     }
                 });
