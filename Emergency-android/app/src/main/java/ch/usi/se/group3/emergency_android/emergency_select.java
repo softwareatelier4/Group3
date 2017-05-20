@@ -30,20 +30,16 @@ public class emergency_select extends AppCompatActivity {
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
         EditText ip = (EditText) findViewById(R.id.editIP);
-//        System.out.println(username.getText());
-//        System.out.println(password.getText());
+
+
         JSONObject o = new JSONObject("{'userName':'"+ username.getText()+"','password':'"+  password.getText()+"'}");
-        String url ="http://"+ip.getText()+":4000/userRouting/login?userName=hakjsdfhlaks";
-//        System.out.println(url)
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url,
-                o,
+        String url ="http://" + ip.getText()+ ":4000/userRouting/login";
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, o,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                           System.out.println(response);
-                        Intent nextScreen = new Intent(getApplicationContext(), freelancer_list.class);
-                        //TODO: Response can be added to intent in order to save it
-                        startActivity(nextScreen);
+                        startActivity(new Intent(getApplicationContext(), freelancer_list.class));
                     }
                 },
                 new Response.ErrorListener() {
@@ -54,41 +50,17 @@ public class emergency_select extends AppCompatActivity {
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-                        Intent nextScreen = new Intent(getApplicationContext(), freelancer_list.class);
-                        //TODO: Response can be added to intent in order to save it
-                        startActivity(nextScreen);
-                        System.out.println(error);
                     }
                 });
         RequestQueue queue = Volley.newRequestQueue(this);
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                     @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                     }
-//                });
 
         queue.add(req);
-
-//        checkLoginData
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_select);
-
-//    System.out.println("xd");
-    // Example of a call to a native method
-//    TextView tv = (TextView) findViewById(R.id.sample_text);
-//    tv.setText(stringFromJNI());
     }
 
     /**
