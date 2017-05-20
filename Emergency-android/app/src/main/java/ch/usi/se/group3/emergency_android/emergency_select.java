@@ -26,7 +26,6 @@ import org.json.JSONObject;
 public class emergency_select extends AppCompatActivity {
     public void exampleFunction(View view) throws JSONException {
 
-
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
         EditText ip = (EditText) findViewById(R.id.editIP);
@@ -50,6 +49,12 @@ public class emergency_select extends AppCompatActivity {
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+
+                        EditText username = (EditText) findViewById(R.id.editText2);
+                        username.setText("");
+                        EditText password = (EditText) findViewById(R.id.pweditText);
+                        password.setText("");
+
                     }
                 });
         RequestQueue queue = Volley.newRequestQueue(this);
