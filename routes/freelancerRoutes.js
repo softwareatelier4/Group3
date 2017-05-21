@@ -10,9 +10,18 @@ const fileType = require('file-type');
 const multer = require("multer")
 var upload = multer({ dest: './public/img/' }).single("file")
 var upload2 = multer({dest:'./public/files'});
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 require("../models/User.js");
 require("../models/Freelancer.js");
 require("../models/Review.js")
+var transport = nodemailer.createTransport(smtpTransport({
+  service: 'gmail',
+  auth: {
+    user: "paolofalcionix@gmail.com",
+    pass: "BirbaLea2014"
+  }
+}))
 
 //
 //
@@ -254,7 +263,20 @@ router.post("/", upload2.array('files'),function(req,res){
             if(err){
                 res.status(400).end();
             }else{
-                console.log(saved._id)
+              var mail = {
+                from: "paolofalcionix@gmail.com",
+                to: req.body.email,
+                subject: "Verify your email",
+                text: "Click on this link to verify your email: http://localhost:4000/verify-email",
+              }
+              transport.sendMail(mail, function(error, response){
+                if(error){
+                  console.log(error);
+                }else{
+                  console.log("Message sent: " + response.message);
+                }
+                transport.close();
+              });
                 user.update({_id:req.body.userId},{$push:{freelancers:saved._id}},function(err){
                     if(err){
                         res.status(400).end()
