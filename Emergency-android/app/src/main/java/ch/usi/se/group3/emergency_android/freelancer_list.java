@@ -19,15 +19,21 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONArray;
+
 /**
  * Created by simonreding on 18.05.17.
  */
 
 public class freelancer_list extends Activity {
+    ListViewHandler lvh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.freelancer_display);
+        JSONArray freelancers = FreelancerDataHolder.getFreelancers();
+//        Log.v("freelancers:",freelancers.toString());
+        lvh=new ListViewHandler(this);
     }
 
     public void btn_location(View view){

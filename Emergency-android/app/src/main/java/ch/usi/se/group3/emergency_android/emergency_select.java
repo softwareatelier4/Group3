@@ -19,12 +19,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class emergency_select extends AppCompatActivity {
-    public void exampleFunction(View view) throws JSONException {
+    public void exampleFunction(View view) throws org.json.JSONException {
 
         EditText username = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.pweditText);
@@ -37,8 +38,15 @@ public class emergency_select extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, o,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        startActivity(new Intent(getApplicationContext(), freelancer_list.class));
+                    public void onResponse(JSONObject response)  {
+
+                        try {
+                            FreelancerDataHolder.setFreelancers(response.getJSONArray("freelancers"));
+                            startActivity(new Intent(getApplicationContext(), freelancer_list.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 },
                 new Response.ErrorListener() {

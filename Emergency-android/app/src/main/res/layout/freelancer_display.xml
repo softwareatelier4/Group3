@@ -25,8 +25,8 @@
         android:layout_width="213dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
-        android:text="Notification"
-        android:onClick = "btn_notification"/>
+        android:onClick="btn_notification"
+        android:text="Notification" />
 
     <Button
         android:id="@+id/btn_background"
@@ -35,5 +35,12 @@
         android:layout_weight="0.08"
         android:onClick="btn_background"
         android:text="Background" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
 
 </LinearLayout>
