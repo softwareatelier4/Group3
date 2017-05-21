@@ -28,4 +28,12 @@
         android:text="Notification"
         android:onClick = "btn_notification"/>
 
+    <Button
+        android:id="@+id/btn_background"
+        android:layout_width="212dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:onClick="btn_background"
+        android:text="Background" />
+
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
-
 /**
  * Created by simonreding on 18.05.17.
  */
@@ -33,6 +32,11 @@ public class freelancer_list extends Activity {
 
     public void btn_location(View view){
 
+    }
+
+    public void btn_background(View view){
+        Intent intent = new Intent(this, background.class);
+        startService(intent);
     }
 
     public void btn_notification(View view)

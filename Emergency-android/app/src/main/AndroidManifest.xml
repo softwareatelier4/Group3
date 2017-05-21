@@ -18,6 +18,9 @@
         </activity>
         <activity android:name=".freelancer_list" >
         </activity>
+
+        <service android:name=".background"
+            android:exported="false"/>
     </application>
 
 </manifest>
