@@ -36,10 +36,6 @@ public class background extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
-                //Your logic that service will perform will be placed here
-                //In this example we are just looping and waits for 1000 milliseconds in each loop.
                 for (int i = 0; i < 10; i++) {
                     try
                     {
