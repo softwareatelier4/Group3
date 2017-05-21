@@ -20,8 +20,8 @@ const user = mongoose.model("User");
 
 //for android app login
 router.post('/login',function(req,res){
-  
-  user.findOne({userName:req.body.userName,password:req.body.password}).lean().exec(function(err,found){
+
+  user.findOne({userName:req.body.userName,password:req.body.password}).lean().populate("freelancers").exec(function(err,found){
     if(found == null){
       res.status(404).json(found);
       res.end();

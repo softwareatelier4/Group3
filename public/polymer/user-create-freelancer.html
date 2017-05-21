@@ -365,6 +365,9 @@
 
                 formData.append("latitude", this.$.locSel.lat);
                 formData.append("longitude", this.$.locSel.long);
+                if(this.$.locSel.address!= undefined){
+                  formData.append("location", this.$.locSel.address)
+                }
 
 
 
@@ -452,6 +455,3 @@
     </script>
 
 </dom-module>
-
-
-
