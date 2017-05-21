@@ -9,9 +9,12 @@ module.exports = {
       .waitForElementVisible('.row-container', 1000)
       .assert.urlContains('profile')
       .assert.elementPresent('#contact-container')
-      // .click('.fa.fa-skype') 
+      // .click('.fa.fa-skype')
       // .assert.urlContains('profile/asfd')
       .assert.elementPresent('#pictureInput')
+
+
+      
       .end()
   }
 }
