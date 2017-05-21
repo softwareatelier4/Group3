@@ -316,13 +316,44 @@ router.get('/', function (req, res){
 
 
   router.post("/update/:id",upload2.array('files'), function(req,res){
-    console.log(req.params.id)
+    let b = false;
+    freelancer.find({_id: req.params.id}, function (err, found){
+      if (Object.keys(found).length === 0 ) {
+        res.status(404).end();
+      }
+      else{
+        found[0] = found[0].toObject();
+        if(found[0].email !== req.body.email)
+        {
+          b = true;
+          req.body.emailVerification=false;
+          console.log("emails are different");
+        }
+        else{
+          console.log("the email stayed the same");
+        }
+      }
+    })
     freelancer.update({_id:req.params.id},req.body, function(err,modified){
       if(err){
-        console.log(err)
         res.status(400).end()
       }else{
-        console.log(modified)
+        if(b){
+          var mail = {
+            from: "paolofalcionix@gmail.com",
+            to: req.body.email,
+            subject: "Verify your new email",
+            text: "Click on this link to verify your new email: http://localhost:4000/freelancer/verify-email/"+req.params.id,
+          }
+          transport.sendMail(mail, function(error, response){
+            if(error){
+              console.log(error);
+            }else{
+              console.log("Message sent: " + response.message);
+            }
+            transport.close();
+          });
+        }
         res.status(201).json()
       }
     })
