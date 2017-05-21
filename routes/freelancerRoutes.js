@@ -8,6 +8,7 @@ const fs = require('fs');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
 const multer = require("multer")
+var path = require('path');
 var upload = multer({ dest: './public/img/' }).single("file")
 var upload2 = multer({dest:'./public/files'});
 const nodemailer = require('nodemailer');
@@ -44,11 +45,7 @@ router.get("/verify-email/:id", function(req,res,next){
     if(err){
       res.status(400).end()
     }else{
-      console.log(req.url)
-      let url = "/verify-email"
-      req.url = url;
-      console.log(url)
-      next()
+      res.sendFile(path.join(__dirname, '../public/verification.html'));
     }
   })
 })
