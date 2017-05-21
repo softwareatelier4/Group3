@@ -81,8 +81,8 @@
     <template>
       <template is="dom-if" if="{{!toggle}}">
       <div id="emForm"><h1>What's your emergency?</h1>
-      <paper-input label="Enter Profession" id="emergencySearch"></paper-input>
-      <paper-button on-tap="startSearch">Find Closest</paper-button>
+      <paper-input label="Enter Profession" name="esname" value = "{{name}}" id="emergencySearch"></paper-input>
+      <paper-button on-tap="startSearch" id="findclosest">Find Closest</paper-button>
       </div>
     </template>
       <template is="dom-if" if="[[result]]">
