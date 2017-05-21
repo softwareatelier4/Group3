@@ -8,6 +8,7 @@ module.exports = {
     .click('.emergency')
     .waitForElementVisible('body',1000)
     .assert.urlEquals("http://localhost:4000/emergency.html")
+
     .end()
   }
 }
