@@ -235,8 +235,6 @@ router.get('/', function (req, res){
   {
     let a = new freelancer(req.body);
     //get the user data for the name and firstname
-    console.log(req.body);
-
     a.verified=false;
 
     a.save(function(err,saved)
@@ -247,10 +245,21 @@ router.get('/', function (req, res){
         res.status(400).end();
         return;
       }
-
+      var mail = {
+        from: "paolofalcionix@gmail.com",
+        to: req.body.email,
+        subject: "Freelancer Profile JOB ADVISOR",
+        text: "A freelancer profile has been created with your email on JOB ADVISOR \n Link:"+"http://localhost:4000/profile/"+saved._id
+      }
+      transport.sendMail(mail, function(error, response){
+        if(error){
+          console.log(error);
+        }else{
+          console.log("Message sent: " + response.message);
+        }
+        transport.close();
+      });
       res.status(201).json({newId:saved._id})
-
-
     })
   });
 
