@@ -75,7 +75,7 @@ describe("freelancer db test POST",function(){
       "lastName" : "MacFarlane",
     }
     request(app)
-    .post("/freelancer")
+    .post("/freelancer/"+"fdsfasd")
     .set("content-type", "application/json")
     .send({})
     .expect(400)
@@ -313,6 +313,32 @@ describe('GET /freelancer', function(){
       request(app)
       .post("/freelancer/setAvailable/"+"dsadasdas")
       .query({"available" : "true"})
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should return 200 if available is false",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+id)
+      .query({"available" : "false"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should return 400 if id doesn't exist",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+"fdsafdsa")
+      .query({"available" : "false"})
       .expect(400)
       .end(function(err,res){
         if(err){
