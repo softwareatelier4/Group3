@@ -41,7 +41,9 @@ public class emergency_select extends AppCompatActivity {
                     public void onResponse(JSONObject response)  {
 
                         try {
+                            EditText ip = (EditText) findViewById(R.id.editIP);
                             FreelancerDataHolder.setFreelancers(response.getJSONArray("freelancers"));
+                            FreelancerDataHolder.setIp(ip.getText().toString());
                             startActivity(new Intent(getApplicationContext(), freelancer_list.class));
                         } catch (JSONException e) {
                             e.printStackTrace();

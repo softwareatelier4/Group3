@@ -344,6 +344,46 @@ router.get('/', function (req, res){
       }
     })
   });
+let timeOutMap={}
+function timeoutFreelancer(id){
+  return function(){
+    freelancer.update({_id:id},{available:false},function(err,modified){
+      if(err){
+        console.log(err)
+      }
+    })
+  }
+}
+let timeOutInMilliseconds=30000//30 s
+  router.post("/setAvailable/:id", function(req, res){
+    console.log(req.query.available)
+    let id =req.params.id;
+    if(req.query.available=="true"){
+      freelancer.update({_id:id},{available:true},function(err,modified){
+        if(err){
+          res.status(400).end()
+        }else{
+          if(timeOutMap[id]!=undefined){
+            clearTimeout(timeOutMap[id])
+          }
+          timeOutMap[id]=setTimeout(timeoutFreelancer(id),30000)
+          res.status(200).end()
+        }
+      })
+    }else{
+      freelancer.update({_id:req.params.id},{available:false},function(err,modified){
+        if(err){
+          res.status(400).end()
+        }else{
+          if(timeOutMap[id]!=undefined){
+            clearTimeout(timeOutMap[id])
+          }
+          res.status(200).end()
+        }
+      })
+    }
+
+  })
 
   // router.put("/verify-email", function(req,res){
   //   user.update({_id:req.body.id},{emailVerification:true},function(err,modified){
