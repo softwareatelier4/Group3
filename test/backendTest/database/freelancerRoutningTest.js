@@ -25,7 +25,8 @@ let newFreelancerData={
   "skypeAcc":"asfd",
   "description":"i am a bad carpenter",
   "_id": id.toString(),
-  "verified":"true"
+  "verified":"true",
+  "available" : "true"
 }
 
 
@@ -280,8 +281,35 @@ describe('GET /freelancer', function(){
         }
       })
     })
+    it("should receive 400 if the email was unsuccesfully  verified",function(done){
+      request(app)
+      .get("/freelancer/verify-email/"+"fasdfasdfas")
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
   })
-  
+
+  describe('set available function testing', function(){
+    it("should return 200 if there sb available",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+id)
+      .query({"available" : "true"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
 
 
   describe('DELETE /freelancer/:freelancerid', function(){
