@@ -22,7 +22,7 @@ module.exports = {
       .url("localhost:4000/search.html")
       .useCss()
       .waitForElementVisible('body', 1000)
-      .assert.urlEquals("http://localhost:4000/search.html")
+      .assert.urlContains("profile")
       .assert.visible('#search-button')
       .assert.visible('.profile-container')
       .assert.visible('.button')
@@ -36,9 +36,11 @@ module.exports = {
       .waitForElementVisible('.row-container', 2000)
       .waitForElementVisible('#search-container', 2000)
       .waitForElementNotVisible('#sliderDescription', 2000)
-      .click("#logout-button")
-      .assert.urlEquals("http://localhost:4000/search")
 
+      .waitForElementVisible(".profile-display",2000)
+
+      // .click("#logout-button")
+      // .assert.urlEquals("http://localhost:4000/search")
       .end()
       }
 }
@@ -62,15 +64,14 @@ module.exports = {
       .waitForElementVisible('.row-container', 2000)
       .waitForElementVisible('#search-container', 2000)
       .waitForElementNotVisible('#sliderDescription', 2000)
-      .click("#logout-button")
-      .assert.urlEquals("http://localhost:4000/search")
+
 
       .end()
   }
 }
 
 module.exports = {
-  'searchFindName':function(client){
+  'searchFindName2':function(client){
     client
       .url("localhost:4000/search.html")
       .useCss()
@@ -89,8 +90,10 @@ module.exports = {
       .waitForElementVisible('.row-container', 2000)
       .waitForElementVisible('#search-container', 2000)
       .waitForElementNotVisible('#sliderDescription', 2000)
-      .click("#logout-button")
-      .assert.urlEquals("http://localhost:4000/search")
+
+      .assert.urlContains('profile')
+      // .click("#logout-button")
+      // .assert.urlEquals("http://localhost:4000/search")
 
       .end()
   }

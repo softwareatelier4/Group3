@@ -25,7 +25,8 @@ let newFreelancerData={
   "skypeAcc":"asfd",
   "description":"i am a bad carpenter",
   "_id": id.toString(),
-  "verified":"true"
+  "verified":"true",
+  "available" : "true"
 }
 
 
@@ -74,7 +75,7 @@ describe("freelancer db test POST",function(){
       "lastName" : "MacFarlane",
     }
     request(app)
-    .post("/freelancer")
+    .post("/freelancer/"+"fdsfasd")
     .set("content-type", "application/json")
     .send({})
     .expect(400)
@@ -256,6 +257,114 @@ describe('GET /freelancer', function(){
     it("should return error if no picture is sent",function(done){
       request(app)
       .post("/freelancer/"+id)
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+  describe('testing /update/:id router', function(){
+    it("the id doesn't exist",function(done){
+      request(app)
+      .post("/freelancer/update/"+"dsafdsaghdf")
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("the id  exist",function(done){
+      request(app)
+      .post("/freelancer/update/"+id)
+      .expect(201)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+
+  describe('/verify-email/:id', function(){
+    it("should receive 200 if the email was succesfully  verified",function(done){
+      request(app)
+      .get("/freelancer/verify-email/"+id)
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should receive 400 if the email was unsuccesfully  verified",function(done){
+      request(app)
+      .get("/freelancer/verify-email/"+"fasdfasdfas")
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+
+  describe('set available function testing', function(){
+    it("should return 200 if there sb available",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+id)
+      .query({"available" : "true"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should return 400 if the id is not available",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+"dsadasdas")
+      .query({"available" : "true"})
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should return 200 if available is false",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+id)
+      .query({"available" : "false"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("should return 400 if id doesn't exist",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+"fdsafdsa")
+      .query({"available" : "false"})
       .expect(400)
       .end(function(err,res){
         if(err){

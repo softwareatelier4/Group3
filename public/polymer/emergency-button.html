@@ -81,8 +81,8 @@
     <template>
       <template is="dom-if" if="{{!toggle}}">
       <div id="emForm"><h1>What's your emergency?</h1>
-      <paper-input label="Enter Profession" id="emergencySearch"></paper-input>
-      <paper-button on-tap="startSearch">Find Closest</paper-button>
+      <paper-input label="Enter Profession" name="esname" value = "{{name}}" id="emergencySearch"></paper-input>
+      <paper-button on-tap="startSearch" id="findclosest">Find Closest</paper-button>
       </div>
     </template>
       <template is="dom-if" if="[[result]]">
@@ -164,8 +164,12 @@ on-response="handleResponse"></iron-ajax>
               let maxDistance = Infinity
               let that = this
               this.data.forEach(function(item){
-
-                let freelancerPos = new google.maps.LatLng(item.latitude, item.longitude)
+                console.log(item.currentLng)
+                if(item.firstName=="alex"){
+                  item.currentLat="30"
+                  item.currentLng="30"
+                }
+                let freelancerPos = new google.maps.LatLng(item.currentLat, item.currentLng)
                 item.distance = google.maps.geometry.spherical.computeDistanceBetween(freelancerPos, that.position)
                 if(item.distance<maxDistance){
                   maxDistance = item.distance;

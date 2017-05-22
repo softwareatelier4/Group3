@@ -15,6 +15,8 @@ const freelancerSchema = new mongoose.Schema(
     location : {type : String, required : true},
     latitude : {type: String, required: true},
     longitude: {type: String, required: true},
+    currentLat : {type: String, required: false},
+    currentLng: {type: String, required: false},
     // streetNum : {type : Number, required : true},
     // street : {type : String, required : true},
     // country : {type : String, required : true},
@@ -33,7 +35,8 @@ const freelancerSchema = new mongoose.Schema(
     cv:{type:String},
     identification:{type:String},
     optionalFile:{type:String},
-    available:{type:Boolean, required:true,default:false} //for emergency
+    available:{type:Boolean, required:true,default:false}, //for emergency
+    emailVerification : {type: Boolean, default : false},
 
   }
 );

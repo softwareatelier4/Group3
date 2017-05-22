@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+    <EditText
+        android:id="@+id/txt_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <Button
+        android:id="@+id/btn_location"
+        android:layout_width="211dp"
+        android:layout_height="86dp"
+        android:onClick="btn_location"
+        android:text="Get my location" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:onClick="btn_notification"
+        android:text="Notification" />
+
+    <Button
+        android:id="@+id/btn_background"
+        android:layout_width="212dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:onClick="btn_background"
+        android:text="Background" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
+
+</LinearLayout>
