@@ -39,6 +39,8 @@
         android:layout_marginStart="236dp"
         android:layout_toEndOf="@+id/secondLine"
         android:layout_toRightOf="@+id/secondLine"
-        android:text="ToggleButton" />
+        android:text="ToggleButton"
+        android:textOff="Not Available"
+        android:textOn="Available" />
 
 </RelativeLayout>

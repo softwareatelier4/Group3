@@ -58,12 +58,14 @@ public class freelancer_list extends Activity implements GoogleApiClient.Connect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.freelancer_display);
         lvh=new ListViewHandler(this);
+        getLocation();
     }
 
     public void btn_location(View view) {
         getLocation();
         if(lastLocation != null){
             Toast.makeText(getBaseContext(), "location (null) :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            FreelancerDataHolder.setLocation(lastLocation.getLatitude(),lastLocation.getLongitude());
         }
     }
 
@@ -105,6 +107,7 @@ public class freelancer_list extends Activity implements GoogleApiClient.Connect
         fusedLocationProviderApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         lastLocation = fusedLocationProviderApi.getLastLocation(googleApiClient);
         Toast.makeText(getBaseContext(), "location :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+        FreelancerDataHolder.setLocation(lastLocation.getLatitude(),lastLocation.getLongitude());
 
     }
 
@@ -113,8 +116,10 @@ public class freelancer_list extends Activity implements GoogleApiClient.Connect
         if(location != null){
             lastLocation = location;
             Toast.makeText(getBaseContext(), "location (update):"+location.getLatitude()+" , "+location.getLongitude(), Toast.LENGTH_SHORT).show();
+            FreelancerDataHolder.setLocation(lastLocation.getLatitude(),lastLocation.getLongitude());
         }else{
             Toast.makeText(getBaseContext(), "location (null) :"+location.getLatitude()+" , "+location.getLongitude(), Toast.LENGTH_SHORT).show();
+
         }
    }
 

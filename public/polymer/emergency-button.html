@@ -164,8 +164,12 @@ on-response="handleResponse"></iron-ajax>
               let maxDistance = Infinity
               let that = this
               this.data.forEach(function(item){
-
-                let freelancerPos = new google.maps.LatLng(item.latitude, item.longitude)
+                console.log(item.currentLng)
+                if(item.firstName=="alex"){
+                  item.currentLat="30"
+                  item.currentLng="30"
+                }
+                let freelancerPos = new google.maps.LatLng(item.currentLat, item.currentLng)
                 item.distance = google.maps.geometry.spherical.computeDistanceBetween(freelancerPos, that.position)
                 if(item.distance<maxDistance){
                   maxDistance = item.distance;

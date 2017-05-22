@@ -50,7 +50,7 @@ public class FreelancerListViewAdapter extends ArrayAdapter<Integer> {
             TextView textView2 = (TextView) v.findViewById(R.id.secondLine);
             textView2.setText(o.getString("firstName"));
             ToggleButton toggle = (ToggleButton) v.findViewById(R.id.toggleButton);
-            toggle.setOnCheckedChangeListener(new ClickHandler(o.getString("_id"),this.fl));
+            toggle.setOnCheckedChangeListener(new ClickHandler(o.getString("_id"),this.fl,o.getString("job"),toggle));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,10 +63,14 @@ class ClickHandler implements CompoundButton.OnCheckedChangeListener{
     String id;
     freelancer_list fl;
     Handler h;
-    public ClickHandler(String id, freelancer_list fl){
+    final String job;
+    final ToggleButton tb;
+    public ClickHandler(String id, freelancer_list fl,String job, View btn){
         this.id = id;
         this.fl = fl;
+        this.job=job;
         h = new Handler();
+        tb = (ToggleButton) btn;
     }
 
     @Override
@@ -78,6 +82,8 @@ class ClickHandler implements CompoundButton.OnCheckedChangeListener{
         if (isChecked) {
             Log.v("checked","checked"+this.id);
             url+="?available=true";
+            url+="&lat="+FreelancerDataHolder.getLat();
+            url+="&lng="+FreelancerDataHolder.getLng();
 
         } else {//send not available signal
             // The toggle is disabled
@@ -93,10 +99,11 @@ class ClickHandler implements CompoundButton.OnCheckedChangeListener{
                         h.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Log.v("d","asfd");
-                                fl.sendNotification("hribpiubuasdf","aslkfjdn");
+                                fl.sendNotification("Are you still available?",
+                                       job );
+                                tb.setChecked(false);
                             }
-                        },10000);
+                        },3600000);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -105,5 +112,13 @@ class ClickHandler implements CompoundButton.OnCheckedChangeListener{
             }
         });
         queue.add(stringRequest);
+    }
+}
+
+class UpdateLocation implements Runnable{
+
+    @Override
+    public void run() {
+
     }
 }

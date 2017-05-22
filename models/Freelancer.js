@@ -15,6 +15,8 @@ const freelancerSchema = new mongoose.Schema(
     location : {type : String, required : true},
     latitude : {type: String, required: true},
     longitude: {type: String, required: true},
+    currentLat : {type: String, required: false},
+    currentLng: {type: String, required: false},
     // streetNum : {type : Number, required : true},
     // street : {type : String, required : true},
     // country : {type : String, required : true},

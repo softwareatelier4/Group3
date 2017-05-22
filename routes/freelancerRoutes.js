@@ -394,12 +394,12 @@ function timeoutFreelancer(id){
     })
   }
 }
-let timeOutInMilliseconds=30000//30 s
+let timeOutInMilliseconds=3600000//1 min for presentation purpose
   router.post("/setAvailable/:id", function(req, res){
-    console.log(req.query.available)
+    console.log(req.query.lat)
     let id =req.params.id;
     if(req.query.available=="true"){
-      freelancer.update({_id:id},{available:true},function(err,modified){
+      freelancer.update({_id:id},{available:true,currentLat:req.query.lat,currentLng:req.query.lng},function(err,modified){
         if(err){
           res.status(400).end()
         }else{
