@@ -245,7 +245,7 @@ router.get('/', function (req, res){
                 from: "paolofalcionix@gmail.com",
                 to: found[0].email,
                 subject: "Freelancer Profile Deleted",
-                text: "Your freelancer profile was deleted and the profile was deleted. In case you want more information contact the admin."
+                text: "Your freelancer profile was deleted. In case you want more information contact the admin."
               }
               transport.sendMail(mail, function(error, response){
                 if(error){
