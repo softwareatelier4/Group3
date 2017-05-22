@@ -267,6 +267,32 @@ describe('GET /freelancer', function(){
       })
     })
   })
+  describe('testing /update/:id router', function(){
+    it("the id doesn't exist",function(done){
+      request(app)
+      .post("/freelancer/update/"+"dsafdsaghdf")
+      .expect(400)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+    it("the id  exist",function(done){
+      request(app)
+      .post("/freelancer/update/"+id)
+      .expect(201)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
 
   describe('/verify-email/:id', function(){
     it("should receive 200 if the email was succesfully  verified",function(done){

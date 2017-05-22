@@ -75,7 +75,8 @@ router.put("/verify/:id", function(req,res){
             }
             transport.close();
           })
-        }})
+        }
+      })
       res.status(201).end()
     }
   })
@@ -369,7 +370,7 @@ router.get('/', function (req, res){
   router.post("/update/:id",upload2.array('files'), function(req,res){
     let b = false;
     freelancer.find({_id: req.params.id}, function (err, found){
-      if (Object.keys(found).length === 0 ) {
+      if (err || Object.keys(found).length === 0 ){
         res.status(404).end();
       }
       else{
