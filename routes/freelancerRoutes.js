@@ -40,12 +40,12 @@ router.get("/unverified", function(req,res){
 
 router.get("/verify-email/:id", function(req,res,next){
   let id = req.params.id;
-  console.log("fuck alex");
+  console.log("alex");
   freelancer.update({_id:id},{emailVerification:true},function(err,modified){
     if(err){
       res.status(400).end()
     }else{
-      res.sendFile(path.join(__dirname, '../public/verification.html'));
+      res.sendFile(path.join(__dirname, '../public/verification.html'))
     }
   })
 })

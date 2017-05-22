@@ -267,6 +267,22 @@ describe('GET /freelancer', function(){
     })
   })
 
+  describe('/verify-email/:id', function(){
+    it("should receive 200 if the email was succesfully  verified",function(done){
+      request(app)
+      .get("/freelancer/verify-email/"+id)
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
+  })
+  
+
 
   describe('DELETE /freelancer/:freelancerid', function(){
     // after(utils.dropDb)
