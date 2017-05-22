@@ -8,7 +8,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -18,20 +21,101 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 /**
  * Created by simonreding on 18.05.17.
  */
 
-public class freelancer_list extends Activity {
+public class freelancer_list extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
+
+    GoogleApiClient googleApiClient;
+    Location lastLocation;
+    LocationRequest locationRequest;
+    FusedLocationProviderApi fusedLocationProviderApi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.freelancer_display);
+
     }
 
-    public void btn_location(View view){
+    public void btn_location(View view) {
+        getLocation();
+        if(lastLocation != null){
+            Toast.makeText(getBaseContext(), "location (null) :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void onConnectionSuspended(int cause) {
+        Toast.makeText(getApplicationContext(), "Supended Connection", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void getLocation() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        fusedLocationProviderApi = LocationServices.FusedLocationApi;
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(getApplicationContext(), "Rej. Connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        fusedLocationProviderApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        lastLocation = fusedLocationProviderApi.getLastLocation(googleApiClient);
+        Toast.makeText(getBaseContext(), "location :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(location != null){
+            lastLocation = location;
+            Toast.makeText(getBaseContext(), "location (update):"+location.getLatitude()+" , "+location.getLongitude(), Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getBaseContext(), "location (null) :"+location.getLatitude()+" , "+location.getLongitude(), Toast.LENGTH_SHORT).show();
+        }
+   }
+
+    public void onConnectionFailed(ConnectionResult result){
+        Toast.makeText(getApplicationContext(),"Failed Connection",Toast.LENGTH_SHORT).show();
     }
 
     public void btn_background(View view){
@@ -43,7 +127,6 @@ public class freelancer_list extends Activity {
     {
         sendNotification("Emergency Android", "Hello world");
     }
-
 
     public void sendNotification(String title, String message){
         NotificationCompat.Builder mBuilder =

@@ -5,10 +5,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationProvider;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+
+import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
  * Created by damianopugliesi on 21/05/2017.
@@ -20,10 +23,14 @@ public class background extends Service {
 
     private boolean isRunning  = false;
 
+
+
+
     @Override
     public void onCreate() {
         Log.i(TAG, "Service onCreate");
         isRunning = true;
+
     }
 
     @Override
@@ -58,6 +65,10 @@ public class background extends Service {
 
         return Service.START_STICKY;
     }
+
+
+
+
 
 
     @Override

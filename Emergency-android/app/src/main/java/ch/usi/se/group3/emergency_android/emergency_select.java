@@ -44,6 +44,10 @@ public class emergency_select extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.v("error", error.toString());
+
+
+
                         Context context = getApplicationContext();
                         CharSequence text = "Wrong IP or Credentials!";
                         int duration = Toast.LENGTH_SHORT;
