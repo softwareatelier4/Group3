@@ -36,11 +36,13 @@ router.post('/login',function(req,res){
 
 
 router.get("/xd", function(req,res){
+  console.log(req.query.email)
   user.findOne({userName:req.query.userName}).lean().exec(function(err,found){
     if(found == null){
       let a = new user(req.query);
       a.save(function(err, saved){
         if(err){
+          console.log(err)
           res.json({'error' : 'Fill all the fields'}).end();
         }
         else{
