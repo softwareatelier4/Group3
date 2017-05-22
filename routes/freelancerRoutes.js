@@ -51,12 +51,31 @@ router.get("/verify-email/:id", function(req,res,next){
 })
 
 router.put("/verify/:id", function(req,res){
-
   freelancer.update({_id:req.params.id},{verified:true},function(err,modified){
     if(err){
       console.log(err)
       res.status(400).end()
     }else{
+      freelancer.find({_id: req.params.id},function(err,found){
+        if(err || Object.keys(found).length === 0){
+          res.status(404).end();
+        }
+        else{
+          var mail = {
+            from: "paolofalcionix@gmail.com",
+            to: found[0].email,
+            subject: "Freelancer Profile Verification Approved",
+            text: "Your creation request was approved and the profile was verified."
+          }
+          transport.sendMail(mail, function(error, response){
+            if(error){
+              console.log(error);
+            }else{
+              console.log("Message sent: " + response.message);
+            }
+            transport.close();
+          })
+        }})
       res.status(201).end()
     }
   })
