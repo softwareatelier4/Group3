@@ -33,7 +33,7 @@ const textSearchFields = ["firstName","lastName","email","location","street","co
 
 router.get("/unverified", function(req,res){
   console.log("here")
-  freelancer.find({verified:false}).lean().exec(function(err,found){
+  freelancer.find().lean().exec(function(err,found){
     res.json(found);
   })
 })

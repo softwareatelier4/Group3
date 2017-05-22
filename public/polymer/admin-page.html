@@ -87,9 +87,16 @@
       <template is="dom-if" if="[[item.identification]]"><div class= "element-display"><a href="{{item.identification}}">Identification</a></div></template>
       <template is="dom-if" if="[[item.optionalFile]]"><div class= "element-display"><a href="{{item.optionalFile}}">Optional File</a></div></template>
       <div class="buttoncontainer">
+        <template id="buttonVerify" is="dom-if" if="[[item.verified]]">
+        <paper-button id="verifybut" data-id$={{item._id}} class = "button green">
+          Verify
+        </paper-button>
+      </template>
+      <template id="buttonVerify" is="dom-if" if="[[item.notverified]]">
         <paper-button id="verifybut" data-id$={{item._id}} class = "button" on-tap="verify">
           Verify
         </paper-button>
+      </template>
         <paper-button id="denybut" data-id$={{item._id}} class = "button" on-tap="deny">
           Deny
         </paper-button>
@@ -128,6 +135,9 @@ Polymer({
   },
 
   handleResponse:function(res){
+    res.detail.response.forEach(function(item){
+      item.notverified = !item.verified
+    })
     this.set("freelancers",res.detail.response)
   },
   verify:function(e){
