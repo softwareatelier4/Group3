@@ -313,7 +313,7 @@ describe('GET /freelancer', function(){
       request(app)
       .post("/freelancer/setAvailable/"+"dsadasdas")
       .query({"available" : "true"})
-      .expect(200)
+      .expect(400)
       .end(function(err,res){
         if(err){
           done(err)
