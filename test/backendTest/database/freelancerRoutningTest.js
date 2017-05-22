@@ -309,6 +309,19 @@ describe('GET /freelancer', function(){
         }
       })
     })
+    it("should return 400 if the id is not available",function(done){
+      request(app)
+      .post("/freelancer/setAvailable/"+"dsadasdas")
+      .query({"available" : "true"})
+      .expect(200)
+      .end(function(err,res){
+        if(err){
+          done(err)
+        }else{
+          done()
+        }
+      })
+    })
   })
 
 
