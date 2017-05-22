@@ -37,9 +37,12 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import org.json.JSONArray;
+
 /**
  * Created by simonreding on 18.05.17.
  */
+
 
 public class freelancer_list extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
@@ -48,12 +51,13 @@ public class freelancer_list extends Activity implements GoogleApiClient.Connect
     Location lastLocation;
     LocationRequest locationRequest;
     FusedLocationProviderApi fusedLocationProviderApi;
+    ListViewHandler lvh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.freelancer_display);
-
+        lvh=new ListViewHandler(this);
     }
 
     public void btn_location(View view) {
