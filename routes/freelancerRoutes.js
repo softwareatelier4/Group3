@@ -33,30 +33,50 @@ const textSearchFields = ["firstName","lastName","email","location","street","co
 
 router.get("/unverified", function(req,res){
   console.log("here")
-  freelancer.find({verified:false}).lean().exec(function(err,found){
+  freelancer.find().lean().exec(function(err,found){
     res.json(found);
   })
 })
 
 router.get("/verify-email/:id", function(req,res,next){
   let id = req.params.id;
-  console.log("fuck alex");
+  console.log("alex");
   freelancer.update({_id:id},{emailVerification:true},function(err,modified){
     if(err){
       res.status(400).end()
     }else{
-      res.sendFile(path.join(__dirname, '../public/verification.html'));
+      res.sendFile(path.join(__dirname, '../public/verification.html'))
     }
   })
 })
 
 router.put("/verify/:id", function(req,res){
-
   freelancer.update({_id:req.params.id},{verified:true},function(err,modified){
     if(err){
       console.log(err)
       res.status(400).end()
     }else{
+      freelancer.find({_id: req.params.id},function(err,found){
+        if(err || Object.keys(found).length === 0){
+          res.status(404).end();
+        }
+        else{
+          var mail = {
+            from: "paolofalcionix@gmail.com",
+            to: found[0].email,
+            subject: "Freelancer Profile Verification Approved",
+            text: "Your creation request was approved and the profile was verified."
+          }
+          transport.sendMail(mail, function(error, response){
+            if(error){
+              console.log(error);
+            }else{
+              console.log("Message sent: " + response.message);
+            }
+            transport.close();
+          })
+        }
+      })
       res.status(201).end()
     }
   })
@@ -224,6 +244,38 @@ router.get('/', function (req, res){
             res.status(404).json().end();
           }
           else{
+            if(req.body.deny){
+              var mail = {
+                from: "paolofalcionix@gmail.com",
+                to: found[0].email,
+                subject: "Freelancer Profile Verification Denied",
+                text: "Your creation request was denied and the profile was deleted."
+              }
+              transport.sendMail(mail, function(error, response){
+                if(error){
+                  console.log(error);
+                }else{
+                  console.log("Message sent: " + response.message);
+                }
+                transport.close();
+              })
+            }
+            else{
+              var mail = {
+                from: "paolofalcionix@gmail.com",
+                to: found[0].email,
+                subject: "Freelancer Profile Deleted",
+                text: "Your freelancer profile was deleted. In case you want more information contact the admin."
+              }
+              transport.sendMail(mail, function(error, response){
+                if(error){
+                  console.log(error);
+                }else{
+                  console.log("Message sent: " + response.message);
+                }
+                transport.close();
+              })
+            }
             res.sendStatus(204);
           }
         })
@@ -318,7 +370,7 @@ router.get('/', function (req, res){
   router.post("/update/:id",upload2.array('files'), function(req,res){
     let b = false;
     freelancer.find({_id: req.params.id}, function (err, found){
-      if (Object.keys(found).length === 0 ) {
+      if (err || Object.keys(found).length === 0 ){
         res.status(404).end();
       }
       else{
@@ -425,7 +477,7 @@ let timeOutInMilliseconds=3600000//1 min for presentation purpose
 
   })
 
-  // router.put("/verify-email", function(req,res){
+  // router.delete("/verify-email", function(req,res){
   //   user.update({_id:req.body.id},{emailVerification:true},function(err,modified){
   //     if(err){
   //       console.log(err)
