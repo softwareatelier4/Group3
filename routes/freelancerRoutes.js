@@ -224,6 +224,38 @@ router.get('/', function (req, res){
             res.status(404).json().end();
           }
           else{
+            if(req.body.deny){
+              var mail = {
+                from: "paolofalcionix@gmail.com",
+                to: found[0].email,
+                subject: "Freelancer Profile Verification Denied",
+                text: "Your creation request was denied and the profile was deleted."
+              }
+              transport.sendMail(mail, function(error, response){
+                if(error){
+                  console.log(error);
+                }else{
+                  console.log("Message sent: " + response.message);
+                }
+                transport.close();
+              })
+            }
+            else{
+              var mail = {
+                from: "paolofalcionix@gmail.com",
+                to: found[0].email,
+                subject: "Freelancer Profile Deleted",
+                text: "Your freelancer profile was deleted and the profile was deleted. In case you want more information contact the admin."
+              }
+              transport.sendMail(mail, function(error, response){
+                if(error){
+                  console.log(error);
+                }else{
+                  console.log("Message sent: " + response.message);
+                }
+                transport.close();
+              })
+            }
             res.sendStatus(204);
           }
         })
@@ -385,7 +417,7 @@ router.get('/', function (req, res){
     })
   });
 
-  // router.put("/verify-email", function(req,res){
+  // router.delete("/verify-email", function(req,res){
   //   user.update({_id:req.body.id},{emailVerification:true},function(err,modified){
   //     if(err){
   //       console.log(err)

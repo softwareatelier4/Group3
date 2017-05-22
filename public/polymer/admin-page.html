@@ -141,15 +141,18 @@ Polymer({
       e.target.style.backgroundColor="green";
 
       req.generateRequest();
-    }
-    // deny:function(e){
-    //   let freelancerId = e.target.getAttribute("data-id");
-    //   let verify = document.getElementById("verifybut");
-    //   let del = document.getElementById("delbut");
-    //   verify.style.backgroundColor = "#494E6B";
-    //   del.style.backgroundColor = "#494E6B";
-    //   e.target.style.backgroundColor= "red";
-    // },
+    },
+    deny:function(e){
+      console.log("it entered the function")
+      let freelancerId = e.target.getAttribute("data-id");
+      var r = new XMLHttpRequest();
+      var obj = {
+        "deny" : true
+      }
+      r.open("DELETE", "/freelancer/"+freelancerId,true);
+      r.setRequestHeader("Content-Type", "application/json");
+      r.send(JSON.stringify(obj));
+    },
     // delete:function(e){
     //   let freelancerId = e.target.getAttribute("data-id");
     //   let verify = document.getElementById("verifybut");
