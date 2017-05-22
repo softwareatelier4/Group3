@@ -41,7 +41,9 @@ public class emergency_select extends AppCompatActivity {
                     public void onResponse(JSONObject response)  {
 
                         try {
+                            EditText ip = (EditText) findViewById(R.id.editIP);
                             FreelancerDataHolder.setFreelancers(response.getJSONArray("freelancers"));
+                            FreelancerDataHolder.setIp(ip.getText().toString());
                             startActivity(new Intent(getApplicationContext(), freelancer_list.class));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -52,6 +54,10 @@ public class emergency_select extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.v("error", error.toString());
+
+
+
                         Context context = getApplicationContext();
                         CharSequence text = "Wrong IP or Credentials!";
                         int duration = Toast.LENGTH_SHORT;

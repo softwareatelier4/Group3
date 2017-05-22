@@ -23,5 +23,6 @@
         <service android:name=".background"
             android:exported="false"/>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 </manifest>

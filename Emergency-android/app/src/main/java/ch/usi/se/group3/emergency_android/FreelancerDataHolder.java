@@ -10,10 +10,19 @@ import org.json.JSONObject;
 public class FreelancerDataHolder {
     private static JSONArray freelancers;
     private static String userId;
+    private static String ip;
     public static void setFreelancers(JSONArray data){
         freelancers = data;
     }
     public static JSONArray getFreelancers(){
         return freelancers;
     };
+
+    public static String getIp() {
+        return ip;
+    }
+
+    public static void setIp(String ip) {
+        FreelancerDataHolder.ip = ip;
+    }
 }
