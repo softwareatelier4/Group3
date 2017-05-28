@@ -106,7 +106,7 @@ public class freelancer_list extends Activity implements GoogleApiClient.Connect
         }
         fusedLocationProviderApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         lastLocation = fusedLocationProviderApi.getLastLocation(googleApiClient);
-        Toast.makeText(getBaseContext(), "location :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getBaseContext(), "location :"+lastLocation.getLatitude()+" , "+lastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
         FreelancerDataHolder.setLocation(lastLocation.getLatitude(),lastLocation.getLongitude());
 
     }
