@@ -10,8 +10,8 @@ require("../models/Admin.js");
 var transport = nodemailer.createTransport(smtpTransport({
   service: 'gmail',
   auth: {
-    user: "paolofalcionix@gmail.com",
-    pass: "BirbaLea2014"
+    user: "jobAdvisorAutoMailer@gmail.com",
+    pass: "abcd1234+"
   }
 }))
 
@@ -48,7 +48,7 @@ router.get("/xd", function(req,res){
         else{
           //var htmlToSend = '<head></head><body><input type="button" onclick="window.location="localhost:4000/verify-email"></button></body>'
           var mail = {
-            from: "paolofalcionix@gmail.com",
+            from: "jobAdvisorAutoMailer@gmail.com",
             to: req.query.email,
             subject: "Verify your email",
             text: "Click on this link to verify your email: http://localhost:4000/verify-email",
