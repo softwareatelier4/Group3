@@ -19,8 +19,8 @@ require("../models/Review.js")
 var transport = nodemailer.createTransport(smtpTransport({
   service: 'gmail',
   auth: {
-    user: "paolofalcionix@gmail.com",
-    pass: "BirbaLea2014"
+    user: "jobAdvisorAutoMailer@gmail.com",
+    pass: "abcd1234+"
   }
 }))
 
@@ -62,7 +62,7 @@ router.put("/verify/:id", function(req,res){
         }
         else{
           var mail = {
-            from: "paolofalcionix@gmail.com",
+            from: "jobAdvisorAutoMailer@gmail.com",
             to: found[0].email,
             subject: "Freelancer Profile Verification Approved",
             text: "Your creation request was approved and the profile was verified."
@@ -239,30 +239,31 @@ router.get('/', function (req, res){
         res.status(404).end();
       }
       else{
+        if(req.body.deny){
+          var mail = {
+            from: "jobAdvisorAutoMailer@gmail.com",
+            to: found[0].email,
+            subject: "Freelancer Profile Verification Denied",
+            text: "Your creation request was denied please resend validation data."
+          }
+          transport.sendMail(mail, function(error, response){
+            if(error){
+              console.log(error);
+            }else{
+              console.log("Message sent: " + response.message);
+            }
+            transport.close();
+          })
+        }else{
         freelancer.remove({_id: req.params.id}, function(err){
           if(err){
             res.status(404).json().end();
           }
           else{
-            if(req.body.deny){
+
+
               var mail = {
-                from: "paolofalcionix@gmail.com",
-                to: found[0].email,
-                subject: "Freelancer Profile Verification Denied",
-                text: "Your creation request was denied and the profile was deleted."
-              }
-              transport.sendMail(mail, function(error, response){
-                if(error){
-                  console.log(error);
-                }else{
-                  console.log("Message sent: " + response.message);
-                }
-                transport.close();
-              })
-            }
-            else{
-              var mail = {
-                from: "paolofalcionix@gmail.com",
+                from: "jobAdvisorAutoMailer@gmail.com",
                 to: found[0].email,
                 subject: "Freelancer Profile Deleted",
                 text: "Your freelancer profile was deleted. In case you want more information contact the admin."
@@ -275,10 +276,10 @@ router.get('/', function (req, res){
                 }
                 transport.close();
               })
-            }
+
             res.sendStatus(204);
           }
-        })
+        })}
       }
     })
   });
@@ -298,7 +299,7 @@ router.get('/', function (req, res){
         return;
       }
       var mail = {
-        from: "paolofalcionix@gmail.com",
+        from: "jobAdvisorAutoMailer@gmail.com",
         to: req.body.email,
         subject: "Freelancer Profile JOB ADVISOR",
         text: "A freelancer profile has been created with your email on JOB ADVISOR \n Link:"+"http://localhost:4000/profile/"+saved._id
@@ -339,7 +340,7 @@ router.get('/', function (req, res){
           res.status(400).end();
         }else{
           var mail = {
-            from: "paolofalcionix@gmail.com",
+            from: "jobAdvisorAutoMailer@gmail.com",
             to: req.body.email,
             subject: "Verify your email",
             text: "Click on this link to verify your email: http://localhost:4000/freelancer/verify-email/"+saved._id,
@@ -392,7 +393,7 @@ router.get('/', function (req, res){
       }else{
         if(b){
           var mail = {
-            from: "paolofalcionix@gmail.com",
+            from: "jobAdvisorAutoMailer@gmail.com",
             to: req.body.email,
             subject: "Verify your new email",
             text: "Click on this link to verify your new email: http://localhost:4000/freelancer/verify-email/"+req.params.id,
